@@ -17,3 +17,8 @@ overwrite_option = "OVERWRITE=YES"
 
 subprocess.call(["ogr2ogr","-lco", db_schema, "-lco", overwrite_option, \
 	"-nlt", geom_type, "-f", output_format, db_connection,  input_shp])
+	
+# -lco is the layer creation option
+# -f is output format
+# -nlt new layer type
+
