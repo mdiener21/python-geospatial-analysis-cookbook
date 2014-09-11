@@ -11,7 +11,6 @@ output_format = "PostgreSQL"
 db_connection = "PG:host=localhost port=5432 \
 	user=postgres dbname=py_cb password=secret"
 	
-pg_epsg = "900913"
 input_shp = "/home/mdiener/geodata/bikeways.shp"
 
 subprocess.call(["ogr2ogr","-lco", db_schema, "-lco", overwrite_option, \
