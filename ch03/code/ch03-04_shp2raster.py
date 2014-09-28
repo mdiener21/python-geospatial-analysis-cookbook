@@ -1,36 +1,48 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#
-from osgeo import gdal, ogr
 
-# Define pixel_size and NoData value of new raster
+from osgeo import ogr
+from osgeo import gdal
+
+# set pixel size
 pixel_size = 1
-NoData_value = -9999
+no_data_value = -9999
 
-# Filename of input OGR file
-input_shp = '/home/mdiener/01_projects/book/geodata/ply_golfcourse-strasslach3857.shp'
+# Shapefile input name
+input_shp = r'../geodata/input_filename.shp'
 
+# TIF Raster file to be created
+output_raster = r'../geodata/output_imagename.tif'
 
-# Filename of the raster Tiff that will be created
-raster_fn = '/home/mdiener/01_projects/book/geodata/test-foo.tif'
-
-# Open the data source and read in the extent
-source_ds = ogr.Open(input_shp)
-source_layer = source_ds.GetLayer()
-x_min, x_max, y_min, y_max = source_layer.GetExtent()
+# Open the data source get the layer object
+# assign extent coordinates
+open_shp = ogr.Open(input_shp)
+shp_layer = open_shp.GetLayer()
+x_min, x_max, y_min, y_max = shp_layer.GetExtent()
 
 # Create the destination data source
 x_res = int((x_max - x_min) / pixel_size)
 y_res = int((y_max - y_min) / pixel_size)
-target_ds = gdal.GetDriverByName('GTiff').Create(raster_fn, x_res, y_res, 1, gdal.GDT_Byte)
-target_ds.SetGeoTransform((x_min, pixel_size, 0, y_max, 0, -pixel_size))
-band = target_ds.GetRasterBand(1)
-band.SetNoDataValue(NoData_value)
 
-# Rasterize
-gdal.RasterizeLayer(target_ds, [1], source_layer, burn_values=[255])
-#gdal.RasterizeLayer(target_ds, [1], source_layer, None, None, [1], ['ALL_TOUCHED=TRUE'])
+# set the image type for export
+image_type = 'GTiff'
+driver = gdal.GetDriverByName(image_type)
 
+# create a new raster takes Parameters
+# Filename 	the name of the dataset to create. UTF-8 encoded.
+# nXSize 	width of created raster in pixels.
+# nYSize 	height of created raster in pixels.
+# nBands 	number of bands.
+# eType 	type of raster.
 
-# one line command line that worked
-#gdal_rasterize -burn 255 -l ply_golfcourse-strasslach3857 ply_golfcourse-strasslach3857.shp test.tif
+new_raster = driver.Create(output_raster, x_res, y_res, 1, gdal.GDT_Byte)
+new_raster.SetGeoTransform((x_min, pixel_size, 0, y_max, 0, -pixel_size))
+
+# get the raster band we want to export too
+raster_band = new_raster.GetRasterBand(1)
+
+# assign the no data value to empty cells
+raster_band.SetNoDataValue(no_data_value)
+
+# run vector to raster on new raster with input Shapefile
+gdal.RasterizeLayer(new_raster, [1], shp_layer, burn_values=[255])
