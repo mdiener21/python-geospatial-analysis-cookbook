@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
 # convert / import osm xml .osm file into a Shapefile
 import subprocess
 
