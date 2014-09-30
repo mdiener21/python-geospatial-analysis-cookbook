@@ -4,12 +4,17 @@
 import subprocess
 import os
 
+# folder to hold output Shapefiles
 destination_dir = "/home/mdiener/ch03/geodata/temp"
+
+# list of postGIS tables
 postgis_tables_list = ["bikeways", "sportanl"]
 
+# database connection parameters
 db_schema = "active_schema=geodata"
 db_connection = "PG:host=localhost port=5432 user=postgres \
-        dbname=py_cb password=air " +  db_schema
+        dbname=py_geoan_cb password=air " +  db_schema
+
 output_format = "ESRI Shapefile"
 
 # check if destination directory exists

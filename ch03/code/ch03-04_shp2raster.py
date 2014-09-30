@@ -20,7 +20,7 @@ open_shp = ogr.Open(input_shp)
 shp_layer = open_shp.GetLayer()
 x_min, x_max, y_min, y_max = shp_layer.GetExtent()
 
-# calculate the resolution for our output raster
+# calculate raster resolution
 x_res = int((x_max - x_min) / pixel_size)
 y_res = int((y_max - y_min) / pixel_size)
 

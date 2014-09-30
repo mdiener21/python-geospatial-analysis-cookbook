@@ -24,7 +24,7 @@ subprocess.call([ogr_info, input_osm])
 # call the subprocess function which fires ogr2ogr command line
 #subprocess.call([ogr2ogr, "-lco", option_line, "-f", output_format, output_shp, input_osm])
 
-subprocess.call([ogr2ogr, "-f", output_format, output_shp, input_osm, 'multipolygons'])
+subprocess.call([ogr2ogr, "-f", output_format, output_shp, input_osm, 'waypoints'])
 #subprocess.call([ogr2ogr, output_shp, multipolygons])
 #ogr2ogr cite_soleil_buildings cite_soleil_buildings.osm multipolygons
 

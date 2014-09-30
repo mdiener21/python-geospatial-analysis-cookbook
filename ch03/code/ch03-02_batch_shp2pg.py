@@ -13,7 +13,7 @@ def run_shp2pg(input_shp):
 	db_schema = "SCHEMA=geodata"
 	db_connection = "PG:host=localhost port=5432 \
 
-		user=postgres dbname=py_cb password=air"
+		user=postgres dbname=py_geoan_cb password=air"
 	output_format = "PostgreSQL"
 	geom_type = "MULTILINESTRING"
 	#input_shp = "/home/mdiener/geodata/bikeways.shp"
@@ -21,8 +21,10 @@ def run_shp2pg(input_shp):
 	subprocess.call(["ogr2ogr","-lco", db_schema, "-lco", overwrite_option, \
 		"-nlt", geom_type, "-f", output_format, db_connection,  input_shp])
 
+# directory full of shapefiles
 shapefile_dir = "/home/mdiener/geodata"
 
+# empty list to hold names of all shapefils in directory
 shapefile_list = []
 
 for file in os.listdir(shapefile_dir):
