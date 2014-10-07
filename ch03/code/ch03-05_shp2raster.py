@@ -9,10 +9,12 @@ pixel_size = 1
 no_data_value = -9999
 
 # Shapefile input name
-input_shp = r'../geodata/input_filename.shp'
+# input projection must be in cartesian system in meters
+# input wgs 84 or EPSG: 4326 will NOT work!!!
+input_shp = r'../geodata/ply_golfcourse-strasslach3857.shp'
 
 # TIF Raster file to be created
-output_raster = r'../geodata/output_imagename.tif'
+output_raster = r'../geodata/ply_golfcourse-strasslach.tif'
 
 # Open the data source get the layer object
 # assign extent coordinates
