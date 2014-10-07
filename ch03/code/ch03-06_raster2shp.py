@@ -3,15 +3,15 @@ from osgeo import gdal
 import sys
 
 #  get raster datasource
-open_image = gdal.Open( "INPUT.tif" )
+open_image = gdal.Open( "../geodata/cadaster_borders-2tone-black-white.png" )
 input_band = open_image.GetRasterBand(3)
 
 #  create output datasource
-dst_layername = "POLYGONIZED_STUFF"
-drv = ogr.GetDriverByName("ESRI Shapefile")
+output_shp = "POLYGONIZED_STUFF"
+shp_driver = ogr.GetDriverByName("ESRI Shapefile")
 
 # create output file name
-dst_ds = drv.CreateDataSource( dst_layername + ".shp" )
-dst_layer = dst_ds.CreateLayer(dst_layername, srs = None )
+output_shapefile = shp_driver.CreateDataSource( output_shp + ".shp" )
+new_shapefile = output_shapefile.CreateLayer(output_shp, srs = None )
 
-gdal.Polygonize(input_band, None, dst_layer, -1, [], callback=None)
+gdal.Polygonize(input_band, None, new_shapefile, -1, [], callback=None)
