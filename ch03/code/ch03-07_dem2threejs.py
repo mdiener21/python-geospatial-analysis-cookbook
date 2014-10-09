@@ -10,6 +10,7 @@ command_gdal_translate = "c:/OSGeo4W/bin/gdal_translate.exe"
 
 command_gdalwarp = "c:/OSGeo4W/bin/gdal_translate.exe"
 command_gdalinfo = "c:/OSGeo4W/bin/gdalinfo.exe"
+command_gdaldem = "c:/OSGeo4w/bin/gdaldem.exe"
 
 # for linux users
 #command_gdal_translate = "gdal_translate"
@@ -29,6 +30,12 @@ new_clip_ktn_dem = path_base + "ktn_clip-dhm5.asc"
 final_heightmap = path_base + "final_heightmap.png"
 
 output_envi = path_base + "final_envi.bin"
+
+ktn_ortho_2012 = path_base + "ktn-ortho-2012.tif"
+
+ktn_ortho_2012_clip = path_base + "ktn-ortho-2012_clip.jpg"
+
+
 
 
 ####subprocess.call(["gdalbuildvrt", temp_vrt, orig_dem_asc])
@@ -56,7 +63,7 @@ show_tif_info = command_gdalinfo + " -mm " + temp_tiff
 tif_info = subprocess.call(show_tif_info.split(), shell=False)
 print type(tif_info)
 print "foo"
-print tif_info
+
 # max_min = re.compile(r'Min/Max=')
 
 # if max_min.match(str(max_min)):
@@ -64,14 +71,30 @@ print tif_info
 # else:
 #     print "no match"
 
-translate2png = command_gdal_translate + " -scale 700 851 0 255 -outsize 200 200 -of PNG " + temp_tiff + " " + final_heightmap
-
-#subprocess.call(translate2png.split(), shell=False)
-
-####subprocess.call(["gdal_translate", "-ot", "UInt16", "-outsize", "200", "200", "-of", "ENVI", temp_tiff, threejs_webgl_dem])
-# subprocess.call(['gdalwarp',"-te", "","","","", temp_vrt, temp_tiff])
-
+# outputs an ENVI image file .bin with height values from 0 to 65535 in 16 bit format
 tif_2_envi = command_gdal_translate + " -scale 700 851 0 65535 -ot UInt16 -outsize 200 200 -of ENVI " + temp_tiff + " " + output_envi
 
-subprocess.call(tif_2_envi.split(),shell=False)
-#gdal_translate -scale 0 2470 0 65535 -ot UInt16 -outsize 200 200 -of ENVI jotunheimen.tif jotunheimen.bin
+#subprocess.call(tif_2_envi.split(),shell=False)
+
+
+####################
+####################
+
+# outputs a PNG with only 0-255 height values
+translate2png = command_gdal_translate + " -scale 700 851 0 255 -outsize 200 200 -of PNG " + temp_tiff + " " + final_heightmap
+#subprocess.call(translate2png.split(), shell=False)
+
+# subprocess.call(['gdalwarp',"-te", "","","","", temp_vrt, temp_tiff])
+
+### section creates a color relief texture for my terrain
+relief_colors = path_base + "color-relief.txt"
+output_relief = path_base + "new_relief.tif"
+run_color_relief = command_gdaldem + " color-relief " + temp_tiff + " " + relief_colors + " " + output_relief
+
+
+
+
+run_clip_ortho = command_gdal_translate + " -projwin 478000 185200 478500 184700 -of JPEG " \
+               + ktn_ortho_2012 + " " + ktn_ortho_2012_clip
+
+subprocess.call(run_clip_ortho.split(),shell=False)
