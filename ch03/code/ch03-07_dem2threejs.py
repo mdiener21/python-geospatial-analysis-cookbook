@@ -66,11 +66,12 @@ print tif_info
 
 translate2png = command_gdal_translate + " -scale 700 851 0 255 -outsize 200 200 -of PNG " + temp_tiff + " " + final_heightmap
 
-subprocess.call(translate2png.split(), shell=False)
+#subprocess.call(translate2png.split(), shell=False)
 
 ####subprocess.call(["gdal_translate", "-ot", "UInt16", "-outsize", "200", "200", "-of", "ENVI", temp_tiff, threejs_webgl_dem])
 # subprocess.call(['gdalwarp',"-te", "","","","", temp_vrt, temp_tiff])
 
-tif_2_envi = "gdal_translate -scale 700 851 0 65535 -ot UInt16 -outsize 200 200 -of ENVI " + temp_tiff + " " + output_envi
+tif_2_envi = command_gdal_translate + " -scale 700 851 0 65535 -ot UInt16 -outsize 200 200 -of ENVI " + temp_tiff + " " + output_envi
+
 subprocess.call(tif_2_envi.split(),shell=False)
 #gdal_translate -scale 0 2470 0 65535 -ot UInt16 -outsize 200 200 -of ENVI jotunheimen.tif jotunheimen.bin
