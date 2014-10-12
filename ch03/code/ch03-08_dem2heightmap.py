@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import subprocess
+from osgeo import gdal
 
-path_base = "../geodata/"
+# path_base = "../geodata/"
+path_base = "c:/00_GOMOGI/geodata/"
 
 # for windows users
 command_gdal_translate = "c:/OSGeo4W/bin/gdal_translate.exe"
@@ -37,7 +39,7 @@ ktn_ortho_2012 = path_base + "ktn-ortho-2012.tif"
 ktn_ortho_2012_clip = path_base + "ktn-ortho-2012_clip.jpg"
 
 # create temp vrt file from ascii
-subprocess.call(["gdalbuildvrt", temp_vrt, orig_dem_asc])
+# subprocess.call(["gdalbuildvrt", temp_vrt, orig_dem_asc])
 
 
 # 5000m x 5000m square
@@ -49,24 +51,39 @@ subprocess.call(["gdalbuildvrt", temp_vrt, orig_dem_asc])
 clip_command = command_gdal_translate + " -projwin 478000 185200 478500 184700 -of AAIGrid " \
                + orig_dem_asc + " " + new_clip_ktn_dem
 
-
 print ("now executing this command: " + clip_command)
 print ("so be patient this could take some time...now clipping...")
-subprocess.call(clip_command.split(), shell=False)
+#subprocess.call(clip_command.split(), shell=False)
 
 # transform dem to tiff
-dem2tiff = command_gdalwarp + " " + new_clip_ktn_dem + " "  + temp_tiff
+dem2tiff = command_gdalwarp + " " + new_clip_ktn_dem + " " + temp_tiff
 print ("now executing this command: " + dem2tiff)
-subprocess.call(dem2tiff.split(), shell=False)
+#subprocess.call(dem2tiff.split(), shell=False)
 
-show_tif_info = command_gdalinfo + " -mm " + temp_tiff
-tif_info = subprocess.call(show_tif_info.split(), shell=False)
 
+ds = gdal.Open(temp_tiff, gdal.GA_ReadOnly)
+width = ds.RasterXSize
+print width
+height = ds.RasterYSize
+print height
+
+band = ds.GetRasterBand(1)
+
+print 'Band Type=', gdal.GetDataTypeName(band.DataType)
+
+min = band.GetMinimum()
+max = band.GetMaximum()
+if min is None or max is None:
+    (min, max) = band.ComputeRasterMinMax(1)
+print 'Min=%.3f, Max=%.3f' % (min, max)
+min_elevation = str(int(round(min)))
+max_elevation = str(int(round(max)))
 
 # outputs an ENVI image file .bin with height values from 0 to 65535 in 16 bit format
-tif_2_envi = command_gdal_translate + " -scale 700 851 0 65535 -ot UInt16 -outsize 200 200 -of ENVI " + temp_tiff + " " + output_envi
+tif_2_envi = command_gdal_translate + " -scale " + min_elevation + " " + max_elevation + \
+             " 0 65535 -ot UInt16 -outsize 200 200 -of ENVI " + temp_tiff + " " + output_envi
 
-subprocess.call(tif_2_envi.split(),shell=False)
+#subprocess.call(tif_2_envi.split(),shell=False)
 
 
 ####################
