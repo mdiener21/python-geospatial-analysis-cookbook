@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import subprocess
 from osgeo import gdal
+import math
 
 # path_base = "../geodata/"
 path_base = "c:/00_GOMOGI/geodata/"
@@ -28,7 +29,8 @@ temp_tiff = path_base + "temp_image.tif"
 
 threejs_webgl_dem = path_base + "webgl_dem.bin"
 
-new_clip_ktn_dem = path_base + "ktn_clip-dhm5.asc"
+clip_ktn_dem5000 = path_base + "dem-5000.asc"
+clip_ktn_dem500 = path_base + "dem-500.asc"
 
 final_heightmap = path_base + "final_heightmap.png"
 
@@ -42,31 +44,26 @@ ktn_ortho_2012_clip = path_base + "ktn-ortho-2012_clip.jpg"
 # subprocess.call(["gdalbuildvrt", temp_vrt, orig_dem_asc])
 
 
-# 5000m x 5000m square
-# clip_command = command_gdal_translate + " -projwin 477200 189600 482200 184600 -of AAIGrid " \
-#                + orig_dem_asc + " " + new_clip_ktn_dem
+#5000m x 5000m square
+clip_command1 = command_gdal_translate + " -projwin 477200 189600 482200 184600 -of AAIGrid " \
+               + orig_dem_asc + " " + clip_ktn_dem5000
 
 # [-projwin ulx uly lrx lry] upper left(ul) x
 # 500m x 500m DEM  or 50px x 50px  because DEM pixel is 10m x 10m
-clip_command = command_gdal_translate + " -projwin 478000 185200 478500 184700 -of AAIGrid " \
-               + orig_dem_asc + " " + new_clip_ktn_dem
+clip_command2 = command_gdal_translate + " -projwin 478000 185200 478500 184700 -of AAIGrid " \
+               + clip_ktn_dem5000 + " " + clip_ktn_dem500
 
-print ("now executing this command: " + clip_command)
 print ("so be patient this could take some time...now clipping...")
-#subprocess.call(clip_command.split(), shell=False)
+#subprocess.call(clip_command1.split(), shell=False)
+#subprocess.call(clip_command2.split(), shell=False)
 
 # transform dem to tiff
-dem2tiff = command_gdalwarp + " " + new_clip_ktn_dem + " " + temp_tiff
+dem2tiff = command_gdal_translate + " " + clip_ktn_dem5000 + " " + temp_tiff
 print ("now executing this command: " + dem2tiff)
-#subprocess.call(dem2tiff.split(), shell=False)
+subprocess.call(dem2tiff.split(), shell=False)
 
 
-ds = gdal.Open(temp_tiff, gdal.GA_ReadOnly)
-width = ds.RasterXSize
-print width
-height = ds.RasterYSize
-print height
-
+ds = gdal.Open(clip_ktn_dem500, gdal.GA_ReadOnly)
 band = ds.GetRasterBand(1)
 
 print 'Band Type=', gdal.GetDataTypeName(band.DataType)
@@ -79,11 +76,17 @@ print 'Min=%.3f, Max=%.3f' % (min, max)
 min_elevation = str(int(round(min)))
 max_elevation = str(int(round(max)))
 
-# outputs an ENVI image file .bin with height values from 0 to 65535 in 16 bit format
-tif_2_envi = command_gdal_translate + " -scale " + min_elevation + " " + max_elevation + \
-             " 0 65535 -ot UInt16 -outsize 200 200 -of ENVI " + temp_tiff + " " + output_envi
 
-#subprocess.call(tif_2_envi.split(),shell=False)
+#true_height = math.round(value / 65535 * max_elevation)
+
+# # outputs an ENVI image file .bin with height values from 0 to 65535 in 16 bit format
+tif_2_envi = command_gdal_translate + " -scale " + min_elevation + " " + max_elevation + \
+             " 0 65535 -ot UInt16 -outsize 500 500 -of ENVI " + temp_tiff + " " + output_envi
+
+# # outputs an ENVI image file .bin with height values from 0 to 65535 in 16 bit format
+# tif_2_envi = command_gdal_translate + " -ot UInt16 -outsize 500 500 -of ENVI " + temp_tiff + " " + output_envi
+
+subprocess.call(tif_2_envi.split(),shell=False)
 
 
 ####################
