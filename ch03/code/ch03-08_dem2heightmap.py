@@ -2,17 +2,19 @@
 # -*- coding: utf-8 -*-
 import subprocess
 
-path_base = "c:/00_GOMOGI/geodata/"
-# path for book code
-# path_base = "../geodata/"
+path_base = "../geodata/"
+
 # for windows users
 command_gdal_translate = "c:/OSGeo4W/bin/gdal_translate.exe"
-command_gdalwarp = "c:/OSGeo4W/bin/gdal_translate.exe"
+command_gdalwarp = "c:/OSGeo4W/bin/gdal_warp.exe"
 command_gdalinfo = "c:/OSGeo4W/bin/gdalinfo.exe"
 command_gdaldem = "c:/OSGeo4w/bin/gdaldem.exe"
 
-# for linux users
-#command_gdal_translate = "gdal_translate"
+# for linux users or users with gdal utilities on your sys path
+# command_gdal_translate = "gdal_translate"
+# command_gdalwarp = "gdalwarp"
+# command_gdalinfo = "gdalinfo"
+# command_gdaldem = "gdaldem"
 
 orig_dem_asc = path_base + "ALS_DGM_10m.asc"
 # input arcascii format DEM data
