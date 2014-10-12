@@ -9,7 +9,7 @@ open_image = gdal.Open( "../geodata/cadaster_borders-2tone-black-white.png" )
 input_band = open_image.GetRasterBand(3)
 
 #  create output datasource
-output_shp = "../geodata/POLYGONIZED_STUFF"
+output_shp = "../geodata/cadaster_raster"
 shp_driver = ogr.GetDriverByName("ESRI Shapefile")
 
 # create output file name
