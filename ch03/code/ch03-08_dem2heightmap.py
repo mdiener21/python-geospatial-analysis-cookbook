@@ -9,7 +9,6 @@ path_base = "c:/00_GOMOGI/geodata/"
 
 # for windows users
 command_gdal_translate = "c:/OSGeo4W/bin/gdal_translate.exe"
-command_gdalwarp = "c:/OSGeo4W/bin/gdal_warp.exe"
 command_gdalinfo = "c:/OSGeo4W/bin/gdalinfo.exe"
 command_gdaldem = "c:/OSGeo4w/bin/gdaldem.exe"
 
@@ -20,6 +19,7 @@ command_gdaldem = "c:/OSGeo4w/bin/gdaldem.exe"
 # command_gdaldem = "gdaldem"
 
 orig_dem_asc = path_base + "ALS_DGM_10m.asc"
+orig_dem_asc = path_base + "dem-5000.asc"
 # input arcascii format DEM data
 input_dem = path_base + "small_elev.asc"
 
@@ -80,8 +80,10 @@ max_elevation = str(int(round(max)))
 #true_height = math.round(value / 65535 * max_elevation)
 
 # # outputs an ENVI image file .bin with height values from 0 to 65535 in 16 bit format
-tif_2_envi = command_gdal_translate + " -scale " + min_elevation + " " + max_elevation + \
-             " 0 65535 -ot UInt16 -outsize 500 500 -of ENVI " + temp_tiff + " " + output_envi
+tif_2_envi = command_gdal_translate + " -scale -ot UInt16 -outsize 500 500 -of ENVI " \
+             + temp_tiff + " " + output_envi
+
+# gdal_translate –ot UInt16 –scale –of ENVI –outsize 1025 1025 srtm_36_02_warped_cropped.tif heightmap.raw
 
 # # outputs an ENVI image file .bin with height values from 0 to 65535 in 16 bit format
 # tif_2_envi = command_gdal_translate + " -ot UInt16 -outsize 500 500 -of ENVI " + temp_tiff + " " + output_envi
