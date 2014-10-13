@@ -21,14 +21,17 @@ def run_shp2pg(input_shp):
     "-nlt", geom_type, "-f", output_format, db_connection,  input_shp])
 
 # directory full of shapefiles
-shapefile_dir = "../geodata"
+# shapefile_dir = "../geodata"
+
+shapefile_dir = os.path.dirname(os.path.realpath('..\geodata')) + "\\geodata"
+
 
 # empty list to hold names of all shapefils in directory
 shapefile_list = []
 
 for file in os.listdir(shapefile_dir):
     if file.endswith(".shp"):
-        # apped join path to file name to outpout "/home/mdiener/geodata/myshape.shp"
+        # apped join path to file name to outpout "../geodata/myshape.shp"
         full_shapefile_path = os.path.join(shapefile_dir, file)
         shapefile_list.append(full_shapefile_path)
 
