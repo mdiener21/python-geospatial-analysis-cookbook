@@ -16,7 +16,7 @@ def get_epsg_code(epsg):
    return (f.read())
 
 # Shapefile filename must equal the new .prj filename
-shp_filename = "world_country_admin_boundary_shapefile_with_fips_codes"
+shp_filename = "UTM_Zone_Boundaries"
 
 # path to where Shapefile with no .prj is located
 os.chdir("../geodata/")
