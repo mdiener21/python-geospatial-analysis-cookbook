@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import json
-import geojson
 
 geojson_yes_crs = '../geodata/schools.geojson'
 geojson_no_crs = '../geodata/golfcourses_bc.geojson'
