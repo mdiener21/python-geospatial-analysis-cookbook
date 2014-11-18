@@ -27,7 +27,7 @@ os.chdir("../geodata/")
 with open("%s.prj" % shp_filename, "w") as prj:
     epsg_code = get_epsg_code(4326)
     prj.write(epsg_code)
-    print "done writing projection definition " +  prj.name + "to EPSG:" + epsg_code
+    print "done writing projection definition " + prj.name + "to EPSG:" + epsg_code
 
 # now change abck to our code directory
 os.chdir("../code/")
