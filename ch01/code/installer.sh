@@ -1,3 +1,4 @@
+#!/bin/sh
 # setup installs
 sudo apt-get install python-setuptools python-pip
 
@@ -22,8 +23,8 @@ export WORKON_HOME=~/venvs
 mkdir $WORKON_HOME
 source /usr/local/bin/virtualenvwrapper.sh
 mkvirtualenv pygeo_analysis_cookbook
-echo “export WORKON_HOME=$WORKON_HOME” >> ~/.bashrc
-echo “source /usr/local/bin/virtualenvwrapper.sh” >> ~/.bashrc
+echo export WORKON_HOME=$WORKON_HOME >> ~/.bashrc
+echo source /usr/local/bin/virtualenvwrapper.sh >> ~/.bashrc
 source ~/.bashrc
 
 workon pygeo_analysis_cookbook
@@ -49,7 +50,7 @@ pip install owslib
 #
 #
 # NOT TO INCLUDE ANY OF this stuff in final !!!!
-# BELOW ARE SOME NOTES FOR ME ONLY
+# BELOW ARE SOME SILLY STUFF not needed
 #
 ################################################
 $ sudo apt-add-repository ppa:ubuntugis/ubuntugis-unstable
@@ -59,12 +60,12 @@ $ virtualenv gdalenv
 $ source gdal/bin/activate
 (gdalenv) $ pip install --no-install GDAL
 (gdalenv) $ cd /path/to/gdalenv/build/GDAL
-(gdalenv) $ python setup.py build_ext –include-dirs=/usr/include/gdal/
+(gdalenv) $ python setup.py build_ext include-dirs=/usr/include/gdal/
 (gdalenv) $ pip install --no-download GDAL
 done
 
 cd /.venv/pygeo_analysis_cookbook/build/gdal
-python setup.py build_ext –gdal-config=/usr/bin/gdal-config --include-dirs=/usr/include/gdal --library-dirs=/usr/lib
+python setup.py build_ext gdal-config=/usr/bin/gdal-config --include-dirs=/usr/include/gdal --library-dirs=/usr/lib
 
 /usr/share/gdal/1.7
 /usr/include/gdal
@@ -81,7 +82,7 @@ pip install GDAL
 $ wget http://download.osgeo.org/gdal/1.11.0/gdal-1.11.0.tar.gz
 $ tar xzf gdal-1.11.0.tar.gz
 $ cd gdal-1.11.0
-$ ./configure -–with-python
+$ ./configure -with-python
 $ make  #this takes time
 $ sudo make installs
 
