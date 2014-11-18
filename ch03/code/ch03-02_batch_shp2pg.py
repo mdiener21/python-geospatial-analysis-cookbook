@@ -4,6 +4,7 @@
 import subprocess
 import os
 
+
 def run_shp2pg(input_shp):
     """
     input_shp is full path to shapefile including file ending
@@ -18,7 +19,7 @@ def run_shp2pg(input_shp):
     # input_shp = "../geodata/bikeways.shp"
     overwrite_option = "OVERWRITE=YES"
     subprocess.call(["ogr2ogr", "-lco", db_schema, "-lco", overwrite_option,
-    "-nlt", geom_type, "-f", output_format, db_connection,  input_shp])
+                     "-nlt", geom_type, "-f", output_format, db_connection, input_shp])
 
 # directory full of shapefiles
 # shapefile_dir = "../geodata"
