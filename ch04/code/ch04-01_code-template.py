@@ -3,8 +3,7 @@
 
 import psycopg2
 import json
-import geojson
-from geojson import Feature, Polygon, Point, FeatureCollection
+from geojson import loads, Feature, FeatureCollection
 
 
 # Database Connection Info
@@ -14,74 +13,52 @@ db_passwd = "air"
 db_database = "py_geoan_cb"
 db_port = "5432"
 
+# connect to DB
 conn = psycopg2.connect(host=db_host, user=db_user, port=db_port, password=db_passwd, database=db_database)
 
+# create a cursor
 cur = conn.cursor()
 
-buffer_query = """select ST_AsGeoJSON(ST_Transform(ST_Buffer(wkb_geometry, 100),4326)) as geom, name
+# the PostGIS buffer query
+buffer_query = """select ST_AsGeoJSON(ST_Transform(ST_Buffer(wkb_geometry, 100,'quad_segs=8'),4326)) as geom, name
                from geodata.schools"""
 
-# SELECT ST_Transform(ST_GeomFromText('POLYGON((7))',2249),4326) As wgs_geom
-
+# execute the query
 res = cur.execute(buffer_query)
 
+# return all the rows, we expect more than one
 dbRows = cur.fetchall()
 
+# an empty list to hold each feature of our feature collection
 new_geom_collection = []
 
+# loop through each row in result query set and add to my feature collection
+# assign name field to the GeoJSON properties
 for each_poly in dbRows:
     geom = each_poly[0]
-    geoj = geojson.loads(geom)
-    myfeat = Feature(geometry=geoj)
+    name = each_poly[1]
+    geoj = loads(geom)
+    myfeat = Feature(geometry=geoj, properties={'name': name})
     new_geom_collection.append(myfeat)
 
-foo = FeatureCollection(new_geom_collection)
+# use the geojson module to create the final Feature Collection of features created from for loop above
+my_geojson = FeatureCollection(new_geom_collection)
 
-# for each_geom in dbRows:
-#     # my_feature = Feature(geometry=each_geom)
-#     geom = each_geom[0]
-#     name = each_geom[1]
-#     country = each_geom[2]
-#     altitude = each_geom[3]
-#
-#     featureCollection = {"type": "FeatureCollection", "features": []}
-#     # currentPoiCat = {"featureCollection": featureCollection}
-#
-#
-#     #geomJson = json.loads(geom)
-#     item = {
-#         "type": "Feature",
-#         "properties":
-#             {
-#                 "name": name,
-#                 "country": country,
-#                 "altitude": altitude
-#             },
-#         "geometry": geom
-#     }
-#     featureCollection['features'].append(item)
-#     #currentPoiCat['featureCollection']['features'].append(item)
-
-#new_geom_collection.append(featureCollection)
-# FeatureCollection([my_feature, my_other_feature])
-# my_geojson = FeatureCollection(new_geom_collection) # doctest: +ELLIPSIS
-
-
-# save geojson to file on disk
+# set the name and folde of output GeoJSON file
 output_geojson_buf = "../geodata/out_buff_100m.geojson"
 
 
+# save geojson to a file in our geodata folder
 def write_geojson():
     fo = open(output_geojson_buf, "w")
-    fo.write(json.dumps(foo))
+    fo.write(json.dumps(my_geojson))
     fo.close()
 
-# run the download and create new file to test, download the json file and compare to current json
+# run the write function to actually create the GeoJSON file
 write_geojson()
 
 # close cursor
 cur.close()
 
-#close connection
+# close connection
 conn.close()
-
