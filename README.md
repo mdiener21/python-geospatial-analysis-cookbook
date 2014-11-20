@@ -1,4 +1,4 @@
-python-geospatia-analysis-cookbook
+python-geospatial-analysis-cookbook
 ==================================
 
-a cook book of python geospatial analysis code
+my python cookbook code for geospatial analysis cookbook
