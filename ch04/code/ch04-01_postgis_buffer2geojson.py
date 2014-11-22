@@ -24,7 +24,7 @@ buffer_query = """select ST_AsGeoJSON(ST_Transform(ST_Buffer(wkb_geometry, 100,'
                from geodata.schools"""
 
 # execute the query
-res = cur.execute(buffer_query)
+cur.execute(buffer_query)
 
 # return all the rows, we expect more than one
 dbRows = cur.fetchall()
