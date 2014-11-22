@@ -37,14 +37,14 @@ new_geom_collection = []
 for each_poly in dbRows:
     geom = each_poly[0]
     name = each_poly[1]
-    geoj = loads(geom)
-    myfeat = Feature(geometry=geoj, properties={'name': name})
+    geoj_geom = loads(geom)
+    myfeat = Feature(geometry=geoj_geom, properties={'name': name})
     new_geom_collection.append(myfeat)
 
 # use the geojson module to create the final Feature Collection of features created from for loop above
 my_geojson = FeatureCollection(new_geom_collection)
 
-# set the name and folde of output GeoJSON file
+# define the output folder and GeoJSon file name
 output_geojson_buf = "../geodata/out_buff_100m.geojson"
 
 
