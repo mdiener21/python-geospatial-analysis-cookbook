@@ -27,8 +27,12 @@ buffer_bike_query = """ SELECT ST_Buffer(geom.a, 100) from geodata.bikepaths; ""
 # ST_Within returns a True or False
 is_inside_query = """ CREATE TABLE geodata.points_inside as
                       SELECT
-                          ST_WITHIN(point_geom, polygon_geom)
-                      FROM polygon_layer;
+                          name
+                      FROM
+                          geodata.polygon_layer
+                      WHERE
+                          ST_WITHIN(point_geom, polygon_geom);
+
                   """
 
 
@@ -54,6 +58,8 @@ cur.execute(is_inside_query)
 # return all the rows, we expect more than one
 dbRows = cur.fetchall()
 
-if value is True:
-    # the point is inside our polygon
-    # export these points to GeoJSON
+for row in dbRows:
+    if row is True:
+        print "The following points are inside the polygon" + row[0]
+        # the point is inside our polygon
+        # export these points to GeoJSON
