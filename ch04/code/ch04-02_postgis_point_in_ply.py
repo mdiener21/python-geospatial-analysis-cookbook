@@ -23,6 +23,8 @@ cur = conn.cursor()
 
 # buffer all bike paths
 
+
+# a single query
 buffer_bike_query = """ SELECT ST_Buffer(geom.a, 100) from geodata.bikepaths; """
 # ST_Within returns a True or False
 is_inside_query = """ CREATE TABLE geodata.points_inside as
