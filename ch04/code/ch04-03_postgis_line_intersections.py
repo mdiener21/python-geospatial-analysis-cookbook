@@ -28,8 +28,8 @@ split_lines_query = """
                     FROM
                         geodata.van_raw_roads;
                      """
-cur.execute("ALTER TABLE geodata.temp_roads ADD COLUMN id serial;")
-cur.execute("ALTER TABLE geodata.temp_roads ADD CONSTRAINT temp_pkey PRIMARY KEY (id);")
+cur.execute("ALTER TABLE geodata.split_roads ADD COLUMN id serial;")
+cur.execute("ALTER TABLE geodata.split_roads ADD CONSTRAINT temp_pkey PRIMARY KEY (id);")
 
 # create table geodata.temp_roads as select (st_dump(st_node(st_collect(geom)))).geom as geom from geodata.van_raw_roads;
 
