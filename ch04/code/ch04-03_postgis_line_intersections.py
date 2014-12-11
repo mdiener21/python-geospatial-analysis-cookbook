@@ -19,19 +19,26 @@ conn = psycopg2.connect(host=db_host, user=db_user, port=db_port, password=db_pa
 # create a cursor
 cur = conn.cursor()
 
+# drop table if exists
+# cur.execute("DROP TABLE IF EXISTS geodata.split_roads;")
 
+# split lines at intesections query
 split_lines_query = """
                     CREATE TABLE
                         geodata.split_roads
                     AS SELECT
-                        (ST_Dump(ST_Node(ST_Collect(geom)))).geom AS GEOM
+                        (ST_Dump(ST_Node(ST_Collect(wkb_geometry)))).geom AS geom
                     FROM
-                        geodata.van_raw_roads;
+                        geodata.lines;
                      """
+cur.execute(split_lines_query)
+conn.commit()
+
 cur.execute("ALTER TABLE geodata.split_roads ADD COLUMN id serial;")
-cur.execute("ALTER TABLE geodata.split_roads ADD CONSTRAINT temp_pkey PRIMARY KEY (id);")
+cur.execute("ALTER TABLE geodata.split_roads ADD CONSTRAINT split_roads_pkey PRIMARY KEY (id);")
 
-# create table geodata.temp_roads as select (st_dump(st_node(st_collect(geom)))).geom as geom from geodata.van_raw_roads;
+# close cursor
+cur.close()
 
-
-
+# close connection
+conn.close()
