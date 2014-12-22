@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import psycopg2
+import json
 import pprint
 from geojson import loads, Feature, FeatureCollection
 
@@ -20,7 +21,7 @@ cur = conn.cursor()
 
 complex_query = """
     SELECT
-      st_asgeojson(st_centroid(g.wkb_geometry)) as geom, c.name AS city, g.name AS golfclub, p.name_en AS park,
+      ST_AsGeoJSON(st_centroid(g.wkb_geometry)) as geom, c.name AS city, g.name AS golfclub, p.name_en AS park,
 	  ST_Distance(geography(c.wkb_geometry), geography(g.wkb_geometry)) AS distance,
 	  ST_Distance(geography(p.geom), geography(g.wkb_geometry)) AS distance
       FROM 
@@ -61,6 +62,19 @@ for each_result in validity_results:
 my_geojson = FeatureCollection(new_geom_collection)
 
 pprint.pprint(my_geojson)
+
+# define the output folder and GeoJSon file name
+output_geojson_buf = "../../../geodata/golfcourses_analysis.geojson"
+
+
+# save geojson to a file in our geodata folder
+def write_geojson():
+    fo = open(output_geojson_buf, "w")
+    fo.write(json.dumps(my_geojson))
+    fo.close()
+
+# run the write function to actually create the GeoJSON file
+write_geojson()
 
 # close cursor
 cur.close()
