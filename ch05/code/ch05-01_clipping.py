@@ -23,92 +23,100 @@ GRAY = '#00b700'
 BLUE = '#6699cc'
 YELLOW = '#ffe680'
 
+
 # functions slightly modified from Sean Gilles http://toblerity.org/shapely/
-def plot_coords_line(ax, ob, color='#00b700'):
-    x, y = ob.xy
+# used for drawing our results using matplotlib
+
+def plot_coords_line(axis, object, color='#00b700'):
+    x, y = object.xy
     ax.plot(x, y, 'o', color=color, zorder=1)
 
 
-def plot_coords_lines(ax, ob, color='#999999'):
-    for linestring in ob:
+def plot_coords_lines(axis, object, color='#999999'):
+    for linestring in object:
         x, y = linestring.xy
         ax.plot(x, y, 'o', color=color, zorder=2)
 
 
-def plot_line(ax, ob, color='#00b700'):
-    x, y = ob.xy
+def plot_line(axis, object, color='#00b700'):
+    x, y = object.xy
     ax.plot(x, y, color=color, linewidth=3, zorder=1)
 
 
-def plot_lines(ax, ob, color='#00b700'):
-    for line in ob:
+def plot_lines(axis, object, color='#00b700'):
+    for line in object:
         x, y = line.xy
         ax.plot(x, y, color=color, alpha=0.4, linewidth=1, solid_capstyle='round', zorder=2)
 
 
-def set_plot_bounds(obj, offset=1.0):
+def set_plot_bounds(object, offset=1.0):
     """
     Creates the limits for x and y axis plot
 
-    :param obj: input shapely geometry
+    :param object: input shapely geometry
     :param offset: amount of space around edge of features
     :return: dictionary of x-range and y-range values for
     """
-    bounds = obj.bounds
+    bounds = object.bounds
     x_min = bounds[0]
     y_min = bounds[1]
     x_max = bounds[2]
     y_max = bounds[3]
-    xrange = [x_min - offset, x_max + offset]
-    yrange = [y_min - offset, y_max + offset]
+    x_range = [x_min - offset, x_max + offset]
+    y_range = [y_min - offset, y_max + offset]
 
-    return {'xrange': xrange, 'yrange': yrange}
+    return {'xrange': x_range, 'yrange': y_range}
 
-# open road lines that we want to clip
+# open roads Shapefile that we want to clip with pyshp
 roads_london = shapefile.Reader(r"../geodata/roads_london_3857.shp")
-roads_london_bbox = roads_london.bbox
-# print roads_london.bbox
 
-# open shapefile with pyshp
+# open circle polygon with pyshp
 clip_area = shapefile.Reader(r"../geodata/clip_area_3857.shp")
 
-# access the geometry of the clip area
+# access the geometry of the clip area circle
 clip_feature = clip_area.shape()
 
 # convert pyshp object to shapely
 clip_feature_shply = asShape(clip_feature)
 
+# create a list of all roads features and attributes
 roads_features = roads_london.shapeRecords()
-roads_shply_list = []
-orig_roads_shply = []
 
+# variables to hold new geometry
+roads_clip_list = []
+roads_shply = []
+
+# run through each geometry, convert to shapely geometry and intersect
 for feature in roads_features:
     roads_london_shply = asShape(feature.shape.__geo_interface__)
-    orig_roads_shply.append(roads_london_shply)
-    its = roads_london_shply.intersection(clip_feature_shply)
-    if its.geom_type == "LineString":
-        roads_shply_list.append(its)
+    roads_shply.append(roads_london_shply)
+    roads_intersect = roads_london_shply.intersection(clip_feature_shply)
+    if roads_intersect.geom_type == "LineString":
+        roads_clip_list.append(roads_intersect)
 
-shapewriter2 = shapefile.Writer()
-shapewriter2.field("name")
+# open writer to write our new shapefile too
+pyshp_writer = shapefile.Writer()
 
-for x in roads_shply_list:
-    geoj = mapping(x)
+# create new field
+pyshp_writer.field("name")
+
+# convert our shapely geometry back to pyshp, record for record
+for feature in roads_clip_list:
+    geojson = mapping(feature)
 
     # create empty pyshp shape
     record = shapefile._Shape()
+    # shapeType 3 is linestring
     record.shapeType = 3
-    record.points = geoj["coordinates"]
+    record.points = geojson["coordinates"]
     record.parts = [0]
 
-    shapewriter2._shapes.append(record)
+    pyshp_writer._shapes.append(record)
     # add a list of attributes to go along with the shape
-    shapewriter2.record(["empty record"])
+    pyshp_writer.record(["empty record"])
 
-shapewriter2.save(r"../geodata/roads_clipped.shp")
-line = LineString([(0, 1), (3, 1), (0, 0)])
-polygon = Polygon(Point(1.5, 1).buffer(1))
-
+# save to disk
+pyshp_writer.save(r"../geodata/roads_clipped.shp")
 
 # setup matplotlib figure that will display the results
 fig = pyplot.figure(1, figsize=SIZE, dpi=90, facecolor="white")
@@ -116,9 +124,16 @@ fig = pyplot.figure(1, figsize=SIZE, dpi=90, facecolor="white")
 # add a little more space around subplots
 fig.subplots_adjust(hspace=.5)
 
-# ####### 2  Lines inside circle aka the CLIPPED lines
+# ###################################
+#             first plot
+#  display sample line and circle
+# ###################################
+
 # #col,#row,#plotnumber
 ax = fig.add_subplot(221)
+
+line = LineString([(0, 1), (3, 1), (0, 0)])
+polygon = Polygon(Point(1.5, 1).buffer(1))
 
 patch1 = PolygonPatch(polygon, fc=BLUE, ec=BLUE, alpha=0.5, zorder=1)
 ax.add_patch(patch1)
@@ -127,35 +142,49 @@ plot_coords_line(ax, line)
 
 ax.set_title('Input line and circle')
 
-xrange = set_plot_bounds(polygon, 1.5)['xrange']
-yrange = set_plot_bounds(polygon, 1)['yrange']
+x_range = [polygon.bounds[0] - 1.5, polygon.bounds[2] + 1.5]
+y_range = [polygon.bounds[1] - 1.0, polygon.bounds[3] + 1.0]
 
-ax.set_xlim(xrange)
-ax.set_ylim(yrange)
+# comment out 2 lines above and uncomment next 2 lines to use function above
+# x_range = set_plot_bounds(polygon, 1.5)['xrange']
+# y_range = set_plot_bounds(polygon, 1)['yrange']
+
+ax.set_xlim(x_range)
+ax.set_ylim(y_range)
 ax.set_aspect(1)
 
+# ##########################################
+#             second plot
+#    display original input circle and roads
+# ##########################################
 
-# ###################################
-# ##   second plot
-# ###################################
-ax = fig.add_subplot(224)
+ax = fig.add_subplot(222)
 
-# plot the lines and the line vertex to plot
-plot_lines(ax, roads_shply_list, color='#3C3F41')
+# draw our original imput lines and circle
+plot_lines(ax, roads_shply, color='#3C3F41')
+patch2 = PolygonPatch(clip_feature_shply, fc=BLUE, ec=BLUE, alpha=0.5, zorder=1)
+
+# add polygon to plot
+ax.add_patch(patch2)
 
 # write title of second plot
-ax.set_title('Roads intersect circle')
+ax.set_title('Input roads and circle')
 
 # define the area that plot will fit into
-xrange = [clip_feature_shply.bounds[0] - 200.0, clip_feature_shply.bounds[2] + 200.0]
-yrange = [clip_feature_shply.bounds[1] - 200.0, clip_feature_shply.bounds[3] + 200.0]
+x_range = set_plot_bounds(clip_feature_shply, 600)['xrange']
+y_range = set_plot_bounds(clip_feature_shply, 600)['yrange']
 
-ax.set_xlim(xrange)
-ax.set_ylim(yrange)
+ax.set_xlim(*x_range)
+ax.set_ylim(*y_range)
 ax.set_aspect(1)
 
 ax.set_xticklabels([])
 ax.set_yticklabels([])
+
+# ###################################
+#             third plot
+#  display sample intersection
+# ###################################
 
 ax = fig.add_subplot(223)
 
@@ -176,33 +205,33 @@ plot_coords_lines(ax, intersect_line, color='#3C3F41')
 ax.set_title('Line intersects circle')
 
 # define the area that plot will fit into
-xrange = set_plot_bounds(polygon, 1.5)['xrange']
-yrange = set_plot_bounds(polygon, 1)['yrange']
+x_range = set_plot_bounds(polygon, 1.5)['xrange']
+y_range = set_plot_bounds(polygon, 1)['yrange']
 
-ax.set_xlim(*xrange)
-ax.set_ylim(*yrange)
+ax.set_xlim(*x_range)
+ax.set_ylim(*y_range)
 
 ax.set_aspect(1)
 
-# create the second plot located at
-ax = fig.add_subplot(222)
+# ###################################
+#             fourth plot
+#  showing results of clipped roads
+# ###################################
 
-# draw our original imput lines and circle
-plot_lines(ax, orig_roads_shply, color='#3C3F41')
-patch2 = PolygonPatch(clip_feature_shply, fc=BLUE, ec=BLUE, alpha=0.5, zorder=1)
+ax = fig.add_subplot(224)
 
-# add polygon to plot
-ax.add_patch(patch2)
+# plot the lines and the line vertex to plot
+plot_lines(ax, roads_clip_list, color='#3C3F41')
 
 # write title of second plot
-ax.set_title('Input roads and circle')
+ax.set_title('Roads intersect circle')
 
 # define the area that plot will fit into
-xrange = set_plot_bounds(clip_feature_shply, 600)['xrange']
-yrange = set_plot_bounds(clip_feature_shply, 600)['yrange']
+x_range = set_plot_bounds(clip_feature_shply, 200)['xrange']
+y_range = set_plot_bounds(clip_feature_shply, 200)['yrange']
 
-ax.set_xlim(*xrange)
-ax.set_ylim(*yrange)
+ax.set_xlim(x_range)
+ax.set_ylim(y_range)
 ax.set_aspect(1)
 
 ax.set_xticklabels([])
