@@ -77,7 +77,7 @@ clip_area = shapefile.Reader(r"../geodata/clip_area_3857.shp")
 clip_feature = clip_area.shape()
 
 # convert pyshp object to shapely
-clip_feature_shply = asShape(clip_feature)
+clip_shply = asShape(clip_feature)
 
 # create a list of all roads features and attributes
 roads_features = roads_london.shapeRecords()
@@ -86,11 +86,13 @@ roads_features = roads_london.shapeRecords()
 roads_clip_list = []
 roads_shply = []
 
-# run through each geometry, convert to shapely geometry and intersect
+# run through each geometry, convert to shapely geom and intersect
 for feature in roads_features:
     roads_london_shply = asShape(feature.shape.__geo_interface__)
     roads_shply.append(roads_london_shply)
-    roads_intersect = roads_london_shply.intersection(clip_feature_shply)
+    roads_intersect = roads_london_shply.intersection(clip_shply)
+
+    # only export linestrings, shapely also created points
     if roads_intersect.geom_type == "LineString":
         roads_clip_list.append(roads_intersect)
 
@@ -106,6 +108,7 @@ for feature in roads_clip_list:
 
     # create empty pyshp shape
     record = shapefile._Shape()
+
     # shapeType 3 is linestring
     record.shapeType = 3
     record.points = geojson["coordinates"]
@@ -129,28 +132,42 @@ fig.subplots_adjust(hspace=.5)
 #  display sample line and circle
 # ###################################
 
-# #col,#row,#plotnumber
+# first figure upper left drawing
+# 222 represents the number_rows, num_cols, subplot number
 ax = fig.add_subplot(221)
 
+# our demonstration geometries to see the details
 line = LineString([(0, 1), (3, 1), (0, 0)])
 polygon = Polygon(Point(1.5, 1).buffer(1))
 
+# use of descartes to create polygon in matplotlib
+# input circle and color fill and outline in blue with transparancy
 patch1 = PolygonPatch(polygon, fc=BLUE, ec=BLUE, alpha=0.5, zorder=1)
+
+# add circle to axis in figure
 ax.add_patch(patch1)
+
+# add line using our function above
 plot_line(ax, line)
+
+# draw the line nodes using our function
 plot_coords_line(ax, line)
 
+# subplot title text
 ax.set_title('Input line and circle')
 
+# define axis ranges as list [x-min, x-max]
+# added 1.5 units around object so not touching the sides
 x_range = [polygon.bounds[0] - 1.5, polygon.bounds[2] + 1.5]
+
+# y-range [y-min, y-max]
 y_range = [polygon.bounds[1] - 1.0, polygon.bounds[3] + 1.0]
 
-# comment out 2 lines above and uncomment next 2 lines to use function above
-# x_range = set_plot_bounds(polygon, 1.5)['xrange']
-# y_range = set_plot_bounds(polygon, 1)['yrange']
-
+# set the x and y axis limits
 ax.set_xlim(x_range)
 ax.set_ylim(y_range)
+
+# assing the aspect ratio
 ax.set_aspect(1)
 
 # ##########################################
@@ -160,24 +177,24 @@ ax.set_aspect(1)
 
 ax = fig.add_subplot(222)
 
-# draw our original imput lines and circle
+# draw our original input road lines and circle
 plot_lines(ax, roads_shply, color='#3C3F41')
-patch2 = PolygonPatch(clip_feature_shply, fc=BLUE, ec=BLUE, alpha=0.5, zorder=1)
 
-# add polygon to plot
+patch2 = PolygonPatch(clip_shply, fc=BLUE, ec=BLUE, alpha=0.5, zorder=1)
 ax.add_patch(patch2)
 
 # write title of second plot
 ax.set_title('Input roads and circle')
 
-# define the area that plot will fit into
-x_range = set_plot_bounds(clip_feature_shply, 600)['xrange']
-y_range = set_plot_bounds(clip_feature_shply, 600)['yrange']
+# define the area that plot will fit into plus 600m space around
+x_range = set_plot_bounds(clip_shply, 600)['xrange']
+y_range = set_plot_bounds(clip_shply, 600)['yrange']
 
 ax.set_xlim(*x_range)
 ax.set_ylim(*y_range)
 ax.set_aspect(1)
 
+# remove the x,y axis labels by setting empty list
 ax.set_xticklabels([])
 ax.set_yticklabels([])
 
@@ -188,13 +205,10 @@ ax.set_yticklabels([])
 
 ax = fig.add_subplot(223)
 
-# create matplotlib patch
 patch2 = PolygonPatch(polygon, fc=BLUE, ec=BLUE, alpha=0.5, zorder=1)
-
-# add polygon to plot
 ax.add_patch(patch2)
 
-# run the intersection
+# run the intersection detail view
 intersect_line = line.intersection(polygon)
 
 # plot the lines and the line vertex to plot
@@ -210,7 +224,6 @@ y_range = set_plot_bounds(polygon, 1)['yrange']
 
 ax.set_xlim(*x_range)
 ax.set_ylim(*y_range)
-
 ax.set_aspect(1)
 
 # ###################################
@@ -227,14 +240,16 @@ plot_lines(ax, roads_clip_list, color='#3C3F41')
 ax.set_title('Roads intersect circle')
 
 # define the area that plot will fit into
-x_range = set_plot_bounds(clip_feature_shply, 200)['xrange']
-y_range = set_plot_bounds(clip_feature_shply, 200)['yrange']
+x_range = set_plot_bounds(clip_shply, 200)['xrange']
+y_range = set_plot_bounds(clip_shply, 200)['yrange']
 
 ax.set_xlim(x_range)
 ax.set_ylim(y_range)
 ax.set_aspect(1)
 
+# remove the x,y axis labels by setting empty list
 ax.set_xticklabels([])
 ax.set_yticklabels([])
 
+# draw the plots to the screen
 pyplot.show()
