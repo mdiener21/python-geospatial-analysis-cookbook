@@ -1,17 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 from math import sqrt
 
 import shapefile
 from matplotlib import pyplot
 from descartes import PolygonPatch
-import shapely
-from shapely.geometry import Polygon, LineString, Point
 from shapely.ops import polygonize
-# used to import dictionary data to shapely
+from shapely.geometry import Polygon, LineString, Point
 from shapely.geometry import asShape
 from shapely.geometry import mapping
+
+
 
 # calculate the size of our matplotlib output
 GM = (sqrt(5) - 1.0) / 2.0
@@ -68,84 +67,59 @@ def set_plot_bounds(object, offset=1.0):
 
     return {'xrange': x_range, 'yrange': y_range}
 
+
 roads_input_shp = r"../geodata/roads_london_3857.shp"
+clip_area = r"../geodata/clip_area_3857.shp"
+
 
 def shape_to_shply(shp_path):
     shape_reader = shapefile.Reader(shp_path)
     features = shape_reader.shapeRecords()
 
-    for feature in features:
-        shply_obj = asShape(feature.shape.__geo_interface__)
-        print shply_obj
+    if shape_reader.numRecords > 1:
+        shply_list = []
+        for feature in features:
+            shply_obj = asShape(feature.shape.__geo_interface__)
+            shply_list.append(shply_obj)
 
-    print shply_obj
+        # print shply_list
+        return shply_list
+    else:
+        shply_object = shape_reader.shape()
+        print "only one record"
+        print shply_object
+        return shply_object
 
-    #return shply_obj
 
+def shply_to_shape(shply_obj_list, out_path):
+    """
+    outpath looks like this out_path = r"../geodata/split_up_poly_circle.shp"
+    :param shply_obj_list:
+    :param out_path:
+    :return:
+    """
 
-shape_to_shply(roads_input_shp)
+    pyshp_writer = shapefile.Writer()
+    pyshp_writer.field("name")
+    for feature in shply_obj_list:
+        geojson = mapping(feature)
 
-def clip_feature(lines_to_clip, clip_area):
+        # create empty pyshp shape
+        record = shapefile._Shape()
 
-    roads_features = roads_london.shapeRecords()
-    pass
+        # shapeType 3 is Mulitlinestring
+        # shapeType 8 is Multipolygon
+        # shapeType 5 is Polygon
+        record.shapeType = 5
+        record.points = geojson["coordinates"][0]
+        record.parts = [0]
 
-def shply_to_shape(object):
-    pass
+        pyshp_writer._shapes.append(record)
+        # add a list of attributes to go along with the shape
+        pyshp_writer.record(["empty record"])
 
-# # open roads Shapefile that we want to clip with pyshp
-# roads_london = shapefile.Reader(r"../geodata/roads_london_3857.shp")
-#
-# # open circle polygon with pyshp
-# clip_area = shapefile.Reader(r"../geodata/clip_area_3857.shp")
-#
-# # access the geometry of the clip area circle
-# clip_feature = clip_area.shape()
-#
-# # convert pyshp object to shapely
-# clip_shply = asShape(clip_feature)
-#
-# # create a list of all roads features and attributes
-# roads_features = roads_london.shapeRecords()
-#
-# # variables to hold new geometry
-# roads_clip_list = []
-# roads_shply = []
-#
-# # run through each geometry, convert to shapely geom and intersect
-# for feature in roads_features:
-#     roads_london_shply = asShape(feature.shape.__geo_interface__)
-#     roads_shply.append(roads_london_shply)
-#     roads_intersect = roads_london_shply.intersection(clip_shply)
-#
-#     # only export linestrings, shapely also created points
-#     if roads_intersect.geom_type == "LineString":
-#         roads_clip_list.append(roads_intersect)
-#
-# # open writer to write our new shapefile too
-# pyshp_writer = shapefile.Writer()
-#
-# # create new field
-# pyshp_writer.field("name")
-#
-# # convert our shapely geometry back to pyshp, record for record
-# for feature in roads_clip_list:
-#     geojson = mapping(feature)
-#
-#     # create empty pyshp shape
-#     record = shapefile._Shape()
-#
-#     # shapeType 3 is linestring
-#     record.shapeType = 3
-#     record.points = geojson["coordinates"]
-#     record.parts = [0]
-#
-#     pyshp_writer._shapes.append(record)
-#     # add a list of attributes to go along with the shape
-#     pyshp_writer.record(["empty record"])
-#
-# # save to disk
-# pyshp_writer.save(r"../geodata/roads_clipped.shp")
+    pyshp_writer.save(out_path)
+
 
 # setup matplotlib figure that will display the results
 fig = pyplot.figure(1, figsize=SIZE, dpi=90, facecolor="white")
@@ -154,7 +128,7 @@ fig = pyplot.figure(1, figsize=SIZE, dpi=90, facecolor="white")
 fig.subplots_adjust(hspace=.5)
 
 # ###################################
-#             first plot
+# first plot
 #  display sample line and circle
 # ###################################
 
@@ -204,27 +178,34 @@ ax.set_aspect(1)
 
 ax = fig.add_subplot(122)
 
-# run the intersection detail view
+# convert circle polygon to linestring of circle boundary
 cirle_as_line = polygon.boundary
+
+# combine new boundary lines with the input set of lines
 result_union_lines = cirle_as_line.union(line)
+
+# re-create polygons from unioned lines
 new_polygons = polygonize(result_union_lines)
 
-output = dict(type='FeatureCollection', features=[])
+# stores the final split up polygons
+new_cut_ply = []
 
-# http://stackoverflow.com/questions/25374459/find-holes-in-a-union-of-rectangles
+# identify which new polygon we want to keep
 for poly in new_polygons:
-    # check if new poly is inside original polygon otherwise ignore it
+    # check if new poly is inside original otherwise ignore it
     if poly.centroid.within(polygon):
-        hmm = poly.centroid
-        ax.plot(hmm.x, hmm.y, 'o', color='#999999')
-        print "finally"
+        # center_pt = poly.centroid
+        # ax.plot(center_pt.x, center_pt.y, 'o', color='#999999')
+        print "creating new split polygon"
         patch3 = PolygonPatch(poly, fc='purple', alpha=0.5, zorder=2)
         ax.add_patch(patch3)
+        # add only polygons that overlap original for export
+        new_cut_ply.append(poly)
     else:
         # draw centroid of new polygon NOT inside original polygon
-        hmm = poly.centroid
-        ax.plot(hmm.x, hmm.y, 'o', color='#FF1813')
-        print "NOPE not inside the original polygon"
+        # center_pt = poly.centroid
+        # ax.plot(center_pt.x, center_pt.y, 'o', color='#FF1813')
+        print "This polygon is outside of the input features"
 
 
 # write title of second plot
@@ -239,3 +220,9 @@ ax.set_ylim(*y_range)
 ax.set_aspect(1)
 
 pyplot.show()
+
+# full path to where we will store the shapefile
+split_poly_output = r"../geodata/split_up_poly_circle.shp"
+
+# execute our conversion from Shapely to Shapefile
+shply_to_shape(new_cut_ply, split_poly_output)
