@@ -52,12 +52,18 @@ plot_line(ax, line)
 # draw the line nodes using our function
 # plot_coords_line(ax, line)
 
+new_line_wrong = LineString([point,pt_snap_res])
+new_line_correct = LineString([point,shplySnapPoint])
+
+plot_line(ax, new_line_wrong, '#000000', ls='--', linewidth=0.4,c=GRAY)
+plot_line(ax, new_line_correct, '#666666', ls='--', linewidth=0.4,c=GRAY)
+
+
 plot_coords_line(ax, point, BLUE, 'x', 'original-pt')
 plot_coords_line(ax, pt_snap_res, RED, 'o', 'snap-res')
-plot_coords_line(ax, shplySnapPoint, GRAY, 'o', 'good-snap')
+plot_coords_line(ax, shplySnapPoint, color=GREEN, symbol='o', label='good-snap', mew=1,ms= 8)
 
 
-#plot_coords_line(ax, square.exterior)
 
 
 
@@ -68,10 +74,10 @@ ax.set_title('Snap Point to Line')
 
 # define axis ranges as list [x-min, x-max]
 # added 1.5 units around object so not touching the sides
-x_range = [square.bounds[0] - 1.0, square.bounds[2] + 1.5]
+x_range = [line.bounds[0] - 1.0, line.bounds[2] + 1.5]
 
 # y-range [y-min, y-max]
-y_range = [square.bounds[1] - 1.0, square.bounds[3] + 1.0]
+y_range = [line.bounds[1] - 1.0, line.bounds[3] + 1.0]
 
 # set the x and y axis limits
 ax.set_xlim(x_range)
@@ -83,7 +89,7 @@ ax.set_aspect(1)
 # ax.legend(loc='upper center', bbox_to_anchor=(1, 0.5),
 #           ncol=2, fancybox=True, shadow=True)
 
-ax.legend()
+#ax.legend()
 
 pyplot.show()
 
