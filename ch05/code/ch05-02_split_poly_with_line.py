@@ -24,7 +24,7 @@ fig.subplots_adjust(hspace=.5)
 # ###################################
 
 # first figure upper left drawing
-# 222 represents the number_rows, num_cols, subplot number
+# 121 represents the number_rows, num_cols, subplot number
 ax = fig.add_subplot(121)
 
 # our demonstration geometries to see the details
