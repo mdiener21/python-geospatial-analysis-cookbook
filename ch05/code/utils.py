@@ -78,35 +78,49 @@ H = W * GM
 SIZE = (W, H)
 
 # colors for our plots as hex
-GRAY = '#00b700'
+GRAY = '#B2B3B7'
 BLUE = '#6699cc'
 YELLOW = '#ffe680'
+RED = '#FF1813'
+GREEN = '#24CD17'
 
 
 # functions slightly modified from Sean Gilles http://toblerity.org/shapely/
 # used for drawing our results using matplotlib
 
+# matplotlib makers http://matplotlib.org/api/markers_api.html
+def plot_coords_line(axis, object, color='#00b700',
+                     symbol='o', label="text", mew=1, ms=7):
+    """
+    mew = marker edge width in points
+    ms = marke size in points
 
-def plot_coords_line(axis, object, color='#00b700'):
+    """
     x, y = object.xy
-    axis.plot(x, y, 'o', color=color, zorder=1)
+    axis.plot(x, y, symbol, label=label,color=color,
+              mew=mew, ms=ms, zorder=1)
 
 
 def plot_coords_lines(axis, object, color='#999999'):
     for linestring in object:
         x, y = linestring.xy
-        axis.plot(x, y, 'o', color=color, zorder=2)
+        axis.plot(x, y, 'o',color=color, zorder=2)
 
 
-def plot_line(axis, object, color='#00b700'):
+def plot_line(axis, object, color='#00b700', ls='-',
+              linewidth=0.5, c='b'):
+    """
+    ls is the line style options :[ '-' | '--' | '-.' | ':' | 'steps' | ...]
+    """
     x, y = object.xy
-    axis.plot(x, y, color=color, linewidth=3, zorder=1)
+    axis.plot(x, y, color=color, linewidth=linewidth, ls=ls, c=c,zorder=1)
 
 
 def plot_lines(axis, object, color='#00b700'):
     for line in object:
         x, y = line.xy
-        axis.plot(x, y, color=color, alpha=0.4, linewidth=1, solid_capstyle='round', zorder=2)
+        axis.plot(x, y, color=color, alpha=0.4, linewidth=1,
+                  solid_capstyle='round', zorder=2)
 
 
 def set_plot_bounds(object, offset=1.0):
