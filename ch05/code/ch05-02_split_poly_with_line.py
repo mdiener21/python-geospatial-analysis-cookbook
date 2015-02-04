@@ -11,7 +11,6 @@ from utils import plot_coords_line
 from utils import plot_line
 from utils import set_plot_bounds
 
-##########################
 
 # setup matplotlib figure that will display the results
 fig = pyplot.figure(1, figsize=SIZE, dpi=90, facecolor="white")
@@ -63,7 +62,7 @@ ax.set_ylim(y_range)
 ax.set_aspect(1)
 
 
-###################################
+#####################################
 #             second plot
 #  display sample intersection
 # ###################################
