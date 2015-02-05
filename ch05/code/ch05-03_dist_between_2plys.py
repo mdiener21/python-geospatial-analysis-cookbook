@@ -45,12 +45,15 @@ plot_line(ax, line)
 new_line_wrong = LineString([point, pt_snap_res])
 new_line_correct = LineString([point, shplySnapPoint])
 
-plot_line(ax, new_line_wrong, '#000000', ls='--', linewidth=0.4, c=GRAY)
-plot_line(ax, new_line_correct, '#666666', ls='--', linewidth=0.4, c=GRAY)
+plot_line(ax, new_line_wrong, '#000000', ls='--',
+          linewidth=0.4, c=GRAY)
+plot_line(ax, new_line_correct, '#666666', ls='--',
+          linewidth=0.4, c=GRAY)
 
 plot_coords_line(ax, point, BLUE, 'x', 'original-pt')
 plot_coords_line(ax, pt_snap_res, RED, 'o', 'snap-res')
-plot_coords_line(ax, shplySnapPoint, color=GREEN, symbol='o', label='good-snap', mew=1, ms=8)
+plot_coords_line(ax, shplySnapPoint, color=GREEN, symbol='o',
+                 label='good-snap', mew=1, ms=8)
 
 
 # subplot title text
