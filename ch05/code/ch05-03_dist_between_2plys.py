@@ -1,22 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# calcultes the euclidean shortest distnace
-# between two polygons or lines for that matter
-# geom_a.distance(geom_b)
-from shapely.geometry import Polygon, LineString, Point
-
 from shapely.ops import snap
-
 from matplotlib import pyplot
-from descartes import PolygonPatch
-from shapely.ops import polygonize
-from shapely.geometry import Polygon, LineString, Point
-
-from utils import SIZE, BLUE, RED, GREEN, GRAY, YELLOW
+from shapely.geometry import LineString, Point
+from utils import SIZE, BLUE, RED, GREEN, GRAY
 from utils import plot_coords_line
 from utils import plot_line
-from utils import set_plot_bounds
 
 line = LineString([(0.5, 0.5), (2.0, 1.5), (3.0, 0.5)])
 point = Point(3, 1.8)
@@ -52,22 +42,16 @@ plot_line(ax, line)
 # draw the line nodes using our function
 # plot_coords_line(ax, line)
 
-new_line_wrong = LineString([point,pt_snap_res])
-new_line_correct = LineString([point,shplySnapPoint])
+new_line_wrong = LineString([point, pt_snap_res])
+new_line_correct = LineString([point, shplySnapPoint])
 
-plot_line(ax, new_line_wrong, '#000000', ls='--', linewidth=0.4,c=GRAY)
-plot_line(ax, new_line_correct, '#666666', ls='--', linewidth=0.4,c=GRAY)
-
+plot_line(ax, new_line_wrong, '#000000', ls='--', linewidth=0.4, c=GRAY)
+plot_line(ax, new_line_correct, '#666666', ls='--', linewidth=0.4, c=GRAY)
 
 plot_coords_line(ax, point, BLUE, 'x', 'original-pt')
 plot_coords_line(ax, pt_snap_res, RED, 'o', 'snap-res')
-plot_coords_line(ax, shplySnapPoint, color=GREEN, symbol='o', label='good-snap', mew=1,ms= 8)
+plot_coords_line(ax, shplySnapPoint, color=GREEN, symbol='o', label='good-snap', mew=1, ms=8)
 
-
-
-
-
-# plot_coords_line(ax, pt_snap_res, GREEN)
 
 # subplot title text
 ax.set_title('Snap Point to Line')
@@ -86,10 +70,4 @@ ax.set_ylim(y_range)
 # assing the aspect ratio
 ax.set_aspect(1)
 
-# ax.legend(loc='upper center', bbox_to_anchor=(1, 0.5),
-#           ncol=2, fancybox=True, shadow=True)
-
-#ax.legend()
-
 pyplot.show()
-
