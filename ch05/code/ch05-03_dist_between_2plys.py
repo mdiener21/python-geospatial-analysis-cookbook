@@ -8,17 +8,32 @@ from utils import SIZE, BLUE, RED, GREEN, GRAY
 from utils import plot_coords_line
 from utils import plot_line
 
+# input origin line an point
 line = LineString([(0.5, 0.5), (2.0, 1.5), (3.0, 0.5)])
 point = Point(3, 1.8)
-pt_snap_res = snap(point, line, 4)
-shplySnapPoint = line.interpolate(line.project(point))
 
-print "point"
+# point location using shapely snap
+pt_snap_res = snap(point, line, 1.1)
+
+# nearest point using linear referencing
+# with interpolation and project
+pt_interpolate = line.interpolate(line.project(point))
+
+# print coordinates and distance to console
+print "origin point coordinate"
 print point
-print "pt_snap_res"
+
+print "pt_snap_res coordinate"
 print pt_snap_res
+
 print "shplySnapPoint"
-print shplySnapPoint
+print pt_interpolate
+
+print "distance from origin to snap point"
+print point.distance(pt_snap_res)
+
+print "distance from origin to interploate point"
+print point.distance(pt_interpolate)
 
 
 # setup matplotlib figure that will display the results
@@ -28,39 +43,35 @@ fig = pyplot.figure(1, figsize=SIZE, dpi=90, facecolor="white")
 fig.subplots_adjust(hspace=.5)
 
 # ###################################
-# first plot
-# display sample line and circle
+# plot display sample line and point
 # ###################################
 
-# first figure upper left drawing
 # 121 represents the number_rows, num_cols, subplot number
 ax = fig.add_subplot(121)
 
-# add line using our function above
+# add line using our utils function
 plot_line(ax, line)
 
-# draw the line nodes using our function
-# plot_coords_line(ax, line)
+# draw a line from origin point to nearest points
+line_to_snap_pt = LineString([point, pt_snap_res])
+line_to_interplate_pt = LineString([point, pt_interpolate])
 
-new_line_wrong = LineString([point, pt_snap_res])
-new_line_correct = LineString([point, shplySnapPoint])
-
-plot_line(ax, new_line_wrong, '#000000', ls='--',
+# plot the grey dashed line
+plot_line(ax, line_to_snap_pt, '#000000', ls='--',
           linewidth=0.4, c=GRAY)
-plot_line(ax, new_line_correct, '#666666', ls='--',
+plot_line(ax, line_to_interplate_pt, '#666666', ls='--',
           linewidth=0.4, c=GRAY)
 
+# plot our input origin point and resulting points
 plot_coords_line(ax, point, BLUE, 'x', 'original-pt')
 plot_coords_line(ax, pt_snap_res, RED, 'o', 'snap-res')
-plot_coords_line(ax, shplySnapPoint, color=GREEN, symbol='o',
+plot_coords_line(ax, pt_interpolate, color=GREEN, symbol='o',
                  label='good-snap', mew=1, ms=8)
-
 
 # subplot title text
 ax.set_title('Snap Point to Line')
 
 # define axis ranges as list [x-min, x-max]
-# added 1.5 units around object so not touching the sides
 x_range = [line.bounds[0] - 1.0, line.bounds[2] + 1.5]
 
 # y-range [y-min, y-max]
