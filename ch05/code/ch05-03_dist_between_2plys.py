@@ -26,7 +26,7 @@ print point
 print "pt_snap_res coordinate"
 print pt_snap_res
 
-print "pt_interpolate"
+print "interpolted point location"
 print pt_interpolate
 
 print "distance from origin to snap point"
