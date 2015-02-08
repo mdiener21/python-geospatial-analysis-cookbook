@@ -3,7 +3,7 @@
 
 import subprocess
 import os
-
+print "foo"
 
 def run_shp2pg(input_shp):
     """
@@ -12,7 +12,7 @@ def run_shp2pg(input_shp):
     """
 
     db_schema = "SCHEMA=geodata"
-    db_connection = "PG:host=localhost port=5432 \
+    db_connection = "PG:host=localhost port=5434 \
     user=postgres dbname=py_geoan_cb password=air"
     output_format = "PostgreSQL"
     geom_type = "MULTILINESTRING"
@@ -22,9 +22,9 @@ def run_shp2pg(input_shp):
                      "-nlt", geom_type, "-f", output_format, db_connection, input_shp])
 
 # directory full of shapefiles
-# shapefile_dir = "../geodata"
+shapefile_dir = "../../../geodata"
 
-shapefile_dir = os.path.dirname(os.path.realpath('..\geodata')) + "\\geodata"
+# shapefile_dir = os.path.dirname(os.path.realpath('..\..\..\geodata')) + "\\geodata"
 
 
 # empty list to hold names of all shapefils in directory

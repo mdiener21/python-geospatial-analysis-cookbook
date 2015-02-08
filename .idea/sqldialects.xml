@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/ch04/code/ch04-01_postgis_buffer2geojson.py" dialect="PostgreSQL" />
+  </component>
+</project>

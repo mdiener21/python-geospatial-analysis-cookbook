@@ -47,7 +47,7 @@ fig.subplots_adjust(hspace=.5)
 # ###################################
 
 # 121 represents the number_rows, num_cols, subplot number
-ax = fig.add_subplot(121)
+ax = fig.add_subplot(111)
 
 # add line using our utils function
 plot_line(ax, line)
