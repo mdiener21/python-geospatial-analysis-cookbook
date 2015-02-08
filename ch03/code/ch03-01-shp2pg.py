@@ -6,15 +6,15 @@ import subprocess
 # database options
 db_schema = "SCHEMA=geodata"
 overwrite_option = "OVERWRITE=YES"
-geom_type = "POINT"
+geom_type = "MULTILINESTRING"
 output_format = "PostgreSQL"
 
 # database connection string
-db_connection = "PG:host=localhost port=5434 \
-	user=postgres dbname=py_geoan_cb password=air"
+db_connection = "PG:host=localhost port=5432 \
+	user=postgres dbname=py_geoan_cb password=secret"
 
 # input shapefile
-input_shp = "../../ch02/geodata/schools.shp"
+input_shp = "/home/mdiener/geodata/bikeways.shp"
 
 # call ogr2ogr from python
 subprocess.call(["ogr2ogr","-lco", db_schema, "-lco", overwrite_option, \

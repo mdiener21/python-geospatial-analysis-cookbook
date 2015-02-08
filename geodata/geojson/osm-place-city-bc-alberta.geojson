@@ -1,0 +1,1517 @@
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-turbo",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2014-12-17T23:28:02Z",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "node/26621545",
+      "properties": {
+        "@id": "node/26621545",
+        "ele": "481",
+        "is_in": "Saskatchewan,Canada",
+        "is_in:continent": "North America",
+        "name": "Saskatoon",
+        "name:ar": "ساسكاتون",
+        "name:en": "Saskatoon",
+        "name:ru": "Саскатун",
+        "name:uk": "Саскатун",
+        "place": "city",
+        "population": "222189",
+        "wikipedia": "en:Saskatoon"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -106.6605124,
+          52.1303794
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/26876754",
+      "properties": {
+        "@id": "node/26876754",
+        "is_in": "Alberta",
+        "is_in:continent": "North America",
+        "is_in:country": "Canada",
+        "is_in:country_code": "CA",
+        "name": "Calgary",
+        "name:ar": "كالجاري",
+        "name:en": "Calgary",
+        "name:fr": "Calgary",
+        "name:ru": "Калгари",
+        "name:uk": "Калґарі",
+        "place": "city",
+        "population": "1149552"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -114.0625614,
+          51.0530588
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/26878229",
+      "properties": {
+        "@id": "node/26878229",
+        "is_in:continent": "North America",
+        "name": "Airdrie",
+        "place": "city",
+        "population": "54,891 (2014)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -114.0105994,
+          51.2859257
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/29576831",
+      "properties": {
+        "@id": "node/29576831",
+        "is_in:continent": "North America",
+        "name": "Red Deer",
+        "name:en": "Red Deer",
+        "name:ru": "Ред-Дир",
+        "name:uk": "Ред-Дір",
+        "place": "city",
+        "population": "82971",
+        "wikipedia": "en:Red Deer, Alberta"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -113.8157619,
+          52.2691823
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/29660373",
+      "properties": {
+        "@id": "node/29660373",
+        "is_in": "Alberta",
+        "is_in:continent": "North America",
+        "name": "Brooks",
+        "place": "city",
+        "population": "11604"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.8924659,
+          50.5704252
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/29660485",
+      "properties": {
+        "@id": "node/29660485",
+        "is_in:continent": "North America",
+        "name": "Medicine Hat",
+        "name:en": "Medicine Hat",
+        "name:ru": "Медисин-Хат",
+        "name:uk": "Медисин-Гет",
+        "place": "city",
+        "population": "54048"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -110.6775465,
+          50.0415358
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/29811182",
+      "properties": {
+        "@id": "node/29811182",
+        "capital": "4",
+        "ele": "645",
+        "is_in": "Alberta, Canada",
+        "is_in:continent": "North America",
+        "is_in:country": "Canada",
+        "is_in:country_code": "CA",
+        "name": "Edmonton",
+        "name:ar": "إدمونتون",
+        "name:de": "Edmonton",
+        "name:en": "Edmonton",
+        "name:fr": "Edmonton",
+        "name:ru": "Эдмонтон",
+        "name:uk": "Едмонтон",
+        "place": "city",
+        "population": "812201",
+        "state_capital": "yes",
+        "wikipedia": "en:Edmonton"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -113.5065085,
+          53.5343609
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/30189922",
+      "properties": {
+        "@id": "node/30189922",
+        "capital": "4",
+        "is_in": "Capital Regional District, British Columbia, Canada",
+        "is_in:continent": "North America",
+        "is_in:country": "Canada",
+        "is_in:country_code": "CA",
+        "name": "Victoria",
+        "name:ar": "فيكتوريا",
+        "name:en": "Victoria",
+        "name:pl": "Victoria",
+        "name:ru": "Виктория",
+        "name:uk": "Вікторія",
+        "place": "city",
+        "population": "80017",
+        "state_capital": "yes",
+        "wikipedia": "en:Victoria, British Columbia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.3649269,
+          48.4283327
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/32974679",
+      "properties": {
+        "@id": "node/32974679",
+        "is_in": "British Columbia, BC, Canada",
+        "is_in:continent": "North America",
+        "name": "Kelowna",
+        "name:en": "Kelowna",
+        "name:ru": "Келоуна",
+        "name:uk": "Келоуна",
+        "place": "city",
+        "population": "117312",
+        "wikipedia": "en:Kelowna"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.4961612,
+          49.8876629
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/33308006",
+      "properties": {
+        "@id": "node/33308006",
+        "name": "Prince George",
+        "name:en": "Prince George",
+        "name:ru": "Принс-Джордж",
+        "name:uk": "Прінс-Джордж",
+        "place": "city",
+        "population": "71974"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.7461341,
+          53.9172526
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/33309322",
+      "properties": {
+        "@id": "node/33309322",
+        "name": "Prince Rupert",
+        "name:ru": "Принс-Руперт",
+        "name:uk": "Прінс-Руперт",
+        "place": "city",
+        "wikipedia": "en:Prince Rupert, British Columbia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -130.3255345,
+          54.312617
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/33541136",
+      "properties": {
+        "@id": "node/33541136",
+        "is_in": "British Columbia, BC, Canada",
+        "name": "Port Alberni",
+        "place": "city",
+        "wikipedia": "en:Port Alberni"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -124.8055888,
+          49.2343521
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/40207774",
+      "properties": {
+        "@id": "node/40207774",
+        "is_in": "Washington,Whatcom County",
+        "name": "Bellingham",
+        "place": "city",
+        "population": "80885",
+        "wikipedia": "en:Bellingham, Washington"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.4788602,
+          48.754402
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/51969524",
+      "properties": {
+        "@id": "node/51969524",
+        "alt_name:ru": "Крэнбрук",
+        "is_in": "British Columbia",
+        "name": "Cranbrook",
+        "name:en": "Cranbrook",
+        "name:ru": "Кранбрук",
+        "place": "city",
+        "wikipedia": "en:Cranbrook, British Columbia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -115.7583977,
+          49.5089765
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/51969555",
+      "properties": {
+        "@id": "node/51969555",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset. Officially a city.",
+        "gns:adm1": "01",
+        "gns:cc1": "CA",
+        "gns:dms_lat": "533800",
+        "gns:dms_long": "-1133800",
+        "gns:dsg": "PPL",
+        "gns:fc": "P",
+        "gns:jog": "NN12-07",
+        "gns:lat": "53.633333",
+        "gns:long": "-113.633333",
+        "gns:mgrs": "12UUE2589145950",
+        "gns:n:xx:full_name": "Saint Albert",
+        "gns:n:xx:full_name_nd": "Saint Albert",
+        "gns:n:xx:modify_date": "1993-12-14",
+        "gns:n:xx:nt": "N",
+        "gns:n:xx:sort_name": "SAINTALBERT",
+        "gns:rc": "1",
+        "gns:ufi": "-572670",
+        "gns:uni": "-808559",
+        "is_in": "Alberta, Canada",
+        "is_in:continent": "North America",
+        "name": "St. Albert",
+        "place": "city",
+        "population": "61,466",
+        "source": "gns_ca",
+        "wikipedia": "en:St. Albert, Alberta"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -113.6279528,
+          53.6332037
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/51969946",
+      "properties": {
+        "@id": "node/51969946",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "gns:adm1": "01",
+        "gns:cc1": "CA",
+        "gns:dms_lat": "534300",
+        "gns:dms_long": "-1131200",
+        "gns:dsg": "PPL",
+        "gns:fc": "P",
+        "gns:jog": "NN12-07",
+        "gns:lat": "53.716667",
+        "gns:long": "-113.2",
+        "gns:mgrs": "12UUE5482454246",
+        "gns:n:xx:full_name": "Fort Saskatchewan",
+        "gns:n:xx:full_name_nd": "Fort Saskatchewan",
+        "gns:n:xx:modify_date": "1993-12-14",
+        "gns:n:xx:nt": "N",
+        "gns:n:xx:sort_name": "FORTSASKATCHEWAN",
+        "gns:rc": "1",
+        "gns:ufi": "-564833",
+        "gns:uni": "-798277",
+        "is_in": "Alberta",
+        "is_in:continent": "North America",
+        "name": "Fort Saskatchewan",
+        "place": "city",
+        "population": "14685",
+        "source": "gns_ca"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -113.2135588,
+          53.7129361
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/51971055",
+      "properties": {
+        "@id": "node/51971055",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "gns:adm1": "02",
+        "gns:cc1": "CA",
+        "gns:dms_lat": "492900",
+        "gns:dms_long": "-1171700",
+        "gns:dsg": "PPL",
+        "gns:fc": "P",
+        "gns:jog": "NM11-08",
+        "gns:lat": "49.483333",
+        "gns:long": "-117.283333",
+        "gns:mgrs": "11UMQ7947881226",
+        "gns:n:xx:full_name": "Nelson",
+        "gns:n:xx:full_name_nd": "Nelson",
+        "gns:n:xx:modify_date": "1993-12-14",
+        "gns:n:xx:nt": "N",
+        "gns:n:xx:sort_name": "NELSON",
+        "gns:rc": "1",
+        "gns:ufi": "-570032",
+        "gns:uni": "-805109",
+        "is_in": "British Columbia",
+        "name": "Nelson",
+        "place": "city",
+        "source": "gns_ca"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.2878681,
+          49.494202
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/51971436",
+      "properties": {
+        "@id": "node/51971436",
+        "is_in": "Alberta, Canada",
+        "is_in:continent": "North America",
+        "is_in:country": "Canada",
+        "is_in:country_code": "CA",
+        "name": "Lloydminster",
+        "phone": "(780)875-6184",
+        "place": "city",
+        "website": "http://www.lloydminster.ca/",
+        "wikipedia": "en:Lloydminster"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -110.0061933,
+          53.278804
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/51971701",
+      "properties": {
+        "@id": "node/51971701",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "gns:adm1": "02",
+        "gns:cc1": "CA",
+        "gns:dms_lat": "504200",
+        "gns:dms_long": "-1191700",
+        "gns:dsg": "PPL",
+        "gns:fc": "P",
+        "gns:jog": "NM11-04",
+        "gns:lat": "50.7",
+        "gns:long": "-119.283333",
+        "gns:mgrs": "11ULS3875718951",
+        "gns:n:xx:full_name": "Salmon Arm",
+        "gns:n:xx:full_name_nd": "Salmon Arm",
+        "gns:n:xx:modify_date": "1993-12-14",
+        "gns:n:xx:nt": "N",
+        "gns:n:xx:sort_name": "SALMONARM",
+        "gns:rc": "1",
+        "gns:ufi": "-573088",
+        "gns:uni": "-809142",
+        "is_in": "British Columbia",
+        "name": "Salmon Arm",
+        "place": "city",
+        "population": "17,464",
+        "source": "gns_ca",
+        "wikipedia": "en:Salmon Arm"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.2849158,
+          50.7000661
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/51971756",
+      "properties": {
+        "@id": "node/51971756",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "gns:adm1": "01",
+        "gns:cc1": "CA",
+        "gns:dms_lat": "533200",
+        "gns:dms_long": "-1135500",
+        "gns:dsg": "PPL",
+        "gns:fc": "P",
+        "gns:jog": "NN12-07",
+        "gns:lat": "53.533333",
+        "gns:long": "-113.916667",
+        "gns:mgrs": "12UUE0670635560",
+        "gns:n:xx:full_name": "Spruce Grove",
+        "gns:n:xx:full_name_nd": "Spruce Grove",
+        "gns:n:xx:modify_date": "1993-12-14",
+        "gns:n:xx:nt": "N",
+        "gns:n:xx:sort_name": "SPRUCEGROVE",
+        "gns:rc": "1",
+        "gns:ufi": "-574056",
+        "gns:uni": "-810414",
+        "is_in": "Alberta, Canada",
+        "is_in:continent": "North America",
+        "name": "Spruce Grove",
+        "place": "city",
+        "population": "18405",
+        "source": "gns_ca"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -113.9012094,
+          53.5448917
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/51971888",
+      "properties": {
+        "@id": "node/51971888",
+        "is_in:continent": "North America",
+        "name": "Leduc",
+        "place": "city",
+        "population": "15630"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -113.5500325,
+          53.260697
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/51972638",
+      "properties": {
+        "@id": "node/51972638",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "ele": "540",
+        "gns:adm1": "01",
+        "gns:cc1": "CA",
+        "gns:dms_lat": "542754",
+        "gns:dms_long": "-1101059",
+        "gns:dsg": "PPL",
+        "gns:fc": "P",
+        "gns:jog": "NN12-05",
+        "gns:lat": "54.465",
+        "gns:long": "-110.183056",
+        "gns:mgrs": "12UWF5295135567",
+        "gns:n:xx:modify_date": "1999-04-05",
+        "gns:n:xx:nt": "N",
+        "gns:rc": "1",
+        "gns:ufi": "-562834",
+        "gns:uni": "-795822",
+        "is_in": "Alberta",
+        "is_in:continent": "North America",
+        "is_in:country": "Canada",
+        "is_in:country_code": "CA",
+        "name": "Cold Lake",
+        "place": "city",
+        "population": "11595",
+        "source": "City of Cold Lake",
+        "wikipedia": "en:Cold Lake, Alberta"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -110.1927478,
+          54.4598843
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/51972747",
+      "properties": {
+        "@id": "node/51972747",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "gns:adm1": "01",
+        "gns:cc1": "CA",
+        "gns:dms_lat": "530100",
+        "gns:dms_long": "-1124900",
+        "gns:dsg": "PPL",
+        "gns:fc": "P",
+        "gns:jog": "NN12-07",
+        "gns:lat": "53.016667",
+        "gns:long": "-112.816667",
+        "gns:mgrs": "12UUD7813575668",
+        "gns:n:xx:full_name": "Camrose",
+        "gns:n:xx:full_name_nd": "Camrose",
+        "gns:n:xx:modify_date": "1993-12-14",
+        "gns:n:xx:nt": "N",
+        "gns:n:xx:sort_name": "CAMROSE",
+        "gns:rc": "1",
+        "gns:ufi": "-562055",
+        "gns:uni": "-794810",
+        "is_in": "Alberta",
+        "name": "Camrose",
+        "name:en": "Camrose",
+        "name:ru": "Камроуз",
+        "old_name": "Sparling",
+        "place": "city",
+        "population": "15850",
+        "source": "gns_ca"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -112.8387296,
+          53.0120768
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/51972796",
+      "properties": {
+        "@id": "node/51972796",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "ele": "205",
+        "gns:adm1": "13",
+        "gns:cc1": "CA",
+        "gns:dms_lat": "600000",
+        "gns:dms_long": "-1115300",
+        "gns:dsg": "PPL",
+        "gns:fc": "P",
+        "gns:jog": "NP11-15",
+        "gns:lat": "60",
+        "gns:long": "-111.883333",
+        "gns:mgrs": "12VVM5073151740",
+        "gns:n:xx:full_name": "Fort Smith",
+        "gns:n:xx:full_name_nd": "Fort Smith",
+        "gns:n:xx:modify_date": "1999-05-28",
+        "gns:n:xx:nt": "N",
+        "gns:n:xx:sort_name": "FORTSMITH",
+        "gns:rc": "1",
+        "gns:ufi": "-564837",
+        "gns:uni": "-798282",
+        "name": "Fort Smith",
+        "name:en": "Fort Smith",
+        "name:ru": "Форт-Смит",
+        "name:uk": "Форт-Сміт",
+        "place": "city",
+        "population": "2093",
+        "source": "gns_ca",
+        "wikipedia": "en:Fort Smith, Northwest Territories"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.8901913,
+          60.0058223
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/51973182",
+      "properties": {
+        "@id": "node/51973182",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "is_in": "British Columbia",
+        "name": "Vernon",
+        "place": "city",
+        "source": "gns_ca",
+        "wikipedia": "en:Vernon, British Columbia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.266667,
+          50.266667
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/51973199",
+      "properties": {
+        "@id": "node/51973199",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "gns:adm1": "02",
+        "gns:cc1": "CA",
+        "gns:dms_lat": "493000",
+        "gns:dms_long": "-1193500",
+        "gns:dsg": "PPL",
+        "gns:fc": "P",
+        "gns:jog": "NM11-07",
+        "gns:lat": "49.5",
+        "gns:long": "-119.583333",
+        "gns:mgrs": "11ULQ1295786248",
+        "gns:n:xx:full_name": "Penticton",
+        "gns:n:xx:full_name_nd": "Penticton",
+        "gns:n:xx:modify_date": "1993-12-14",
+        "gns:n:xx:nt": "N",
+        "gns:n:xx:sort_name": "PENTICTON",
+        "gns:rc": "1",
+        "gns:ufi": "-571145",
+        "gns:uni": "-806600",
+        "is_in": "British Columbia",
+        "name": "Penticton",
+        "place": "city",
+        "population": "32877",
+        "source": "gns_ca"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.5921519,
+          49.4997697
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/52288372",
+      "properties": {
+        "@id": "node/52288372",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "is_in": "Saskatchewan",
+        "name": "Meadow Lake",
+        "place": "city",
+        "source": "gns_ca, Provincial Government of Saskatchewan",
+        "wikipedia": "en:Meadow Lake, Saskatchewan"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -108.434722,
+          54.129722
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/52289270",
+      "properties": {
+        "@id": "node/52289270",
+        "is_in": "Saskatchewan",
+        "is_in:continent": "North America",
+        "is_in:country": "Canada",
+        "is_in:country_code": "CA",
+        "is_in:province": "Saskatchewan",
+        "name": "Swift Current",
+        "name:en": "Swift Current",
+        "name:uk": "Свіфт-Керрент",
+        "note": "Census 2011 City subdivision",
+        "place": "city",
+        "population": "15503"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -107.7983846,
+          50.2848814
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/52304529",
+      "properties": {
+        "@id": "node/52304529",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "is_in": "Saskatchewan",
+        "is_in:continent": "North America",
+        "name": "North Battleford",
+        "name:en": "North Battleford",
+        "name:ru": "Норт-Бетлфорд",
+        "name:uk": "Норт-Бетлфорд",
+        "place": "city",
+        "population": "13888",
+        "source": "gns_ca",
+        "wikipedia": "en:North Battleford"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -108.2977496,
+          52.7761737
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/52553401",
+      "properties": {
+        "@id": "node/52553401",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "is_in": "British Columbia",
+        "is_in:continent": "North America",
+        "is_in:country": "Canada",
+        "is_in:country_code": "CA",
+        "name": "Kitimat",
+        "place": "city",
+        "source": "gns_ca",
+        "wikipedia": "en:Kitimat, British Columbia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -128.6869838,
+          54.0159896
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/52553466",
+      "properties": {
+        "@id": "node/52553466",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "ele": "10",
+        "gns:adm1": "02",
+        "gns:cc1": "CA",
+        "gns:dsg": "PPL",
+        "gns:fc": "P",
+        "gns:jog": "NM10-08",
+        "gns:n:xx:full_name": "Vancouver",
+        "gns:n:xx:full_name_nd": "Vancouver",
+        "gns:n:xx:modify_date": "1993-12-14",
+        "gns:n:xx:nt": "N",
+        "gns:n:xx:sort_name": "VANCOUVER",
+        "gns:rc": "1",
+        "is_in": "Vancouver, BC",
+        "is_in:continent": "North America",
+        "is_in:country": "Canada",
+        "is_in:country_code": "CA",
+        "layer": "1",
+        "name": "Vancouver",
+        "name:ar": "فانكوفر",
+        "name:bn": "বাংকূবর",
+        "name:en": "Vancouver",
+        "name:hi": "वांकूवर",
+        "name:kn": "ವಾಂಕೂವರ್",
+        "name:ru": "Ванкувер",
+        "name:uk": "Ванкувер",
+        "place": "city",
+        "population": "603502",
+        "source": "gns_ca",
+        "wikipedia": "en:Vancouver"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1139383,
+          49.2608944
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/52553513",
+      "properties": {
+        "@id": "node/52553513",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "is_in": "British Columbia",
+        "name": "Squamish",
+        "place": "city",
+        "source": "gns_ca",
+        "wikipedia": "en:Squamish, British Columbia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1500001,
+          49.7
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/52553812",
+      "properties": {
+        "@id": "node/52553812",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "is_in": "British Columbia",
+        "is_in:continent": "North America",
+        "name": "Chilliwack",
+        "place": "city",
+        "population": "77936",
+        "source": "gns_ca",
+        "wikipedia": "en:Chilliwack"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.95,
+          49.166667
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/52556169",
+      "properties": {
+        "@id": "node/52556169",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "is_in": "British Columbia",
+        "is_in:continent": "North America",
+        "name": "Nanaimo",
+        "name:en": "Nanaimo",
+        "name:ru": "Нанаймо",
+        "name:uk": "Нанаймо",
+        "place": "city",
+        "population": "83810",
+        "source": "gns_ca",
+        "wikipedia": "en:Nanaimo"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.9379793,
+          49.1637659
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/52556180",
+      "properties": {
+        "@id": "node/52556180",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "is_in": "British Columbia",
+        "is_in:continent": "North America",
+        "name": "Abbotsford",
+        "name:ru": "Абботсфорд",
+        "place": "city",
+        "source": "gns_ca",
+        "wikipedia": "en:Abbotsford, British Columbia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3290473,
+          49.0519047
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/52556897",
+      "properties": {
+        "@id": "node/52556897",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "is_in": "British Columbia",
+        "is_in:continent": "North America",
+        "is_in:country": "Canada",
+        "is_in:country_code": "CA",
+        "name": "Terrace",
+        "place": "city",
+        "source": "gns_ca",
+        "wikipedia": "en:Terrace, British Columbia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -128.6060566,
+          54.5205722
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/107351278",
+      "properties": {
+        "@id": "node/107351278",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "ele": "165",
+        "gns:adm1": "13",
+        "gns:cc1": "CA",
+        "gns:dms_lat": "605100",
+        "gns:dms_long": "-1154200",
+        "gns:dsg": "PPL",
+        "gns:fc": "P",
+        "gns:jog": "NP11-14",
+        "gns:lat": "60.85",
+        "gns:long": "-115.7",
+        "gns:mgrs": "11VNH7064046780",
+        "gns:n:xx:full_name": "Hay River",
+        "gns:n:xx:full_name_nd": "Hay River",
+        "gns:n:xx:modify_date": "1999-05-28",
+        "gns:n:xx:nt": "N",
+        "gns:n:xx:sort_name": "HAYRIVER",
+        "gns:rc": "1",
+        "gns:ufi": "-566052",
+        "gns:uni": "-799836",
+        "name": "Hay River",
+        "name:en": "Hay River",
+        "name:ru": "Хей-Ривер",
+        "name:uk": "Хей-Рівер",
+        "place": "city",
+        "population": "3606",
+        "source": "gns_ca",
+        "wikipedia": "en:Hay River, Northwest Territories"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -115.7866099,
+          60.8155874
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/150917043",
+      "properties": {
+        "@id": "node/150917043",
+        "census:population": "8",
+        "ele": "8",
+        "gnis:Class": "Populated Place",
+        "gnis:County": "Ketchikan Gateway",
+        "gnis:County_num": "130",
+        "gnis:ST_alpha": "AK",
+        "gnis:ST_num": "02",
+        "gnis:id": "1423039",
+        "import_uuid": "bb7269ee-502a-5391-8056-e3ce0e66489c",
+        "is_in": "Ketchikan Gateway,Alaska,Alaska,AK,USA",
+        "is_in:continent": "North America",
+        "is_in:country": "USA",
+        "is_in:country_code": "US",
+        "name": "Ketchikan",
+        "name:en": "Ketchikan",
+        "name:ru": "Кетчикан",
+        "name:uk": "Кетчикан",
+        "place": "city",
+        "population": "7446",
+        "wikipedia": "en:Ketchikan, Alaska"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -131.6466819,
+          55.3430696
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/150918835",
+      "properties": {
+        "@id": "node/150918835",
+        "ele": "17",
+        "gnis:Class": "Populated Place",
+        "gnis:County": "Juneau",
+        "gnis:County_num": "110",
+        "gnis:ST_alpha": "AK",
+        "gnis:ST_num": "02",
+        "gnis:id": "1404263",
+        "import_uuid": "bb7269ee-502a-5391-8056-e3ce0e66489c",
+        "is_in": "Juneau,Alaska,Alaska,AK,USA",
+        "is_in:continent": "North America",
+        "is_in:country": "USA",
+        "is_in:country_code": "US",
+        "name": "Juneau",
+        "name:en": "Juneau",
+        "name:fa": "جونو",
+        "name:lt": "Džunas",
+        "name:pl": "Juneau",
+        "name:ru": "Джуно",
+        "name:uk": "Джуно",
+        "place": "city",
+        "population": "31000",
+        "state_capital": "yes",
+        "wikipedia": "en:Juneau, Alaska"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -134.419734,
+          58.3019496
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/150936508",
+      "properties": {
+        "@id": "node/150936508",
+        "census:population": "18984;2006",
+        "ele": "17",
+        "gnis:Class": "Populated Place",
+        "gnis:County": "Clallam",
+        "gnis:County_num": "009",
+        "gnis:ST_alpha": "WA",
+        "gnis:ST_num": "53",
+        "gnis:id": "1524581",
+        "import_uuid": "bb7269ee-502a-5391-8056-e3ce0e66489c",
+        "is_in": "Clallam,Washington,Wash.,WA,USA",
+        "name": "Port Angeles",
+        "place": "city",
+        "population": "18984"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.4307413,
+          48.118146
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/268148288",
+      "properties": {
+        "@id": "node/268148288",
+        "name": "Whistler",
+        "place": "city",
+        "population": "11000",
+        "website": "http://www.whistler.ca/municipal-gov/council/aboutyourcouncil"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9587054,
+          50.1183158
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/445973270",
+      "properties": {
+        "@id": "node/445973270",
+        "ele": "260",
+        "is_in": "Wood Buffalo, Alberta, AB, Canada",
+        "is_in:continent": "North America",
+        "is_in:country": "Canada",
+        "is_in:country_code": "CA",
+        "name": "Fort McMurray",
+        "name:en": "Fort McMurray",
+        "name:ru": "Форт-МакМеррей",
+        "name:uk": "Форт-МакМеррей",
+        "place": "city",
+        "population": "61374",
+        "wikipedia": "en:Fort McMurray"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.37432,
+          56.7234442
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/1141667381",
+      "properties": {
+        "@id": "node/1141667381",
+        "is_in:continent": "North America",
+        "is_in:country": "Canada",
+        "is_in:country_code": "CA",
+        "name": "Dawson Creek",
+        "name:en": "Dawson Creek",
+        "name:ru": "Досон-Крик",
+        "name:uk": "Досон-Крік",
+        "place": "city",
+        "population": "11583",
+        "source": "NRCan-CanVec-7.0",
+        "wikipedia": "en:Dawson Creek"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.2279592,
+          55.7593123
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/1295420531",
+      "properties": {
+        "@id": "node/1295420531",
+        "name": "Merritt",
+        "place": "city",
+        "source": "NRCan-CanVec-7.0",
+        "wikipedia": "en:Merritt, British Columbia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.7884359,
+          50.111782
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/1328293032",
+      "properties": {
+        "@id": "node/1328293032",
+        "is_in": "Alberta, Canada",
+        "name": "Lacombe",
+        "place": "city",
+        "wikipedia": "en:Lacombe, Alberta"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -113.7332105,
+          52.4715717
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/1439329973",
+      "properties": {
+        "@id": "node/1439329973",
+        "is_in": "British Columbia, BC, Canada",
+        "is_in:continent": "North America",
+        "name": "Kamloops",
+        "name:en": "Kamloops",
+        "name:ru": "Камлупс",
+        "name:uk": "Камлупс",
+        "place": "city",
+        "population": "85678",
+        "wikipedia": "en:Kamloops"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.3417342,
+          50.6765557
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/1505783342",
+      "properties": {
+        "@id": "node/1505783342",
+        "census:population": "2010:8881",
+        "is_in": "Sitka,Alaska,AK,USA",
+        "is_in:continent": "North America",
+        "is_in:country": "USA",
+        "is_in:country_code": "US",
+        "name": "Sitka",
+        "name:en": "Sitka",
+        "name:ru": "Ситка",
+        "name:uk": "Сітка",
+        "place": "city",
+        "population": "8881",
+        "wikipedia": "en:Sitka, Alaska"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -135.3376124,
+          57.0524973
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/1764320150",
+      "properties": {
+        "@id": "node/1764320150",
+        "name": "Revelstoke",
+        "place": "city",
+        "source": "NRCan-CanVec-10.0",
+        "wikipedia": "en:Revelstoke, British Columbia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.191765,
+          50.9933958
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/1790445554",
+      "properties": {
+        "@id": "node/1790445554",
+        "name": "Powell River",
+        "place": "city",
+        "wikipedia": "en:Powell River, British Columbia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -124.5244065,
+          49.8356621
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/1858146408",
+      "properties": {
+        "@id": "node/1858146408",
+        "name": "Wetaskiwin",
+        "name:en": "Wetaskiwin",
+        "name:ru": "Ветаскивин",
+        "name:uk": "Ветасківін",
+        "place": "city",
+        "wikipedia": "en:Wetaskiwin"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -113.3668453,
+          52.9684246
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/2079157918",
+      "properties": {
+        "@id": "node/2079157918",
+        "name": "Grande Prairie",
+        "name:en": "Grande Prairie",
+        "name:ru": "Гранд-Прери",
+        "name:uk": "Гранд-Прері",
+        "place": "city",
+        "source": "NRCan-CanVec-10.0",
+        "wikipedia": "en:Grande Prairie"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.794803,
+          55.1706428
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/2523813997",
+      "properties": {
+        "@id": "node/2523813997",
+        "name": "Campbell River",
+        "name:en": "Campbell River",
+        "name:ru": "Кэмпбелл-Ривер",
+        "name:uk": "Кембелл-Ривер",
+        "place": "city",
+        "population": "31186",
+        "wikipedia": "en:Campbell River, British Columbia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -125.2440905,
+          50.0231613
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/2528873712",
+      "properties": {
+        "@id": "node/2528873712",
+        "name": "Duncan",
+        "place": "city",
+        "wikipedia": "en:Duncan, British Columbia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.7080394,
+          48.7786869
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/2865722923",
+      "properties": {
+        "@id": "node/2865722923",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "is_in": "British Columbia",
+        "is_in:continent": "North America",
+        "is_in:country": "Canada",
+        "is_in:country_code": "CA",
+        "name": "Fort St. John",
+        "name:en": "Fort St. John",
+        "name:ru": "Форт-Сент-Джон",
+        "name:uk": "Форт-Сент-Джон",
+        "place": "city",
+        "population": "18609",
+        "source": "gns_ca",
+        "wikipedia": "en:Fort St. John, British Columbia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.8334657,
+          56.250094
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/2903625031",
+      "properties": {
+        "@id": "node/2903625031",
+        "addr:postcode": "X1A",
+        "capital": "4",
+        "comment": "Experimental import of Canadian places and POIs from GNS Dataset",
+        "ele": "206",
+        "is_in:continent": "North America",
+        "is_in:country": "Canada",
+        "is_in:country_code": "CA",
+        "name": "Yellowknife",
+        "name:ar": "يلونايف",
+        "name:ru": "Йеллоунайф",
+        "name:uk": "Єллоунайф",
+        "place": "city",
+        "population": "19234",
+        "source": "gns_ca",
+        "state_capital": "yes",
+        "wikipedia": "en:Yellowknife"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -114.3692511,
+          62.4552608
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/2903627587",
+      "properties": {
+        "@id": "node/2903627587",
+        "ele": "179",
+        "name": "Behchoko",
+        "name:Tłı̨chǫ": "Behchokǫ̀",
+        "place": "city",
+        "population": "1926",
+        "wikipedia": "en:Behchoko"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -115.9268858,
+          62.7831015
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/2976400400",
+      "properties": {
+        "@id": "node/2976400400",
+        "is_in": "Yukon",
+        "is_in:country": "Canada",
+        "name": "Whitehorse",
+        "name:en": "Whitehorse",
+        "name:pl": "Whitehorse",
+        "name:ru": "Уайтхорс",
+        "name:uk": "Вайтхорс",
+        "place": "city",
+        "population": "27889",
+        "state_capital": "yes",
+        "wikipedia": "en:Whitehorse, Yukon"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -135.0523079,
+          60.7206761
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/3104956255",
+      "properties": {
+        "@id": "node/3104956255",
+        "ele": "910 m (2,990 ft)",
+        "name": "Lethbridge",
+        "name:en": "Lethbridge",
+        "name:ru": "Летбридж",
+        "name:uk": "Летбрідж",
+        "place": "city",
+        "population": "83,517",
+        "website": "https://www.lethbridge.ca/",
+        "wikipedia": "en:Lethbridge"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -112.8509389,
+          49.6932413
+        ]
+      }
+    }
+  ]
+}

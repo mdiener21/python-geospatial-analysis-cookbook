@@ -106,5 +106,3 @@ def formatValue(val, dap=6):
 if __name__ == "__main__":
     argv = sys.argv
     gdal2threejs(argv[1], argv[2], argv[3])
-
-    # usage gdal2threejs.py texture-tif dem-file
