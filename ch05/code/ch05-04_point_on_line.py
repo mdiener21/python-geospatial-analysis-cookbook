@@ -12,3 +12,7 @@ print line_reversed
 
 point_on_line = line.interpolate(1.4)
 print point_on_line
+
+hello = 'hello world'
+reverse_hello = hello[::-1]
+print reverse_hello
