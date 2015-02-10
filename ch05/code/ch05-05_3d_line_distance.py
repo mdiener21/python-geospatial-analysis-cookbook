@@ -29,11 +29,27 @@ def pairs(lst):
 # import fiona
 #
 # with open('../geodata/bike_route.shp'):
-line = LineString([(0, 0), (1, 2), (2, 2), (2, 3), (4, 2), (5, 5)])
+line = LineString([(0, 0, 0), (1, 2, 0), (2, 2, 0), (2, 3, 0), (4, 2, 0), (5, 5, 0)])
 list(line.coords)
 
+start_distance = 0.0
+new_dist = 0.0
 for pair in pairs(list(line.coords)):
     print pair
+    x1 = pair[0][0]
+    x2 = pair[0][1]
+    z1 = pair[0][2]
+    y1 = pair[1][0]
+    y2 = pair[1][1]
+    z2 = pair[1][2]
+
+    distance = calc_3d_distance_2pts(x1,y1,x2,y2,z1,z2)
+    print distance
+    new_dist = start_distance + distance
+    new_dist = new_dist + distance
+    #print new_dist
+
+print new_dist
 
 # num_vertex_in_line = len(line)
 # distance = 0
