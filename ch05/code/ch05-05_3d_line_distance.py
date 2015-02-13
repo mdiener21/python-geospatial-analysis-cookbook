@@ -4,7 +4,9 @@ import math
 import fiona
 from shapely.geometry import shape
 
-filename = '../geodata/bike-route-austria.shp'
+# filename = '../geodata/velowire_stage_16-Carcassonne-Bagneres-de-Luchon.shp'
+filename = '../geodata/velowire_stage_16.geojson'
+# filename = '../geodata/velowire_stage_16-Carcassonne-Bagneres-de-Luchon.kml'
 
 def pairs(lst):
     for i in range(1, len(lst)):
@@ -23,6 +25,7 @@ with fiona.open(filename, 'r') as layer1:
     for feat1 in layer1:
         fid = int(feat1['id'])
         geom1 = shape(feat1['geometry'])
+        print geom1.length/1000
         print geom1.coords[1]
         for pair in pairs(list(geom1.coords)):
             x1 = pair[0][0]
@@ -35,7 +38,8 @@ with fiona.open(filename, 'r') as layer1:
             distance = calc_3d_distance_2pts(x1,y1,x2,y2,z1,z2)
             #print distance
             line_3d_distance += distance
-print line_3d_distance
+print "3D line distance is: "
+print line_3d_distance/1000
         # index.insert(fid, geom1.bounds)
     # with fiona.open(intSHP, 'w', 'ESRI Shapefile', schema) as layer3:
     #     layer3.write({ 'properties': props,
@@ -110,7 +114,6 @@ foo = [1, 13, 13, 2, 3]
 #     # added each distance up
 #
 #     distance += dist_3d
-
 
 
 # PostGIS 3D Distance and 2D Distance
