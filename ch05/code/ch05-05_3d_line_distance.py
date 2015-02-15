@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import math
-import fiona
 from shapely.geometry import shape
+import json
+import geojson
 
 # filename = '../geodata/velowire_stage_16-Carcassonne-Bagneres-de-Luchon.shp'
-filename = '../geodata/velowire_stage_16.geojson'
+filename = '../geodata/velowire_stage_16_4326.geojson'
 # filename = '../geodata/velowire_stage_16-Carcassonne-Bagneres-de-Luchon.kml'
 
 def pairs(lst):
@@ -17,29 +18,68 @@ def calc_3d_distance_2pts(x1, y1, x2, y2, z1, z2):
     d = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2 + (z2 - z1) ** 2)
     return d
 
-
-from shapely.geometry import LineString
 line_3d_distance = 0.0
 
-with fiona.open(filename, 'r') as layer1:
-    for feat1 in layer1:
-        fid = int(feat1['id'])
-        geom1 = shape(feat1['geometry'])
-        print geom1.length/1000
-        print geom1.coords[1]
-        for pair in pairs(list(geom1.coords)):
-            x1 = pair[0][0]
-            x2 = pair[0][1]
-            z1 = pair[0][2]
-            y1 = pair[1][0]
-            y2 = pair[1][1]
-            z2 = pair[1][2]
+def readin_json(jsonfile):
+    with open(jsonfile) as json_data:
+        d = json.load(json_data)
+        return d
 
-            distance = calc_3d_distance_2pts(x1,y1,x2,y2,z1,z2)
-            #print distance
-            line_3d_distance += distance
-print "3D line distance is: "
-print line_3d_distance/1000
+json_load = readin_json("../geodata/velowire_stage_16_27563.geojson")
+print type(json_load)
+
+# js = json.dumps(geojson_file.read().decode('utf-8'))
+# geojson_js = json.loads(geojson_file.read().decode('utf-8'))
+# jsx = json.dumps(geojson_js)
+# print jsx
+#
+# print geojson_js
+# print type(geojson_js)
+
+
+for f in json_load['features']:
+    s = shape(f['geometry'])
+    geo = f['geometry']
+    #print geo
+    print s.length/1000
+    print s.coords[1]
+    for pair in pairs(list(s.coords)):
+        x1 = pair[0][0]
+        x2 = pair[0][1]
+        z1 = pair[0][2]
+        y1 = pair[1][0]
+        y2 = pair[1][1]
+        z2 = pair[1][2]
+
+        distance = calc_3d_distance_2pts(x1,y1,x2,y2,z1,z2)
+        #print distance
+        line_3d_distance += distance
+
+
+print "3D line distance is: "  + str(line_3d_distance/1000000)
+
+from shapely.geometry import LineString
+# line_3d_distance = 0.0
+
+# with fiona.open(filename, 'r') as layer1:
+#     for feat1 in layer1:
+#         fid = int(feat1['id'])
+#         geom1 = shape(feat1['geometry'])
+#         print geom1.length/1000
+#         print geom1.coords[1]
+#         for pair in pairs(list(geom1.coords)):
+#             x1 = pair[0][0]
+#             x2 = pair[0][1]
+#             z1 = pair[0][2]
+#             y1 = pair[1][0]
+#             y2 = pair[1][1]
+#             z2 = pair[1][2]
+#
+#             distance = calc_3d_distance_2pts(x1,y1,x2,y2,z1,z2)
+#             #print distance
+#             line_3d_distance += distance
+# print "3D line distance is: "
+# print line_3d_distance/1000
         # index.insert(fid, geom1.bounds)
     # with fiona.open(intSHP, 'w', 'ESRI Shapefile', schema) as layer3:
     #     layer3.write({ 'properties': props,
