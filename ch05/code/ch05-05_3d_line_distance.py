@@ -26,7 +26,7 @@ def calc_3d_distance_2pts(x1, y1, z1, x2, y2, z2):
     :param z2: z height value seconc coordinate
     :return: 3D distance between two input 3D coordinates
     """
-    d = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2 + (z2 - z1) ** 2)
+    d = math.sqrt((x2 - x1) **2 + (y2 - y1) **2 + (z2 - z1) **2)
     return d
 
 
@@ -65,7 +65,7 @@ for f in json_load['features']:
         line_start = Point(vert_start)
         line_end = Point(vert_end)
 
-        # create
+        # create input coordinates
         x1 = line_start.coords[0][0]
         y1 = line_start.coords[0][1]
         z1 = line_start.coords[0][2]
@@ -73,7 +73,10 @@ for f in json_load['features']:
         y2 = line_end.coords[0][1]
         z2 = line_end.coords[0][2]
 
+        # calculate 3d distance
         distance = calc_3d_distance_2pts(x1, y1, z1, x2, y2, z2)
+
+        # sum distances from vertex to vertex
         length_3d += distance
 
         # calculate total elevation gain
@@ -85,9 +88,11 @@ for f in json_load['features']:
             z2 = z1
 
 
-print "total elevation gain is: " + str(elevation_gain) + " meters"
+print "total elevation gain is: " + str(elevation_gain) \
+      + " meters"
 
 # print coord_pair
 print "3D line distance is: " + str(length_3d / 1000)
 print "2D line distance is: " + str(length_2d / 1000)
-print "difference 2D and 3D is: " + str(length_3d - length_2d) + " meters"
+print "3D-2D length difference: " + str(length_3d - length_2d) \
+      + " meters"
