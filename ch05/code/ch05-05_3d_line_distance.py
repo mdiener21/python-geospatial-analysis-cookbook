@@ -26,7 +26,7 @@ def calc_3d_distance_2pts(x1, y1, z1, x2, y2, z2):
     :param z2: z height value seconc coordinate
     :return: 3D distance between two input 3D coordinates
     """
-    d = math.sqrt((x2 - x1) **2 + (y2 - y1) **2 + (z2 - z1) **2)
+    d = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2 + (z2 - z1) ** 2)
     return d
 
 
@@ -52,7 +52,6 @@ length_2d = 0.0
 for f in json_load['features']:
     # create shapely shape from geojson
     s = shape(f['geometry'])
-    geo = f['geometry']
 
     # calculate 2D total length
     length_2d = s.length
@@ -81,12 +80,11 @@ for f in json_load['features']:
 
         # calculate total elevation gain
         if z1 > z2:
-            elevation_gain = ((z1 - z2) + elevation_gain )
+            elevation_gain = ( (z1 - z2) + elevation_gain )
             z2 = z1
         else:
-            elevation_gain = elevation_gain # no height change
+            elevation_gain = elevation_gain  # no height change
             z2 = z1
-
 
 print "total elevation gain is: " + str(elevation_gain) \
       + " meters"
