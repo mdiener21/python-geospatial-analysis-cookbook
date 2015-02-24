@@ -17,7 +17,7 @@
       .olImageLoadError { display: none; }
     </style>
     <script src="../build/ol.js"></script>
-    <script src="../data/my_polys.js"></script>
+    <script src="../../../geodata/results_sym_diff.js"></script>
 
     <title>Map</title>
   </head>
@@ -35,7 +35,7 @@
 
 		var format = new ol.format.WKT();
 		var feature = format.readFeature(ply_data);
-		feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+		//feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
 
 		var vector = new ol.layer.Vector({
 		  source: new ol.source.Vector({
@@ -47,8 +47,8 @@
 		  layers: [raster, vector],
 		  target: 'map',
 		  view: new ol.View({
-			center: [2952104.019976033, -3277504.823700756],
-			zoom: 4
+			center: [-13574443.4115378610000000,4378853.9759478811000000],
+			zoom: 15
 		  })
 		});
 
