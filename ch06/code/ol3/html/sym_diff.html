@@ -7,51 +7,29 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="../resources/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../resources/layout.css">
-    <style>
-      html, body, #map {
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
-      }
-      .olImageLoadError { display: none; }
-    </style>
+    <link rel="stylesheet" href="../css/layout.css">
+
     <script src="../build/ol.js"></script>
     <script src="../../../geodata/results_sym_diff.js"></script>
 
-    <title>Map</title>
+    <title>Symmetric Difference Results</title>
   </head>
   <body>
-    <div id="map">
 
+    <div class="navbar navbar-inverse navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="brand" href="./"><img src="../resources/logo.png"> OpenLayers 3 Viewer Symmetric difference</a>
+            </div>
+          </div>
     </div>
-    <script src="../resources/jquery.min.js"></script>
-    <script src="../resources/bootstrap/js/bootstrap.min.js"></script>
-    <script>
 
-		var raster = new ol.layer.Tile({
-		  source: new ol.source.OSM()
-		});
+    <div class="container-fluid">
+        <div id="map"></div>
+    </div>
 
-		var format = new ol.format.WKT();
-		var feature = format.readFeature(ply_data);
-		//feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
-
-		var vector = new ol.layer.Vector({
-		  source: new ol.source.Vector({
-			features: [feature]
-		  })
-		});
-
-		var map = new ol.Map({
-		  layers: [raster, vector],
-		  target: 'map',
-		  view: new ol.View({
-			center: [-13574443.4115378610000000,4378853.9759478811000000],
-			zoom: 15
-		  })
-		});
-
-      </script>
+    <script src="../resources/jquery.min.js" type="text/javascript"></script>
+    <script src="../resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../js/map_sym_diff.js" type="text/javascript"></script>
 </body>
 </html>

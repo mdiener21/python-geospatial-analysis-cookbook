@@ -1,4 +1,10 @@
 @import url(http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,400italic,700);
+html, body, #map {
+height: 100%;
+width: 100%;
+overflow: hidden;
+}
+.olImageLoadError { display: none; }
 
 body {
   padding-top: 60px;
@@ -6,7 +12,7 @@ body {
 .map {
   height: 400px;
   width: 100%;
-  background: url(textured_paper.jpeg) repeat;
+  background: url(../resources/textured_paper.jpeg) repeat;
 }
 .ol-attribution {
   max-width: calc(100% - 3em);
