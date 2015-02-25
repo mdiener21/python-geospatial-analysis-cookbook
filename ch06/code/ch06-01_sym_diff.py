@@ -14,9 +14,10 @@ from utils import set_plot_bounds
 ####################################
 
 # define our files input and output locations
-output_wkt_sym_diff = "../geodata/results_sym_diff.js"
 input_fairways = "../geodata/pebble-beach-fairways-3857.geojson"
 input_greens = "../geodata/pebble-beach-greens-3857.geojson"
+output_wkt_sym_diff = "../geodata/results_sym_diff.js"
+
 
 # open and load our geojson files as python dictionary
 with open(input_fairways) as fairways:
