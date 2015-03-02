@@ -1,92 +1,74 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import json
-
 import shapefile
-from geojson import loads, Feature, FeatureCollection
-
-# open roads Shapefile that we want to clip with pyshp
-from shapely.geometry import asShape, Point
-from shapely.geometry import mapping
+from geojson import Feature, FeatureCollection
+from shapely.geometry import asShape, MultiPolygon, Polygon
 from shapely.ops import polygonize
 
+# open first polygon shapefile with pyshp
 in_ply_1 = shapefile.Reader("../geodata/temp1-ply.shp")
 
-# open circle polygon with pyshp
+# open second polygon shapefile with pyshp
 in_ply_2 = shapefile.Reader("../geodata/temp2-ply.shp")
 
-# access the geometry of the clip area circle
-in_ply_2_shape = in_ply_2.shape()
-in_ply_1_shape = in_ply_1.shape()
-
-# convert pyshp object to shapely
-in_ply_2_shply = asShape(in_ply_2_shape)
-in_ply_1_shply = asShape(in_ply_1_shape)
-out_boundaries = in_ply_1_shply.boundary.union(in_ply_2_shply.boundary)
+# access the geometries of each polygon using pyshp
+in_ply_2_shape = in_ply_2.shapes()
+in_ply_1_shape = in_ply_1.shapes()
 
 
-out_shply = polygonize(out_boundaries)
+def create_shply_features(features):
+    """
+    create shapely MultiPolygons
+    :param features: list of geometry shapes
+    :return: a list of shapely geometries
+    """
+    if len(features) > 1:
+        print "we have more than one feature"
+        new_feature_list = []
+        for feature in features:
+            temp = asShape(feature)
+            new_feature_list.append(temp)
+        out_multi_ply = MultiPolygon(new_feature_list)
+    else:
+        print "one or no features found"
+        temp = asShape(features)
+        out_multi_ply = MultiPolygon(temp)
+    return out_multi_ply
+
+def run_union(in_ply1, in_ply2):
+    polygons2 = create_shply_features(in_ply1)
+    polygons1 = create_shply_features(in_ply2)
+
+    out_boundaries2 = polygons1.boundary.union(polygons2.boundary)
+
+    out_shply = polygonize(out_boundaries2)
+    return out_shply
+
+result_union = run_union(in_ply_1_shape,in_ply_2_shape)
+
+def output_geojson_fc(shply_features):
+    new_geojson = []
+    for feature in shply_features:
+        foo = feature.__geo_interface__
+        myfeat = Feature(geometry=foo, properties={'name': "mojo"})
+        new_geojson.append(myfeat)
+
+    out_feat_collect = FeatureCollection(new_geojson)
+    return out_feat_collect
 
 
-new_cut_ply = []
-for feature in out_shply:
-#print out_shply
-    foo = feature.__geo_interface__
-
-    myfeat = Feature(geometry=foo, properties={'name': "mojo"})
-    new_cut_ply.append(feature)
-print myfeat
-
+geojson_fc = output_geojson_fc(result_union)
 
 output_union = "../geodata/output_union.geojson"
 
-def write_geojson():
-    with open(output_union, "w") as f:
-        f.write(json.dumps(myfeat))
+def write_geojson(outpath, in_geojson_fc):
+    """
+    create a GeoJSON file and write to disk
+    :param outpath: for example could be "../geodata/output_union.geojson"
+    :return: a geojson file written to outpath
+    """
+    with open(outpath, "w") as f:
+        f.write(json.dumps(in_geojson_fc))
 
-write_geojson()
-
-
-#print foo
-# create a list of all roads features and attributes
-# in_ply_1_records = in_ply_1.shapeRecords()
-# in_ply_2_records = in_ply_2.shapeRecords()
-
-# variables to hold new geometry
-# roads_clip_list = []
-# roads_shply = []
-
-# run through each geometry, convert to shapely geom and intersect
-# for feature in in_ply_1_records:
-#     roads_london_shply = asShape(feature.shape.__geo_interface__)
-#     roads_shply.append(roads_london_shply)
-#     roads_intersect = roads_london_shply.union(in_ply_2_shply)
-#
-#     # only export linestrings, shapely also created points
-#     if roads_intersect.geom_type == "Polygon":
-#         roads_clip_list.append(roads_intersect)
-
-# # open writer to write our new shapefile too
-# out_ply_union = shapefile.Writer()
-#
-# # create new field
-# out_ply_union.field("name")
-
-# convert our shapely geometry back to pyshp, record for record
-# for feature in out_shply:
-#     geojson = mapping(feature)
-#
-#     # create empty pyshp shape
-#     record = shapefile._Shape()
-#
-#     # shapeType 8 is MultiPolygon
-#     record.shapeType = 8
-#     record.points = geojson["coordinates"]
-#     record.parts = [0]
-#
-#     out_ply_union._shapes.append(record)
-#     # add a list of attributes to go along with the shape
-#     out_ply_union.record(["empty record"])
-
-# save to disk
-# out_ply_union.save(r"../geodata/temp_union.shp")
+write_geojson(output_union, geojson_fc)
