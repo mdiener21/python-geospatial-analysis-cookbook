@@ -55,7 +55,7 @@ def write_wkt(filepath, features):
         f.write("var ply_data = '" + dumps(features) + "'")
 
 # write to our output js file the new polygon as wkt
-write_wkt(output_wkt_sym_diff,result)
+write_wkt(output_wkt_sym_diff, result)
 
 
 #####################################
