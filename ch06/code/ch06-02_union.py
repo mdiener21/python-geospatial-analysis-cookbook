@@ -97,32 +97,6 @@ def create_union(in_ply1, in_ply2, result_geojson):
 result_union = create_union(in_ply_1_shape, in_ply_2_shape, out_geojson_file)
 
 
-def output_geojson_fc(shply_features, outpath):
-    """
-    Create valid GeoJSON python dictionary
-    :param shply_features: shapely geometries
-    :param outpath:
-    :return: GeoJSON FeatureCollection File
-    """
-
-    new_geojson = []
-    for feature in shply_features:
-        if feature.intersects(in_ply_1_shape):
-            print "yes"
-        feature_geom_geojson = feature.__geo_interface__
-        myfeat = Feature(geometry=feature_geom_geojson,
-                         properties={'name': "mojo"})
-        new_geojson.append(myfeat)
-
-    out_feat_collect = FeatureCollection(new_geojson)
-
-    with open(outpath, "w") as f:
-        f.write(json.dumps(out_feat_collect))
-
-
-geojson_fc = output_geojson_fc(result_union, output_union)
-
-
 # write the results out to well known text (wkt) with shapely dump
 def write_wkt(filepath, features):
     """
@@ -138,3 +112,27 @@ def write_wkt(filepath, features):
 
 # write to our output js file the new polygon as wkt
 write_wkt(out_wkt_js, result_union)
+
+
+def output_geojson_fc(shply_features, outpath):
+    """
+    Create valid GeoJSON python dictionary
+    :param shply_features: shapely geometries
+    :param outpath:
+    :return: GeoJSON FeatureCollection File
+    """
+
+    new_geojson = []
+    for feature in shply_features:
+        feature_geom_geojson = feature.__geo_interface__
+        myfeat = Feature(geometry=feature_geom_geojson,
+                         properties={'name': "mojo"})
+        new_geojson.append(myfeat)
+
+    out_feat_collect = FeatureCollection(new_geojson)
+
+    with open(outpath, "w") as f:
+        f.write(json.dumps(out_feat_collect))
+
+
+geojson_fc = output_geojson_fc(result_union, output_union)
