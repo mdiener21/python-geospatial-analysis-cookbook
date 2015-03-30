@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from math import sqrt
-
+import shapefile
+from shapely.geometry import asShape, MultiPolygon
+import json
 # calculate the size of our matplotlib output
+
 GM = (sqrt(5) - 1.0) / 2.0
 W = 8.0
 H = W * GM
@@ -71,3 +74,103 @@ def set_plot_bounds(object, offset=1.0):
     y_range = [y_min - offset, y_max + offset]
 
     return {'xrange': x_range, 'yrange': y_range}
+
+
+def create_shapes(shapefile_path):
+    """
+    Convert Shapefile Geometry to Shapely MultiPolygon
+    :param shapefile_path: path to a shapefile on disk
+    :return: shapely MultiPolygon
+    """
+    in_ply = shapefile.Reader(shapefile_path)
+
+    # using pyshp reading geometry
+    ply_shp = in_ply.shapes()
+    # ply_shp = in_ply.shapeRecords()
+    ply_records = in_ply.records()
+    ply_fields = in_ply.fields
+    print ply_records
+    print ply_fields
+
+    if len(ply_shp) > 1:
+        # using python list comprehension syntax
+        # shapely asShape to convert to shapely geom
+        ply_list = [asShape(feature) for feature in ply_shp]
+
+        # create new shapely multipolygon
+        out_multi_ply = MultiPolygon(ply_list)
+
+        # # equivalent to the 2 lines above without using list comprehension
+        # new_feature_list = []
+        # for feature in features:
+        #     temp = asShape(feature)
+        #     new_feature_list.append(temp)
+        # out_multi_ply = MultiPolygon(new_feature_list)
+
+        print "converting to MultiPolygon: " + str(out_multi_ply)
+    else:
+        print "one or no features found"
+        shply_ply = asShape(ply_shp)
+        out_multi_ply = MultiPolygon(shply_ply)
+
+    return out_multi_ply
+
+def shp_2_geojson_file(shapefile_path, out_geojson):
+    # open shapefile
+    in_ply = shapefile.Reader(shapefile_path)
+    # get a list of geometry and records
+    shp_records = in_ply.shapeRecords()
+    # get list of fields excluding first list object
+    fc_fields = in_ply.fields[1:]
+
+    # using list comprehension to create list of field names
+    field_names = [field_name[0] for field_name in fc_fields ]
+    my_fc_list = []
+    # run through each shape geometry and attribute
+    for x in shp_records:
+        field_attributes = dict(zip(field_names, x.record))
+        geom_j = x.shape.__geo_interface__
+        my_fc_list.append(dict(type='Feature', geometry=geom_j,
+                               properties=field_attributes))
+
+    # write GeoJSON to a file on disk
+    with open(out_geojson, "w") as oj:
+        oj.write(json.dumps({'type': 'FeatureCollection',
+                        'features': my_fc_list}))
+
+
+def shp2_geojson_obj(shapefile_path):
+    # open shapefile
+    in_ply = shapefile.Reader(shapefile_path)
+    # get a list of geometry and records
+    shp_records = in_ply.shapeRecords()
+    # get list of fields excluding first list object
+    fc_fields = in_ply.fields[1:]
+
+    # using list comprehension to create list of field names
+    field_names = [field_name[0] for field_name in fc_fields ]
+    my_fc_list = []
+    # run through each shape geometry and attribute
+    for x in shp_records:
+        field_attributes = dict(zip(field_names, x.record))
+        geom_j = x.shape.__geo_interface__
+        my_fc_list.append(dict(type='Feature', geometry=geom_j,
+                               properties=field_attributes))
+
+    geoj_json_obj = {'type': 'FeatureCollection',
+                    'features': my_fc_list}
+
+    return geoj_json_obj
+
+
+def out_geoj(list_geom, out_geoj_file):
+    out_geojson = dict(type='FeatureCollection', features=[])
+
+    # generate geojson file output
+    for (index_num, ply) in enumerate(list_geom):
+        feature = dict(type='Feature', properties=dict(id=index_num))
+        feature['geometry'] = ply.__geo_interface__
+        out_geojson['features'].append(feature)
+
+    # create geojson file on disk
+    json.dump(out_geojson, open(out_geoj_file, 'w'))
