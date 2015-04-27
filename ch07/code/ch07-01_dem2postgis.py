@@ -15,8 +15,7 @@ conn = psycopg2.connect(host=db_host, user=db_user, port=db_port, password=db_pa
 # create a cursor
 cur = conn.cursor()
 
-# input shapefile
-# input_dem = "../geodata/092j02_0200_deme.dem"
+# input USGS ASCII DEM (and CDED)
 input_dem = "../geodata/dem_3857.dem"
 
 # create an sql file for loading into the PostGIS database raster
@@ -24,13 +23,12 @@ input_dem = "../geodata/dem_3857.dem"
 # -c create new table
 # -I option will create a spatial GiST index on the raster column
 # -C will apply raster constraints
-# -t sets the tile size in this case 100 x 100 tiles
 # -M vacuum analyse the raster table
+
 
 command = 'raster2pgsql -c -C -I -M ' + input_dem + ' geodata.dem_3857'
 
 # write the output to a file
-
 temp_sql_file = "temp_sql.sql"
 
 # open, create new file to write sql statements into
