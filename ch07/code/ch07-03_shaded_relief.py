@@ -30,7 +30,8 @@ def hillshade(array, azimuth, angle_altitude):
     shaded = sin(altituderad) * sin(slope)\
      + cos(altituderad) * cos(slope)\
      * cos(azimuthrad - aspect)
-    return 255*(shaded + 1)/2
+    # return 255*(shaded + 1)/2
+    return aspect
 
 ds = gdal.Open('../geodata/092j02_0200_demw.dem')
 arr = ds.ReadAsArray()
@@ -49,6 +50,6 @@ plt.show()
 # [-alg ZevenbergenThorne] [-combined]
 # [-compute_edges] [-b Band (default=1)] [-of format] [-co "NAME=VALUE"]* [-q]
 
-create_hillshade = '''gdaldem hillshade -az 315 -alt 45 ../geodata/092j02_0200_demw.dem ../geodata/hillshade_3857.tif'''
+create_hillshade = '''gdaldem hillshade -az 315 -alt 45 ../geodata/092j02_0200_demw.dem ../geodata/hillshade.tif'''
 
 subprocess.call(create_hillshade)
