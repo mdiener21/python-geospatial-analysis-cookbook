@@ -9,7 +9,7 @@ import subprocess
 # [-alg ZevenbergenThorne]
 # [-compute_edges] [-b Band (default=1)] [-of format] [-co "NAME=VALUE"]* [-q]
 
-    create_slope = '''gdaldem slope -co compress=lzw -p ../geodata/092j02_0200_demw.dem ../geodata/slope.tif '''
+create_slope = '''gdaldem slope -co compress=lzw -p ../geodata/092j02_0200_demw.dem ../geodata/slope.tif '''
 
 subprocess.call(create_slope)
 
