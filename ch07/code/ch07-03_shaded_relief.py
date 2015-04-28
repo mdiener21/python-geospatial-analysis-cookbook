@@ -14,10 +14,10 @@ import subprocess
 
 def hillshade(array, azimuth, angle_altitude):
     """
-    :param array:
-    :param azimuth:
-    :param angle_altitude:
-    :return:
+    :param array: input USGS ASCII DEM / CDED .dem
+    :param azimuth: sun position
+    :param angle_altitude: sun angle
+    :return: numpy array
     """
 
     x, y = gradient(array)
@@ -32,7 +32,6 @@ def hillshade(array, azimuth, angle_altitude):
      * cos(azimuthrad - aspect)
     return 255*(shaded + 1)/2
 
-#ds = gdal.Open('../geodata/dem_3857.tif')
 ds = gdal.Open('../geodata/092j02_0200_demw.dem')
 arr = ds.ReadAsArray()
 
@@ -49,7 +48,6 @@ plt.show()
 # [-az Azimuth (default=315)] [-alt Altitude (default=45)]
 # [-alg ZevenbergenThorne] [-combined]
 # [-compute_edges] [-b Band (default=1)] [-of format] [-co "NAME=VALUE"]* [-q]
-
 
 create_hillshade = '''gdaldem hillshade -az 315 -alt 45 ../geodata/092j02_0200_demw.dem ../geodata/hillshade_3857.tif'''
 
