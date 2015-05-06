@@ -14,7 +14,7 @@ db_connection = "PG:host=localhost port=5432 \
 	user=postgres dbname=py_geoan_cb password=secret"
 
 # input shapefile
-input_shp = "/home/mdiener/geodata/bikeways.shp"
+input_shp = "../geodata/bikeways.shp"
 
 # call ogr2ogr from python
 subprocess.call(["ogr2ogr","-lco", db_schema, "-lco", overwrite_option, \
