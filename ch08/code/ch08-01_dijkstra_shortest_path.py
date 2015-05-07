@@ -7,7 +7,7 @@ from geojson import loads, Feature, FeatureCollection
 
 db_host = "localhost"
 db_user = "postgres"
-db_passwd = "air" # secret
+db_passwd = "air"  # secret
 db_database = "py_geoan_cb"
 db_port = "5432"
 
@@ -18,31 +18,65 @@ conn = psycopg2.connect(host=db_host, user=db_user, port=db_port,
 # create a cursor
 cur = conn.cursor()
 
+# add columns needed for pgRouting to our imported network lines
+add_source = '''ALTER TABLE geodata.ch08_e01_networklines ADD COLUMN source INTEGER;'''
+add_target = '''ALTER TABLE geodata.ch08_e01_networklines ADD COLUMN target INTEGER;'''
+add_cost = '''ALTER TABLE geodata.ch08_e01_networklines ADD COLUMN cost DOUBLE PRECISION;'''
+
+cur.execute(add_source)
+cur.execute(add_target)
+cur.execute(add_cost)
+
 # passing the name of the imported table
 # plus the tolerance value, geometry column and primary key field
-create_table = '''
+create_topo_table = '''
     SELECT public.pgr_createTopology('geodata.ch08_e01_networklines',
-        0.0005, 'wkb_geometry', 'ogc_fid');
+        0.0001, 'wkb_geometry', 'ogc_fid');
     '''
 # run the create table query
-# cur.execute(create_table)
+cur.execute(create_topo_table)
 
 # commit the new table to the database
-#conn.commit()
+conn.commit()
+
+# start_coord = "71384.9532168 164571.903749"
+# end_coord = "71398.8429459 164493.503944"
+
+# find the start node id within 1 meter of the given coordinate
+# used as input in routing query start point
+start_node_query = """
+    SELECT id FROM geodata.ch08_e01_networklines_vertices_pgr AS p
+    WHERE ST_DWithin(the_geom, ST_GeomFromText('POINT(71384.9532168 164571.903749)',31255), 1);"""
+
+# locate the end node id within 1 meter of the given coordinate
+end_node_query = """
+    SELECT id FROM geodata.ch08_e01_networklines_vertices_pgr AS p
+    WHERE ST_DWithin(the_geom, ST_GeomFromText('POINT(71398.8429459 164493.503944)',31255), 1);
+    """
+# get the start node id within
+cur.execute(start_node_query)
+sn = int(cur.fetchone()[0])
+
+cur.execute(end_node_query)
+en = int(cur.fetchone()[0])
+
 
 # pgRouting query to return our list of segments representing
 # our shortest path Dijkstra results as GeoJSON
-routing_query =  '''
+# query returns the shortes path between our start and end nodes above
+# using the pytohn .format string syntax to insert a variable in the query
+routing_query = '''
     SELECT seq, id1 AS node, id2 AS edge, ST_Length(wkb_geometry) AS cost,
-           ST_AsGeoJSON(wkb_geometry) as geoj
+           ST_AsGeoJSON(wkb_geometry) AS geoj
       FROM pgr_dijkstra(
         'SELECT ogc_fid as id, source, target, st_length(wkb_geometry) as cost
          FROM geodata.ch08_e01_networklines',
-        1, 472, FALSE, FALSE
+        {start_node},{end_node}, FALSE, FALSE
       ) AS di
       JOIN  geodata.ch08_e01_networklines pt
       ON di.id2 = pt.ogc_fid ;
-  '''
+  '''.format(start_node=sn, end_node=en)
+
 
 # run our shortest path query
 cur.execute(routing_query)
@@ -56,6 +90,7 @@ route_result = []
 # loop over each segment in the result route segments
 # create the list of our new GeoJSON
 for segment in route_segments:
+    print segment
     geojs = segment[4]
     geojs_geom = loads(geojs)
     geojs_feat = Feature(geometry=geojs_geom, properties={'nice': 'route'})
