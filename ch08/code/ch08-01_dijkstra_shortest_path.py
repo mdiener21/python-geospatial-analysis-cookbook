@@ -53,10 +53,12 @@ end_node_query = """
     SELECT id FROM geodata.ch08_e01_networklines_vertices_pgr AS p
     WHERE ST_DWithin(the_geom, ST_GeomFromText('POINT(71398.8429459 164493.503944)',31255), 1);
     """
-# get the start node id within
+
+# get the start node id as an integer
 cur.execute(start_node_query)
 sn = int(cur.fetchone()[0])
 
+# get the end node id as an integer
 cur.execute(end_node_query)
 en = int(cur.fetchone()[0])
 
