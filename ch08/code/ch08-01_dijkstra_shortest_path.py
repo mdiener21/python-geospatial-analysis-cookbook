@@ -74,9 +74,9 @@ routing_query = '''
         'SELECT ogc_fid as id, source, target, st_length(wkb_geometry) as cost
          FROM geodata.ch08_e01_networklines',
         {start_node},{end_node}, FALSE, FALSE
-      ) AS di
-      JOIN  geodata.ch08_e01_networklines pt
-      ON di.id2 = pt.ogc_fid ;
+      ) AS dij_route
+      JOIN  geodata.ch08_e01_networklines AS input_network
+      ON dij_route.id2 = input_network.ogc_fid ;
   '''.format(start_node=sn, end_node=en)
 
 
