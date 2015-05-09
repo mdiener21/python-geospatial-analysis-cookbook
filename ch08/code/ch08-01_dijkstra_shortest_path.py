@@ -7,7 +7,7 @@ from geojson import loads, Feature, FeatureCollection
 
 db_host = "localhost"
 db_user = "postgres"
-db_passwd = "air"  # secret
+db_passwd = "secret"
 db_database = "py_geoan_cb"
 db_port = "5432"
 
@@ -17,27 +17,6 @@ conn = psycopg2.connect(host=db_host, user=db_user, port=db_port,
 
 # create a cursor
 cur = conn.cursor()
-
-# add columns needed for pgRouting to our imported network lines
-add_source = '''ALTER TABLE geodata.ch08_e01_networklines ADD COLUMN source INTEGER;'''
-add_target = '''ALTER TABLE geodata.ch08_e01_networklines ADD COLUMN target INTEGER;'''
-add_cost = '''ALTER TABLE geodata.ch08_e01_networklines ADD COLUMN cost DOUBLE PRECISION;'''
-
-cur.execute(add_source)
-cur.execute(add_target)
-cur.execute(add_cost)
-
-# passing the name of the imported table
-# plus the tolerance value, geometry column and primary key field
-create_topo_table = '''
-    SELECT public.pgr_createTopology('geodata.ch08_e01_networklines',
-        0.0001, 'wkb_geometry', 'ogc_fid');
-    '''
-# run the create table query
-cur.execute(create_topo_table)
-
-# commit the new table to the database
-conn.commit()
 
 # start_coord = "71384.9532168 164571.903749"
 # end_coord = "71398.8429459 164493.503944"
