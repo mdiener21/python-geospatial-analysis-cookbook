@@ -67,18 +67,18 @@ for evac_time in evac_times:
 
     cur.execute(distance_poly_query,(sn, evac_time))
     # get entire query results to work with
-    route_segments = cur.fetchall()
+    distance_nodes = cur.fetchall()
 
     # empty list to hold each segment for our GeoJSON output
     route_results = []
 
     # loop over each segment in the result route segments
     # create the list of our new GeoJSON
-    for segment in route_segments:
-        sequence = segment[0]     # sequence number
-        node = segment[1]         # node id
-        cost = segment[2]         # cost value
-        geojs = segment[3]        # geometry
+    for dist_node in distance_nodes:
+        sequence = dist_node[0]     # sequence number
+        node = dist_node[1]         # node id
+        cost = dist_node[2]         # cost value
+        geojs = dist_node[3]        # geometry
         geojs_geom = loads(geojs) # create geojson geom
         geojs_feat = Feature(geometry=geojs_geom,
                 properties={'sequence_num': sequence,
