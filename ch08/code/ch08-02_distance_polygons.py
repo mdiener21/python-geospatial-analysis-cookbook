@@ -38,9 +38,9 @@ start_node_query = """
 # get the start node id as an integer
 # pass the variables
 cur.execute(start_node_query, (x_start_coord, y_start_coord))
-sn = int(cur.fetchone()[0])
+start_node_id = int(cur.fetchone()[0])
 
-comb_res = []
+combined_result = []
 
 hallways = shapefile.Reader("../geodata/shp/e01_hallways_union.shp")
 e01_hallway_features = hallways.shape()
@@ -65,7 +65,7 @@ for evac_time in evac_times:
             ON drive_dist.id1 = networklines.id;
         '''
 
-    cur.execute(distance_poly_query,(sn, evac_time))
+    cur.execute(distance_poly_query,(start_node_id, evac_time))
     # get entire query results to work with
     distance_nodes = cur.fetchall()
 
@@ -85,7 +85,7 @@ for evac_time in evac_times:
                 'node':node, 'evac_time_sec':cost,
                 'evac_code': evac_time})
         # add each point to total including all points
-        comb_res.append(geojs_feat)
+        combined_result.append(geojs_feat)
         # add each point for individual evacuation time
         route_results.append(geojs_geom)
 
@@ -104,7 +104,7 @@ for evac_time in evac_times:
     # create MultiPoint from our list of points for evac time
     point_collection = geometry.MultiPoint(list(evac_time_pts))
 
-    #create our convex hull polyon around evac time points
+    # create our convex hull polyon around evac time points
     convex_hull_polygon = point_collection.convex_hull
 
     # intersect convex hull with hallways polygon  (ch = convex hull)
@@ -124,7 +124,7 @@ for evac_time in evac_times:
     write_geojson(output_geojson_route, geojs_fc )
 
 # final result GeoJSON
-final_res = FeatureCollection(comb_res)
+final_res = FeatureCollection(combined_result)
 
 # write to disk
 write_geojson("../geodata/final_res.geojson", final_res)
