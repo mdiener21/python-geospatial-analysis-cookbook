@@ -129,6 +129,6 @@ final_res = FeatureCollection(combined_result)
 # write to disk
 write_geojson("../geodata/final_res.geojson", final_res)
 
-# clean up and close database curson and connection
+# clean up and close database cursor and connection
 cur.close()
 conn.close()
