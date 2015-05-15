@@ -11,7 +11,7 @@ from shapely.geometry import asShape
 # database connection
 db_host = "localhost"
 db_user = "postgres"
-db_passwd = "air"
+db_passwd = "secret"
 db_database = "py_geoan_cb"
 db_port = "5432"
 
@@ -21,8 +21,8 @@ conn = psycopg2.connect(host=db_host, user=db_user, port=db_port,
 cur = conn.cursor()
 
 def write_geojson(outfilename, indata):
-    file_out = open(outfilename, "w")
-    file_out.write(json.dumps(indata))
+    with open(outfilename, "w") as geojs_out:
+        geojs_out.write(json.dumps(indata))
 
 # center point for creating our distance polygons
 x_start_coord = 71384.9532168
@@ -108,15 +108,15 @@ for evac_time in evac_times:
     convex_hull_polygon = point_collection.convex_hull
 
     # intersect convex hull with hallways polygon  (ch = convex hull)
-    ch_intersect = e01_hallway_shply.intersection(convex_hull_polygon)
+    cvex_hull_intersect = e01_hallway_shply.intersection(convex_hull_polygon)
 
     # export convex hull intersection to geojson
-    ch = ch_intersect.__geo_interface__
+    cvex_hull = cvex_hull_intersect.__geo_interface__
 
     # for each evac time we create a unique GeoJSON polygon
     output_ply = "../geodata/ch08-02_dist_poly_" + str(evac_time) + ".geojson"
 
-    write_geojson(output_ply, ch)
+    write_geojson(output_ply, cvex_hull)
 
     output_geojson_route = "../geodata/ch08-02_dist_pts_" + str(evac_time) + ".geojson"
 

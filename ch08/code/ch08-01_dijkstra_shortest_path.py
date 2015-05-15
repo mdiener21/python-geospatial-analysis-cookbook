@@ -83,11 +83,12 @@ geojs_fc = FeatureCollection(route_result)
 # define the output folder and GeoJSON file name
 output_geojson_route = "../geodata/ch08_shortest_path.geojson"
 
+
 # save geojson to a file in our geodata folder
 def write_geojson():
-    file_out = open(output_geojson_route, "w")
-    file_out.write(json.dumps(geojs_fc))
-    file_out.close()
+    with open(output_geojson_route, "w") as geojs_out:
+        geojs_out.write(json.dumps(geojs_fc))
+
 
 # run the write function to actually create the GeoJSON file
 write_geojson()
