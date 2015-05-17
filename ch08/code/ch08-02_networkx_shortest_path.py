@@ -35,9 +35,6 @@ start_node_pos = 30
 end_node_pos = 21
 
 
-print "in tuple nodes[pos0_i]" + str(nx_nodes[start_node_pos])
-print "ENNNND"
-
 # Compute the shortest path. Dijkstra's algorithm.
 nx_short_path = nx.shortest_path(nx_list_subgraph,
                                  source=tuple(nx_nodes[start_node_pos]),
@@ -74,10 +71,5 @@ nx_array_path = get_full_path(nx_short_path)
 
 # convert numpy array to Shapely Linestring
 out_shortest_path = asLineString(nx_array_path)
-
-
-def write_geojson(outfilename, indata):
-    with open(outfilename, "w") as file_out:
-        file_out.write(json.dumps(indata))
 
 write_geojson("../geodata/final_netx_sh_path.geojson", out_shortest_path.__geo_interface__ )
