@@ -4,8 +4,7 @@
 drop table if exists geodata.ch08_e01_networklines_routing;
 drop table if exists geodata.ch08_e02_networklines_routing;
 
--- convert to 3d coordinates with 900913 as projection
-
+-- convert to 3d coordinates with EPSG:3857
 SELECT ogc_fid, ST_Force_3d(ST_Transform(ST_Force_2D(st_geometryN(wkb_geometry, 1)),3857)) AS wkb_geometry,
   type_id, cost, length, 0 AS source, 0 AS target
   INTO geodata.ch08_e01_networklines_routing
@@ -17,9 +16,8 @@ SELECT ogc_fid, ST_Force_3d(ST_Transform(ST_Force_2D(st_geometryN(wkb_geometry, 
   FROM geodata.ch08_e02_networklines;
 
 -- fill the 3rd coordinate according to their floor number
-
 UPDATE geodata.ch08_e01_networklines_routing SET wkb_geometry=ST_Translate(ST_Force_3Dz(wkb_geometry),0,0,1);
-UPDATE geodata.ch08_e02_networklines_routing SET wkb_geometry=ST_Translate(ST_Force_3Dz(wkb_geometry),0,0,2); -- 6meters above level 1
+UPDATE geodata.ch08_e02_networklines_routing SET wkb_geometry=ST_Translate(ST_Force_3Dz(wkb_geometry),0,0,2);
 
 
 UPDATE geodata.ch08_e01_networklines_routing SET length =ST_Length(wkb_geometry);
@@ -30,12 +28,12 @@ UPDATE geodata.ch08_e01_networklines_routing SET cost=1 WHERE cost=0 or cost IS 
 UPDATE geodata.ch08_e02_networklines_routing SET cost=1 WHERE cost=0 or cost IS NULL;
 
 
--- update gids accordingly
+-- update unique ids ogc_fid accordingly
 UPDATE geodata.ch08_e01_networklines_routing SET ogc_fid=ogc_fid+100000;
 UPDATE geodata.ch08_e02_networklines_routing SET ogc_fid=ogc_fid+200000;
 
 
--- merge all those data into a single table for routing
+-- merge all networkline floors into a single table for routing
 DROP TABLE IF EXISTS geodata.networklines_3857;
 SELECT * INTO geodata.networklines_3857 FROM
 (
@@ -74,7 +72,6 @@ ALTER TABLE geodata.networklines_3857 add column target integer;
 ALTER TABLE geodata.networklines_3857 OWNER TO postgres;
 
 -- we dont need the temporary tables any more, delete them
-
 DROP TABLE IF EXISTS geodata.ch08_e01_networklines_routing;
 DROP TABLE IF EXISTS geodata.ch08_e02_networklines_routing;
 
