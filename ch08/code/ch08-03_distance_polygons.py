@@ -25,15 +25,16 @@ def write_geojson(outfilename, indata):
         geojs_out.write(json.dumps(indata))
 
 # center point for creating our distance polygons
-x_start_coord = 71384.9532168
-y_start_coord = 164571.903749
+x_start_coord = 1587926.769
+y_start_coord = 5879726.492
+
 
 # query including two variables for the x, y POINT coordinate
 start_node_query = """
     SELECT id
     FROM geodata.ch08_e01_networklines_vertices_pgr AS p
     WHERE ST_DWithin(the_geom,
-             ST_GeomFromText('POINT(%s %s)',31255),1);"""
+             ST_GeomFromText('POINT(%s %s)',3857),1);"""
 
 # get the start node id as an integer
 # pass the variables
@@ -42,7 +43,7 @@ start_node_id = int(cur.fetchone()[0])
 
 combined_result = []
 
-hallways = shapefile.Reader("../geodata/shp/e01_hallways_union.shp")
+hallways = shapefile.Reader("../geodata/shp/e01_hallways_union_3857.shp")
 e01_hallway_features = hallways.shape()
 e01_hallway_shply = asShape(e01_hallway_features)
 
@@ -127,7 +128,7 @@ for evac_time in evac_times:
 final_res = FeatureCollection(combined_result)
 
 # write to disk
-write_geojson("../geodata/final_res.geojson", final_res)
+write_geojson("../geodata/ch08_final_dist_poly.geojson", final_res)
 
 # clean up and close database cursor and connection
 cur.close()
