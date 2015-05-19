@@ -18,27 +18,29 @@ conn = psycopg2.connect(host=db_host, user=db_user, port=db_port,
 # create a cursor
 cur = conn.cursor()
 
-# start_coord = "71384.9532168 164571.903749"
-# end_coord = "71398.8429459 164493.503944"
+start_x = 1587927.204
+start_y = 5879726.142
+end_x = 1587947.304
+end_y = 5879611.257
 
 # find the start node id within 1 meter of the given coordinate
 # used as input in routing query start point
 start_node_query = """
     SELECT id FROM geodata.ch08_e01_networklines_vertices_pgr AS p
-    WHERE ST_DWithin(the_geom, ST_GeomFromText('POINT(71384.9532168 164571.903749)',31255), 1);"""
+    WHERE ST_DWithin(the_geom, ST_GeomFromText('POINT(%s %s)',3857), 1);"""
 
 # locate the end node id within 1 meter of the given coordinate
 end_node_query = """
     SELECT id FROM geodata.ch08_e01_networklines_vertices_pgr AS p
-    WHERE ST_DWithin(the_geom, ST_GeomFromText('POINT(71398.8429459 164493.503944)',31255), 1);
+    WHERE ST_DWithin(the_geom, ST_GeomFromText('POINT(%s %s)',3857), 1);
     """
 
 # get the start node id as an integer
-cur.execute(start_node_query)
+cur.execute(start_node_query, (start_x, start_y))
 sn = int(cur.fetchone()[0])
 
 # get the end node id as an integer
-cur.execute(end_node_query)
+cur.execute(end_node_query, (end_x, end_y))
 en = int(cur.fetchone()[0])
 
 
@@ -81,7 +83,7 @@ for segment in route_segments:
 geojs_fc = FeatureCollection(route_result)
 
 # define the output folder and GeoJSON file name
-output_geojson_route = "../geodata/ch08_shortest_path.geojson"
+output_geojson_route = "../geodata/ch08_shortest_path_pgrouting.geojson"
 
 
 # save geojson to a file in our geodata folder
