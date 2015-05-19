@@ -47,7 +47,7 @@ en = int(cur.fetchone()[0])
 # pgRouting query to return our list of segments representing
 # our shortest path Dijkstra results as GeoJSON
 # query returns the shortes path between our start and end nodes above
-# using the pytohn .format string syntax to insert a variable in the query
+# using the python .format string syntax to insert a variable in the query
 routing_query = '''
     SELECT seq, id1 AS node, id2 AS edge, ST_Length(wkb_geometry) AS cost,
            ST_AsGeoJSON(wkb_geometry) AS geoj
