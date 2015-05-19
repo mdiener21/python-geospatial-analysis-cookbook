@@ -14,7 +14,7 @@ def write_geojson(outfilename, indata):
 # returns a graph where each node is a coordinate pair
 # and the edge is the line connecting the two nodes
 
-nx_load_shp = nx.read_shp("../geodata/shp/e01_network_lines.shp")
+nx_load_shp = nx.read_shp("../geodata/shp/e01_network_lines_3857.shp")
 
 # A graph is not always connected, so we take the largest connected subgraph
 # by using the connected_component_subgraphs function.
@@ -26,7 +26,7 @@ nx_nodes = np.array(nx_list_subgraph.nodes())
 
 # output the nodes to a GeoJSON file to view in QGIS
 network_nodes = asMultiPoint(nx_nodes)
-write_geojson("../geodata/final_netx_nodes.geojson", network_nodes.__geo_interface__ )
+write_geojson("../geodata/ch08_final_netx_nodes.geojson", network_nodes.__geo_interface__ )
 
 
 # this number represents the nodes position
@@ -72,4 +72,4 @@ nx_array_path = get_full_path(nx_short_path)
 # convert numpy array to Shapely Linestring
 out_shortest_path = asLineString(nx_array_path)
 
-write_geojson("../geodata/final_netx_sh_path.geojson", out_shortest_path.__geo_interface__ )
+write_geojson("../geodata/ch08_final_netx_sh_path.geojson", out_shortest_path.__geo_interface__ )
