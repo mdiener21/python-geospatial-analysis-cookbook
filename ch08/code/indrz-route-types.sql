@@ -45,6 +45,3 @@ CREATE TYPE public.indrz_arbitraryroutelayer2 AS
     layer integer,
     type integer,
     direction character varying);
-
--- -- vertex_result
--- CREATE TYPE public.vertex_result AS   (x double precision,    y double precision);
