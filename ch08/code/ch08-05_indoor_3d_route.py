@@ -7,7 +7,7 @@ from geojson import loads, Feature, FeatureCollection
 
 db_host = "localhost"
 db_user = "postgres"
-db_passwd = "air"
+db_passwd = "secret"
 db_database = "py_geoan_cb"
 db_port = "5432"
 
@@ -62,9 +62,10 @@ end_node_id = int(cur.fetchone()[0])
 
 routing_query = '''
     SELECT seq, id1 AS node, id2 AS edge, ST_Length(wkb_geometry) AS cost, layer,
-           ST_AsGeoJSON(wkb_geometry) AS geoj
+      type_id, ST_AsGeoJSON(wkb_geometry) AS geoj
       FROM pgr_dijkstra(
-        'SELECT ogc_fid as id, source, target, st_length(wkb_geometry) AS cost, layer
+        'SELECT ogc_fid as id, source, target, st_length(wkb_geometry) AS cost,
+         layer, type_id
          FROM geodata.networklines_3857',
         %s, %s, FALSE, FALSE
       ) AS dij_route
@@ -88,9 +89,12 @@ for segment in route_segments:
     print segment
     seg_cost = segment[3]     # cost value
     layer_level = segment[4]  # floor number
-    geojs = segment[5]        # geojson coordinates
+    seg_type = segment[5]
+    geojs = segment[6]        # geojson coordinates
     geojs_geom = loads(geojs) # load string to geom
-    geojs_feat = Feature(geometry=geojs_geom, properties={'floor': layer_level, 'cost': seg_cost})
+    geojs_feat = Feature(geometry=geojs_geom, properties={'floor': layer_level,
+                                                          'cost': seg_cost,
+                                                          'type_id': seg_type})
     route_result.append(geojs_feat)
 
 # using the geojson module to create our GeoJSON Feature Collection
