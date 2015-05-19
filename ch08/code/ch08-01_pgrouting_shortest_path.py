@@ -71,7 +71,7 @@ route_segments = cur.fetchall()
 route_result = []
 
 # loop over each segment in the result route segments
-# create the list of our new GeoJSON
+# create the list for our new GeoJSON
 for segment in route_segments:
     print segment
     geojs = segment[4]
