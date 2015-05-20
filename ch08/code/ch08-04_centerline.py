@@ -5,7 +5,7 @@ import shapefile
 from shapely.geometry import asShape, mapping
 from centerline import Centerline
 
-input_hallways = "../geodata/shp/e01_hallways_union.shp"
+input_hallways = "../geodata/shp/e01_hallways_small_3857.shp"
 
 
 def write_geojson(outfilename, indata):
