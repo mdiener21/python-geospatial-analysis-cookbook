@@ -27,13 +27,13 @@ def calc_distance_walktime(rows):
     for row in rows:
 
         route_length += row[3]
-        #calculate walk time
+        # calculate walk time
         if row[5] == 3 or row[5] == 4:  # stairs
-            walk_speed = 1.2 # meters per second m/s
+            walk_speed = 1.2  # meters per second m/s
         elif row[5] == 5 or row[5] == 6:  # elevator
             walk_speed = 1.1  # m/s
         else:
-            walk_speed = 1.39 # m/s
+            walk_speed = 1.39  # m/s
 
         walk_time += (row[3] / walk_speed)
 
