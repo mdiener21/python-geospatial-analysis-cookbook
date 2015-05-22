@@ -62,6 +62,7 @@ print pts_in_this_ply
 print pts_in_polys_dic
 # polygons['num_points'] = len(something)
 
+
 def valid_point_in_poly(poly, point):
     """
     Determine if every polygon contains max one point and that each
@@ -71,7 +72,14 @@ def valid_point_in_poly(poly, point):
     :return: True or False if False a dictionary containing polygon ids
     that contain no or multiple points
     """
+    id = None
+    total_pts = None
 
+    good_result = {'result': 'all polygon have only one point inside'}
+    bad_result = {'result': 'some polygons have more than one point inside', 'list_bad_polys': []}
+    list_bad_polys = [{'poly_id': id, 'num_pts': total_pts},{'poly_id': id, 'num_pts': total_pts}]
+    bad_result['list_bad_polys'] = list_bad_polys
+    print bad_result
     # test if point is on the edge, vertex or inside
     # if yes all good else point is in hole or our outside or
     # point is on a vertex or on the edge
