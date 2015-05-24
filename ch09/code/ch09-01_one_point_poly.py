@@ -22,22 +22,8 @@ point_inside = Point(6, 6)
 point_outside = Point(20, 20)
 point_in_hole = Point(3, 3)
 
-print "len "
-print len(point_on_vertex.coords)
-print "is"
-
 pt_series = MultiPoint([(1, 1), (2, 2), (4, 4), (5, 5), (16, 16)])
-
-print len(pt_series)
-# if len(poly) > 1:
 ply_series = MultiPolygon([polygon_box, ply1])
-
-
-
-print len(ply_series)
-
-
-# polygons['num_points'] = len(something)
 
 
 def valid_point_in_poly(polys, points):
@@ -69,8 +55,7 @@ def valid_point_in_poly(polys, points):
         if len(points.coords) == 1:
             single_point = points
             if poly.touches(single_point):
-                pass
-
+                list_bad_polys.append({'single_point_error': single_point})
 
                 # return False
             if poly.contains(single_point):
@@ -79,7 +64,7 @@ def valid_point_in_poly(polys, points):
             for pt in points:
                 if poly.touches(pt):
                     pass
-                    list_bad_polys = [{'poly_id': id, 'num_pts': total_pts},{'poly_id': id, 'num_pts': total_pts}]
+                    list_bad_polys.append({'multipoint_errors': pt.coords, 'poly_id': poly, 'point_coord': pt.coords})
                     # return False
                 if poly.contains(pt):
                     pts_in_this_ply.append(pt)
@@ -90,23 +75,24 @@ def valid_point_in_poly(polys, points):
 
         pts_in_polys_dic['id ' + str(i)] = len(pts_in_this_ply)
 
-    for res in pts_in_polys:
-        if res == 1:
-            print " YEAA  One point in Poly"
-
-        elif res == 0:
-            print " no points in poly"
-        elif res > 1:
-            print " oh no more than one point in polygon"
-        else:
-            print "done"
-
-
+    # for res in pts_in_polys:
+    #     if res == 1:
+    #         print " YEAA  One point in Poly"
+    #
+    #     elif res == 0:
+    #         print " no points in poly"
+    #     elif res > 1:
+    #         print " oh no more than one point in polygon"
+    #     else:
+    #         print "done"
 
 
-    list_bad_polys = [{'poly_id': id, 'num_pts': total_pts},{'poly_id': id, 'num_pts': total_pts}]
-    bad_result['list_bad_polys'] = list_bad_polys
-    print bad_result
+
+
+    # list_bad_polys = [{'poly_id': id, 'num_pts': total_pts},{'poly_id': id, 'num_pts': total_pts}]
+    # bad_result['list_bad_polys'] = list_bad_polys
+    # print bad_result
+    print list_bad_polys
     # test if point is on the edge, vertex or inside
     # if yes all good else point is in hole or our outside or
     # point is on a vertex or on the edge
@@ -126,3 +112,5 @@ print str(valid_point_in_poly(ply_series, point_on_edge)) + " BAD point on EDGE"
 print str(valid_point_in_poly(ply_series, point_inside)) + " Good point on INSIDE"
 print str(valid_point_in_poly(ply_series, point_outside)) + " BAD point OUTSIDE polygon"
 print str(valid_point_in_poly(ply_series, point_in_hole)) + " BAD point IN HOLE polygon"
+
+print str(valid_point_in_poly(ply_series, pt_series)) + " final test multi plys and pts"
