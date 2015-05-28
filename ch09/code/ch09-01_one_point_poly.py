@@ -8,13 +8,9 @@
 from shapely.geometry import Point, MultiPolygon, MultiPoint
 from shapely.geometry import Polygon
 
-# construct a valid polygon (i.e. not self-intersecting) with a hole
-ply_exterior = [(0, 0), (0, 10), (10, 10), (0, 10)]
-ply_interior = [(2, 2), (2, 4), (4, 4), (4, 2)]
-test_ply = Polygon(ply_exterior, [ply_interior])
-ply1 = Polygon([(15, 15), (15, 20), (20, 20), (20, 15)])
-
-polygon_box = Polygon([(0, 0), (0, 10), (10, 10), (0, 10)])
+ply1 = Polygon([(0, 0), (0, 10), (10, 10), (0, 10)])
+ply2 = Polygon([(30,30),(30,40), (40, 40), (40, 30)])
+ply3 = Polygon([(15, 15), (15, 20), (20, 20), (20, 15)])
 
 point_on_edge = Point(5, 10)
 point_on_vertex = Point(10, 10)
@@ -22,8 +18,9 @@ point_inside = Point(6, 6)
 point_outside = Point(20, 20)
 point_in_hole = Point(3, 3)
 
-pt_series = MultiPoint([(1, 1), (2, 2), (4, 4), (5, 5), (16, 16)])
-ply_series = MultiPolygon([polygon_box, ply1])
+pt_series_bad = MultiPoint([(0, 0), (1, 1), (2, 2), (4, 4), (5, 5), (16, 16)])
+pt_series_good = MultiPoint([(5, 5), (35, 35), (16, 16)])
+ply_series = MultiPolygon([ply1, ply2, ply3])
 
 
 def valid_point_in_poly(polys, points):
@@ -35,82 +32,68 @@ def valid_point_in_poly(polys, points):
     :return: True or False if False a dictionary containing polygon ids
     that contain no or multiple points
     """
-
-    good_result = {'result': 'all polygon have only one point inside'}
-    bad_result = {'result': 'some polygons have more than one point inside', 'list_bad_polys': []}
-    list_bad_polys = []
-
-    id = None
-    total_pts = None
-
-    valid_status = False
     pts_in_polys = []
-    pts_in_polys_dic = {}
+    pts_touch_plys = []
 
     # check each polygon for number of points inside
     for i, poly in enumerate(polys):
 
         pts_in_this_ply = []
+        pts_touch_this_ply = []
 
-        if len(points.coords) == 1:
-            single_point = points
-            if poly.touches(single_point):
-                list_bad_polys.append({'single_point_error': single_point})
+        if points.geom_type == 'Point':
+            if poly.touches(points):
+                pts_touch_this_ply.append({'single_point_error_touches': points.__geo_interface__})
+            if poly.contains(points):
+                pts_in_this_ply.append({'single_point_error_contains': points.__geo_interface__})
 
-                # return False
-            if poly.contains(single_point):
-                pts_in_this_ply.append(single_point)
         else:
             for pt in points:
                 if poly.touches(pt):
-                    pass
-                    list_bad_polys.append({'multipoint_errors': pt.coords, 'poly_id': poly, 'point_coord': pt.coords})
-                    # return False
+                    pts_touch_this_ply.append({'multipoint_errors_touches': pt.__geo_interface__, 'poly_id': i, 'point_coord': pt.__geo_interface__})
+
                 if poly.contains(pt):
-                    pts_in_this_ply.append(pt)
-                    # return True
-                # return False
+                    pts_in_this_ply.append({'multipoin_error_contains': pt.__geo_interface__})
 
-        pts_in_polys.append(len(pts_in_this_ply))
+        pts_in_polys.append(len(pts_in_this_ply)) #  print count of point errors
+        pts_touch_plys.append(len(pts_touch_this_ply)) # print count of point errors
 
-        pts_in_polys_dic['id ' + str(i)] = len(pts_in_this_ply)
+        # pts_in_polys.append(pts_in_this_ply)
+        # pts_touch_plys.append(pts_touch_this_ply)
 
-    # for res in pts_in_polys:
-    #     if res == 1:
-    #         print " YEAA  One point in Poly"
-    #
-    #     elif res == 0:
-    #         print " no points in poly"
-    #     elif res > 1:
-    #         print " oh no more than one point in polygon"
-    #     else:
-    #         print "done"
+    man = dict()
+    all_good = True
+    for num, res in enumerate(pts_in_polys):
+
+        if res == 1:
+            man['poly num ' + str(num)] = "excellen only 1 point in poly"
+        elif res > 1:
+            man['poly num ' + str(num)] = str(res) + " points in this poly"
+            all_good = False
+        else:
+            man['poly num ' + str(num)] = "No points in this poly"
+            all_good = False
+
+    if all_good:
+        return all_good
+    else:
+        return man # [4,0,1]
 
 
+#
+# print valid_point_in_poly(ply_series, point_on_vertex)
+# print valid_point_in_poly(ply_series, point_on_edge)
+# print valid_point_in_poly(ply_series, point_inside)
+# print valid_point_in_poly(ply_series, point_outside)
+# print valid_point_in_poly(ply_series, point_in_hole)
 
-
-    # list_bad_polys = [{'poly_id': id, 'num_pts': total_pts},{'poly_id': id, 'num_pts': total_pts}]
-    # bad_result['list_bad_polys'] = list_bad_polys
-    # print bad_result
-    print list_bad_polys
-    # test if point is on the edge, vertex or inside
-    # if yes all good else point is in hole or our outside or
-    # point is on a vertex or on the edge
-    # print pts_in_polys
-    # print "points in this poly"
-    # print pts_in_this_ply
-    # print pts_in_polys_dic
-
-    # test a multipolygon with holes
-
-# print test_ply.contains(point_inside)
-# print test_ply.boundary
-# print test_ply.bounds
-
-print str(valid_point_in_poly(ply_series, point_on_vertex)) + " BAD point on VERTEX"
-print str(valid_point_in_poly(ply_series, point_on_edge)) + " BAD point on EDGE"
-print str(valid_point_in_poly(ply_series, point_inside)) + " Good point on INSIDE"
-print str(valid_point_in_poly(ply_series, point_outside)) + " BAD point OUTSIDE polygon"
-print str(valid_point_in_poly(ply_series, point_in_hole)) + " BAD point IN HOLE polygon"
-
-print str(valid_point_in_poly(ply_series, pt_series)) + " final test multi plys and pts"
+print valid_point_in_poly(ply_series, pt_series_bad)
+# man = dict()
+# for num, res in enumerate(multi_test):
+#     if res == 1:
+#         continue  # man['poly num ' + str(num)] = "excellen only 1 point in poly"
+#     elif res > 1:
+#         man['poly num ' + str(num)] = str(res) + " points in this poly"
+#     else:
+#         man['poly num ' + str(num)] = "No points in this poly"
+# print man
