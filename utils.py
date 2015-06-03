@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 from math import sqrt
 import shapefile
-from shapely.geometry import asShape, MultiPolygon
+from shapely.geometry import asShape, MultiPolygon, MultiPoint, MultiLineString
 import json
-# calculate the size of our matplotlib output
 
+
+# calculate the size of our matplotlib output
 GM = (sqrt(5) - 1.0) / 2.0
 W = 8.0
 H = W * GM
 SIZE = (W, H)
 
-# colors for our plots as hex
+# colors for matplotlib plots as hex
 GRAY = '#B2B3B7'
 BLUE = '#6699cc'
 YELLOW = '#ffe680'
@@ -78,9 +78,9 @@ def set_plot_bounds(object, offset=1.0):
     return {'xrange': x_range, 'yrange': y_range}
 
 
-def create_shapes(shapefile_path):
+def shp_to_shply_multiply(shapefile_path):
     """
-    Convert Shapefile Geometry to Shapely MultiPolygon
+    Convert Polygon Shapefile to Shapely MultiPolygon
     :param shapefile_path: path to a shapefile on disk
     :return: shapely MultiPolygon
     """
@@ -113,15 +113,22 @@ def create_shapes(shapefile_path):
     return out_multi_ply
 
 def shp_2_geojson_file(shapefile_path, out_geojson):
+    '''
+    Convert Shapefile to GeoJSON
+    :param shapefile_path: path to shapefile
+    :param out_geojson: path with name of output geojson
+    :return:  GeoJSON file
+    Example:   shp_2_geojson_file('/home/nice.shp', '/home/out.geojson')
+    '''
     # open shapefile
-    in_ply = shapefile.Reader(shapefile_path)
+    in_shp = shapefile.Reader(shapefile_path)
     # get a list of geometry and records
-    shp_records = in_ply.shapeRecords()
+    shp_records = in_shp.shapeRecords()
     # get list of fields excluding first list object
-    fc_fields = in_ply.fields[1:]
+    fc_fields = in_shp.fields[1:]
 
     # using list comprehension to create list of field names
-    field_names = [field_name[0] for field_name in fc_fields ]
+    field_names = [field_name[0] for field_name in fc_fields]
     my_fc_list = []
     # run through each shape geometry and attribute
     for x in shp_records:
@@ -133,7 +140,7 @@ def shp_2_geojson_file(shapefile_path, out_geojson):
     # write GeoJSON to a file on disk
     with open(out_geojson, "w") as oj:
         oj.write(json.dumps({'type': 'FeatureCollection',
-                        'features': my_fc_list}))
+                             'features': my_fc_list}))
 
 
 def shp2_geojson_obj(shapefile_path):
@@ -145,7 +152,7 @@ def shp2_geojson_obj(shapefile_path):
     fc_fields = in_ply.fields[1:]
 
     # using list comprehension to create list of field names
-    field_names = [field_name[0] for field_name in fc_fields ]
+    field_names = [field_name[0] for field_name in fc_fields]
     my_fc_list = []
     # run through each shape geometry and attribute
     for x in shp_records:
@@ -155,7 +162,7 @@ def shp2_geojson_obj(shapefile_path):
                                properties=field_attributes))
 
     geoj_json_obj = {'type': 'FeatureCollection',
-                    'features': my_fc_list}
+                     'features': my_fc_list}
 
     return geoj_json_obj
 
@@ -173,25 +180,47 @@ def out_geoj(list_geom, out_geoj_file):
     json.dump(out_geojson, open(out_geoj_file, 'w'))
 
 
-def check_geom(in_geom):
+def create_valid_shply_poly(in_geom):
     """
     :param in_geom: input valid Shapely geometry objects
     :return: Shapely MultiPolygon cleaned
     """
-    plys = []
+    list_geom = []
     for g in in_geom:
         # if geometry is NOT valid
         if not g.is_valid:
             print "Oh no invalid geometry"
             # clean polygon with buffer 0 distance trick
-            new_ply = g.buffer(0)
+            new_buf = g.buffer(0)
             print "now lets make it valid"
             # add new geometry to list
-            plys.append(new_ply)
+            list_geom.append(new_buf)
         else:
             # add valid geometry to list
             print "yes Valid geom"
-            plys.append(g)
+            list_geom.append(g)
     # convert new polygons into a new MultiPolygon
-    out_new_valid_multi = MultiPolygon(plys)
+    out_new_valid_multi = MultiPolygon(list_geom)
     return out_new_valid_multi
+
+def create_shply_multigeom(in_geojs, geom_type):
+    '''
+
+    :param in_geojs: geojson input
+    :param geom_type: enter string MultiPolygon, MultiPoint, MultiLineString
+    :return: Shapely Geometry
+    '''
+    shps_list = []
+    for feature in in_geojs['features']:
+        shape = asShape(feature['geometry'])
+        shps_list.append(shape)
+
+    if geom_type == "MultiPolygon":
+        new_multi = MultiPolygon(shps_list)
+    elif geom_type == "MultiPoint":
+        new_multi = MultiPoint(shps_list)
+    elif geom_type == "MultiLineString":
+        new_multi = MultiLineString(shps_list)
+    else:
+        print "sorry invalid geom_type only accepted MultiPolygon, MultiPoint, MultiLineString"
+    return new_multi
