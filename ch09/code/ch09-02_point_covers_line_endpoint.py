@@ -6,7 +6,7 @@ from utils import shp_to_shply_multiply
 from utils import shp_2_geojson_file
 from utils import shp2_geojson_obj
 from utils import create_shply_multigeom
-
+from utils import out_geoj
 from shapely.geometry import Point, MultiPoint
 from shapely.geometry import MultiLineString, LineString
 
@@ -48,13 +48,14 @@ print get_start_line_coord
 print get_end_line_coord
 
 
-def covered_by_endpoint(points, lines):
-    set_pts_not_covered = []
+def covered_by_endpoint(points, lines, ret_errors=True):
+    final_not_covered = []
     final_set = []
 
     for pt in points:
 
         set_pts_covered = []
+        set_pts_not_covered = []
 
         for line in lines:
 
@@ -63,7 +64,6 @@ def covered_by_endpoint(points, lines):
 
             get_start_line_coord = Point(coords[0])
             get_end_line_coord = Point(coords[-1])
-
 
             if pt.equals(get_start_line_coord):
                 #print "point on start of line"
@@ -74,14 +74,44 @@ def covered_by_endpoint(points, lines):
                 set_pts_covered.append(pt)
 
             # else:
-                # print "point not on start or end"
+            #     set_pts_not_covered.append(pt)
 
         final_set.append(set_pts_covered)
-    print final_set
+        if pt.within(lines):
+            final_not_covered.append(pt)
+        elif pt.disjoint(lines):
+            final_not_covered.append(pt)
 
-res = covered_by_endpoint(shp2_points, shp1_lines)
+    if ret_errors:
+        return final_not_covered
+    else:
+        return final_set
+
+empty = []
+
+if empty:
+    print "True"
+else:
+    print "False it is empty"
+res = covered_by_endpoint(shp2_points, shp1_lines, True)
+print res
 
 
-myMulti = MultiPoint(res)
+print "testing"
+out_j = []
+print out_j
+for r in res:
+    if r:  # if list empty
+        for x in r:
+            # print all points that are GOOD
+            out_j.append(x)
+    # else:
+    #     print r
 
-print myMulti
+out_geoj(out_j, '../geodata/badpoints.geojson')
+
+
+
+#myMulti = MultiPoint(res)
+
+#print myMulti
