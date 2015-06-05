@@ -54,12 +54,12 @@ plot_line(ax, line)
 
 # draw a line from origin point to nearest points
 line_to_snap_pt = LineString([point, pt_snap_res])
-line_to_interplate_pt = LineString([point, pt_interpolate])
+line_to_interpolate_pt = LineString([point, pt_interpolate])
 
 # plot the grey dashed line
 plot_line(ax, line_to_snap_pt, '#000000', ls='--',
           linewidth=0.4, c=GRAY)
-plot_line(ax, line_to_interplate_pt, '#666666', ls='--',
+plot_line(ax, line_to_interpolate_pt, '#666666', ls='--',
           linewidth=0.4, c=GRAY)
 
 # plot our input origin point and resulting points
