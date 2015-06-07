@@ -24,12 +24,48 @@ e1 = Point(2,2)
 e2 = Point(-1,-1)
 s3 = Point(-1,-1)
 e3 = Point(-2,-2)
+mul = MultiPoint([s1,s2,e1])
+
+print s1.disjoint(e1)
+
+mypt = None
+
+a = [1,1,1,1,2,2,2,2,3,3,4,5,5]
+from itertools import groupby
+[len(list(group)) for key, group in groupby(a)]
+
+# for point in mul:
+#     point = point.equals()
+#     if point.equals(point):
+#         print "its equal"
 
 if not s1.equals(s2):
     print "NOT s1 != s2"
 else:
     print "true s1 =s2"
 
+
+# import itertools
+# for a, b in itertools.combinations(mul, 2):
+#     compare(a, b)
+
+
+def f7(seq):
+    seen = set()
+    seen_add = seen.add
+    return [ x for x in seq if not (x in seen or seen_add(x))]
+
+d = {} # creates an empty dictionary the first time
+
+def find_duplicates(val):
+    d[val] = d.setdefault(val, -1) + 1
+    return d[val]
+
+
+# remove duplicates
+from collections import OrderedDict
+list(OrderedDict.fromkeys('abracadabra'))
+# ['a', 'b', 'r', 'c', 'd']
 
 def find_dangles(lines):
     '''
@@ -55,6 +91,13 @@ def find_dangles(lines):
         list_start_nodes.append(line_start_point)
         list_end_nodes.append(line_end_point)
 
+    all_nodes = list_end_nodes + list_start_nodes
+
+    print len(all_nodes)
+
+
+
+
     # print list_end_nodes
     # print list_start_nodes
 
@@ -76,6 +119,10 @@ def find_dangles(lines):
     # print False
     f = []
     dangles = []
+    not_dangle_master = []
+    yes_dangle_master = []
+    #for node in all_nodes:
+
     for start_pt in list_start_nodes:
 
         # if start_pt.equals(start_pt):
@@ -83,28 +130,30 @@ def find_dangles(lines):
         # print start_pt.wkt
         not_dangle = []
         yes_dangle = []
-        start_pt1 = start_pt
 
-        if not start_pt1.intersects(start_pt):
-            print "not intersect"
+        for end_pt in list_end_nodes:
 
-            for end_pt in list_end_nodes:
-                if start_pt.intersects(end_pt):
-                    # if start_pt.wkt == end_pt.wkt:
-                    # print "yes start pt = end pt"
-                    yes_dangle.append(start_pt)
-                    # print start_pt.wkt
-                    # if end_pt.equals(start_pt):
-                    #     print "yes end = start"
-                    #     print end_pt.wkt
-                    # if end_pt.equals(end_pt):
-                    #     print "yes end = end"
-                    # else:
-                    #     print "hmm"
-            dangles.append(yes_dangle)
-        else:
-            print "intersect"
-    return dangles
+            if start_pt.equals(end_pt):
+                #print "NOT a dangle"
+                not_dangle.append(start_pt)
+
+            if start_pt.disjoint(end_pt):
+                #print "possible dangle !! look out"
+                # if start_pt.wkt == end_pt.wkt:
+                # print "yes start pt = end pt"
+
+                # print start_pt.wkt
+                # if end_pt.equals(start_pt):
+                #     print "yes end = start"
+                #     print end_pt.wkt
+                # if end_pt.equals(end_pt):
+                #     print "yes end = end"
+                # else:
+                #     print "hmm"
+                dangles.append(yes_dangle)
+        not_dangle_master.append(not_dangle)
+        yes_dangle_master.append(yes_dangle)
+    return yes_dangle_master
 
 
 print "output"
@@ -121,4 +170,4 @@ for x in list_not_dangles:
 #     final.append(x)
 
 
-out_geoj(final, '../geodata/dangles.geojson')
+out_geoj(final, '../geodata/yes_dangles.geojson')
