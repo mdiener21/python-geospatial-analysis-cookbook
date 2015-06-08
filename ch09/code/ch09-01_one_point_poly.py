@@ -4,7 +4,6 @@
 # for every polygon in a polygon layer there can only be
 # one point object located in each polygon
 # the number of points per polygon can be defined by the user
-import shapefile
 from utils import shp_to_shply_multiply
 from utils import shp_2_geojson_file
 from utils import shp2_geojson_obj
@@ -12,20 +11,16 @@ from utils import create_shply_multigeom
 
 from shapely.geometry import Point, MultiPolygon, MultiPoint
 from shapely.geometry import Polygon
+import json
 
 in_shp_poly = "../geodata/topo_polys.shp"
 in_shp_point = "../geodata/topo_points.shp"
 
-shp1_data = shp2_geojson_obj(in_shp_poly)
-shp2_data = shp2_geojson_obj(in_shp_point)
+ply_geojs_obj = shp2_geojson_obj(in_shp_poly)
+pt_geojs_obj = shp2_geojson_obj(in_shp_point)
 
-shp1_polys = create_shply_multigeom(shp1_data, "MultiPolygon")
-shp2_points = create_shply_multigeom(shp2_data, "MultiPoint")
-
-
-shp_2_geojson_file('../geodata/topo_polys.shp', '../geodata/topo_ply.geojson')
-
-shply_poly = shp_to_shply_multiply('../geodata/topo_polys.shp')
+shply_polys = create_shply_multigeom(ply_geojs_obj, "MultiPolygon")
+shply_points = create_shply_multigeom(pt_geojs_obj, "MultiPoint")
 
 ply1 = Polygon([(0, 0), (0, 10), (10, 10), (0, 10)])
 ply2 = Polygon([(30,30),(30,40), (40, 40), (40, 30)])
@@ -54,8 +49,8 @@ def valid_point_in_poly(polys, points):
     pts_in_polys = []
     pts_touch_plys = []
 
-    pts_in_polys2 = []
-    pts_touch_plys2 = []
+    pts_plys_geom = []
+    pts_touch_geom = []
 
     # check each polygon for number of points inside
     for i, poly in enumerate(polys):
@@ -83,19 +78,20 @@ def valid_point_in_poly(polys, points):
         pts_in_polys.append(len(pts_in_this_ply)) #  print count of point errors
         pts_touch_plys.append(len(pts_touch_this_ply)) # print count of point errors
 
-        pts_in_polys2.append(pts_in_this_ply)
-        pts_touch_plys2.append(pts_touch_this_ply)
+        # create list of point geometry errors
+        pts_plys_geom.append(pts_in_this_ply)
+        pts_touch_geom.append(pts_touch_this_ply)
 
-
-
-    print pts_in_polys2[0]
-    print "break....................."
-
-    print pts_touch_plys2
-    print "next####################"
-
+    # identify if we have more than one point per polygon or
+    # identify if no points are inside a polygon
     no_good = dict()
     all_good = True
+
+    # loop over list containing the number of pts per polygon
+    # each item in list is an integer representing the number
+    # of points located inside a particular polygon [4,1,0]
+    # represents 4 points in polygon 1, 1 point in poly 2, and
+    # 0 points in polygon 3
     for num, res in enumerate(pts_in_polys):
 
         if res == 1:
@@ -116,21 +112,44 @@ def valid_point_in_poly(polys, points):
     if all_good:
         return all_good
     else:
-        return no_good # [4,0,1]
+        bad_list = []
+        for pt in pts_plys_geom:
+            fgeom = {}
+            for res in pt:
+                if 'multipoint_contains' in res:
+                    hui = res['multipoint_contains']
+                    print hui
+                    fgeom['geom'] = hui
+            bad_list.append(fgeom)
+        return bad_list
+        #return no_good,pts_in_polys2 # [4,0,1]
 
 
 print valid_point_in_poly(ply_series, point_on_vertex)
 print "----------done test on VERTEX -------------"
+
 print valid_point_in_poly(ply_series, point_on_edge)
 print "----------done test on EDGE -------------"
+
 print valid_point_in_poly(ply_series, point_inside)
 print "----------done test on INSIDE -------------"
+
 print valid_point_in_poly(ply_series, point_outside)
 print "----------done test on OUTSIDE -------------"
+
 print valid_point_in_poly(ply_series, point_in_hole)
 print "----------done test on HOLE -------------"
 
 
-print valid_point_in_poly(shp1_polys, shp2_points)
-print "----------done test on MULTI -------------"
+valid_res = valid_point_in_poly(shply_polys, shply_points)
+
+final_list = []
+for res in valid_res:
+    if 'geom' in res:
+        geom = res['geom']
+        final_list.append(geom)
+
+final_gj = {"type": "GeometryCollection","geometries":final_list}
+print json.dumps(final_gj)
+
 
