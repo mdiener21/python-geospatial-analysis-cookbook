@@ -23,7 +23,7 @@ class TestPointPerPolygon(unittest.TestCase):
         self.assertTrue(polygon.touches(point_on_edge))
         self.assertTrue(polygon.contains(point_inside))
         self.assertFalse(polygon.contains(point_outside))
-        self.assertFalse(point_in_hole.within(poly_with_hole))
+        self.assertTrue(point_in_hole.within(poly_with_hole))
 
 if __name__ == '__main__':
     unittest.main()

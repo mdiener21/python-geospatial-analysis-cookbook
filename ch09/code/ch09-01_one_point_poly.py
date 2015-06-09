@@ -4,13 +4,8 @@
 # for every polygon in a polygon layer there can only be
 # one point object located in each polygon
 # the number of points per polygon can be defined by the user
-from utils import shp_to_shply_multiply
-from utils import shp_2_geojson_file
 from utils import shp2_geojson_obj
 from utils import create_shply_multigeom
-
-from shapely.geometry import Point, MultiPolygon, MultiPoint
-from shapely.geometry import Polygon
 import json
 
 in_shp_poly = "../geodata/topo_polys.shp"
@@ -21,20 +16,6 @@ pt_geojs_obj = shp2_geojson_obj(in_shp_point)
 
 shply_polys = create_shply_multigeom(ply_geojs_obj, "MultiPolygon")
 shply_points = create_shply_multigeom(pt_geojs_obj, "MultiPoint")
-
-ply1 = Polygon([(0, 0), (0, 10), (10, 10), (0, 10)])
-ply2 = Polygon([(30,30),(30,40), (40, 40), (40, 30)])
-ply3 = Polygon([(15, 15), (15, 20), (20, 20), (20, 15)])
-
-point_on_edge = Point(5, 10)
-point_on_vertex = Point(10, 10)
-point_inside = Point(6, 6)
-point_outside = Point(20, 20)
-point_in_hole = Point(3, 3)
-
-pt_series_bad = MultiPoint([(0, 0), (1, 1), (2, 2), (4, 4), (5, 5), (16, 16)])
-pt_series_good = MultiPoint([(5, 5), (35, 35), (16, 16)])
-ply_series = MultiPolygon([ply1, ply2, ply3])
 
 
 def valid_point_in_poly(polys, points):
@@ -58,22 +39,12 @@ def valid_point_in_poly(polys, points):
         pts_in_this_ply = []
         pts_touch_this_ply = []
 
-        # deal with a single point object
-        if points.geom_type == 'Point':
-            if poly.touches(points):
-                pts_touch_this_ply.append({'single_point_error_touches': points.__geo_interface__})
+        for pt in points:
+            if poly.touches(pt):
+                pts_touch_this_ply.append({'multipoint_errors_touches': pt.__geo_interface__, 'poly_id': i, 'point_coord': pt.__geo_interface__})
 
-            if poly.contains(points):
-                pts_in_this_ply.append({'single_point_inside': points.__geo_interface__})
-
-        # handle multiple points
-        else:
-            for pt in points:
-                if poly.touches(pt):
-                    pts_touch_this_ply.append({'multipoint_errors_touches': pt.__geo_interface__, 'poly_id': i, 'point_coord': pt.__geo_interface__})
-
-                if poly.contains(pt):
-                    pts_in_this_ply.append({'multipoint_contains': pt.__geo_interface__})
+            if poly.contains(pt):
+                pts_in_this_ply.append({'multipoint_contains': pt.__geo_interface__})
 
         pts_in_polys.append(len(pts_in_this_ply)) #  print count of point errors
         pts_touch_plys.append(len(pts_touch_this_ply)) # print count of point errors
@@ -123,22 +94,6 @@ def valid_point_in_poly(polys, points):
             bad_list.append(fgeom)
         return bad_list
         #return no_good,pts_in_polys2 # [4,0,1]
-
-
-print valid_point_in_poly(ply_series, point_on_vertex)
-print "----------done test on VERTEX -------------"
-
-print valid_point_in_poly(ply_series, point_on_edge)
-print "----------done test on EDGE -------------"
-
-print valid_point_in_poly(ply_series, point_inside)
-print "----------done test on INSIDE -------------"
-
-print valid_point_in_poly(ply_series, point_outside)
-print "----------done test on OUTSIDE -------------"
-
-print valid_point_in_poly(ply_series, point_in_hole)
-print "----------done test on HOLE -------------"
 
 
 valid_res = valid_point_in_poly(shply_polys, shply_points)
