@@ -145,11 +145,11 @@ def shp_2_geojson_file(shapefile_path, out_geojson):
 
 def shp2_geojson_obj(shapefile_path):
     # open shapefile
-    in_ply = shapefile.Reader(shapefile_path)
+    in_shp = shapefile.Reader(shapefile_path)
     # get a list of geometry and records
-    shp_records = in_ply.shapeRecords()
+    shp_records = in_shp.shapeRecords()
     # get list of fields excluding first list object
-    fc_fields = in_ply.fields[1:]
+    fc_fields = in_shp.fields[1:]
 
     # using list comprehension to create list of field names
     field_names = [field_name[0] for field_name in fc_fields]
@@ -224,3 +224,19 @@ def create_shply_multigeom(in_geojs, geom_type):
     else:
         print "sorry invalid geom_type only accepted MultiPolygon, MultiPoint, MultiLineString"
     return new_multi
+
+def shp2_shply_geom(shapefile, linetype):
+    '''
+    Convert Shapefile to Shapely geometries for processing
+    :param shapefile: path to shapefile including ending .shp
+    :param linetype: MultiPolygon, MultiPoint, MultiLineString
+    :return:
+
+    Example usage:
+    doit("../geodata/topo_dangles.shp", 'MultiLineString')
+    '''
+
+    shp1_data = shp2_geojson_obj(shapefile)
+    shply_geom = create_shply_multigeom(shp1_data, linetype)
+
+    return shply_geom
