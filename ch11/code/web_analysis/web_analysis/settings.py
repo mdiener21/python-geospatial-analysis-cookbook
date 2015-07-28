@@ -38,9 +38,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #### GeoDjango Contrib app
-    'django.contrib.gis',
-
     #### third party apps
     'rest_framework',
 
@@ -87,7 +84,8 @@ WSGI_APPLICATION = 'web_analysis.wsgi.application'
 DATABASES = {
     'default': {
         # Postgresql with PostGIS
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        # 'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'py_geoan_cb', # DB name
         'USER': 'saturn', # DB user name
         'PASSWORD': 'secret', # DB user password
@@ -115,3 +113,49 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGGING_CONFIG = None
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'file_verbose': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/verbose.log',
+            'formatter': 'verbose'
+        },
+        'file_debug': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/debug.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers':['file_verbose'],
+            'propagate': True,
+            'level':'DEBUG',
+        },
+        'api': {
+            'handlers': ['file_debug'],
+            'propagate': True,
+            'level': 'DEBUG',
+        },
+
+    }
+}
+
+import logging.config
+logging.config.dictConfig(LOGGING)
