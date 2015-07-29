@@ -43,6 +43,7 @@ INSTALLED_APPS = (
 
     ##### our local apps
     'api',
+    'maps',
 
 )
 
@@ -62,7 +63,7 @@ ROOT_URLCONF = 'web_analysis.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,  'templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -113,6 +114,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_FOLDER = 'static'
+
+STATICFILES_DIRS = [
+   os.path.join(BASE_DIR, STATIC_FOLDER),
+]
+
+# finds all static folders in all apps
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    #'compressor.finders.CompressorFinder',
+)
 
 LOGGING_CONFIG = None
 
