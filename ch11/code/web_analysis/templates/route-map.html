@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Simple route map{% endblock %}
+
+{% block body %}    {{ block.super }}
+
+{% block content %}
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div id="map" class="map"></div>
+      </div>
+    </div>
+
+{% endblock content %}
+
+    <script>
+
+        var geojs_url = "http://localhost:8000/api/directions/1587898.414,5879564.080,1&1588005.547,5879736.039,2/?format=json";
+        var vectorLayer = new ol.layer.Vector({
+                        source: new ol.source.GeoJSON({url: geojs_url}),
+                        style:  new ol.style.Style({
+                            stroke: new ol.style.Stroke({
+                              color: 'green',
+                              width: 4
+                            })
+                          }),
+                        title: "Route",
+                        name: "Route"
+                    });
+
+        var map = new ol.Map({
+          layers: [
+            new ol.layer.Tile({
+              source: new ol.source.OSM()
+            }),
+            vectorLayer
+          ],
+          target: 'map',
+          controls: ol.control.defaults({
+            attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
+              collapsible: false
+            })
+          }),
+          view: new ol.View({
+            center: [1587927.09817072,5879623.90059265],
+            zoom: 18
+          })
+        });
+
+        </script>
+
+{% endblock body %}
