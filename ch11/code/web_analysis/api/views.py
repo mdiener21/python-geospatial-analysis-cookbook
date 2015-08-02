@@ -55,7 +55,7 @@ def find_closest_network_node(x_coord, y_coord, floor):
 # use the rest_framework decorator to create our api
 #  view for get, post requests
 @api_view(['GET', 'POST'])
-def create_route(request, start_coord, start_floor, end_coord, end_floor):
+def create_route(request, start_coord, start_floor, end_coord, end_floor, route_type):
     """
     Generate a GeoJSON indoor route passing in a start x,y,floor
     followed by &  then the end x,y,floor
@@ -65,6 +65,7 @@ def create_route(request, start_coord, start_floor, end_coord, end_floor):
     :param start_floor: floor number  ex)  2
     :param end_coord: end location x,y
     :param end_floor: end floor ex)  2
+    :param route_type: type of route 1 = barrier-free ex) 1
     :return: GeoJSON route
     """
 
@@ -92,20 +93,28 @@ def create_route(request, start_coord, start_floor, end_coord, end_floor):
                                                 y_end_coord,
                                                 end_floor_num)
 
+        base_route_q = """SELECT ogc_fid as id, source, target,
+                         total_cost AS cost,
+                         layer, type_id
+                         FROM geodata.networklines_3857"""
+
+        # set default query
+        barrierfree_q = "WHERE 1=1"
+        if route_type == "1":
+            # exclude all networklines of type stairs
+            barrierfree_q = "WHERE type_id not in (3,4)"
+
+
         routing_query = '''
             SELECT seq, id1 AS node, id2 AS edge,
               ST_Length(wkb_geometry) AS cost, layer,
               type_id, ST_AsGeoJSON(wkb_geometry) AS geoj
-              FROM pgr_dijkstra(
-                'SELECT ogc_fid as id, source, target,
-                     st_length(wkb_geometry) AS cost,
-                     layer, type_id
-                 FROM geodata.networklines_3857',
-                %s, %s, FALSE, FALSE
+              FROM pgr_dijkstra('
+                {normal} {type}', %s, %s, FALSE, FALSE
               ) AS dij_route
               JOIN  geodata.networklines_3857 AS input_network
               ON dij_route.id2 = input_network.ogc_fid ;
-          '''
+          '''.format(normal=base_route_q, type=barrierfree_q)
 
         # run our shortest path query
         if start_node_id or end_node_id:
