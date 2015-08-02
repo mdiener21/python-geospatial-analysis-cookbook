@@ -7,22 +7,77 @@
 
 {% block content %}
 
-    <div class="row-fluid">
-      <div class="span12">
+    <div class="row">
+      <div class="col-md-2">
+        <div id="directions" class="directions">
+            <form>
+{#              <div class="form-group">#}
+{#                <label for="route-to">Route From:</label>#}
+{#                <input type="text" class="form-control" id="route-to" placeholder="Enter Room Number">#}
+{#              </div>#}
+{#              <div class="form-group">#}
+{#                <label for="route-from">Route To:</label>#}
+{#                <input type="text" class="form-control" id="route-from" placeholder="Enter Room Number">#}
+{#              </div>#}
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="typeRoute" id="routeTypeStandard" value="0" checked>
+                    Standard Route
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="typeRoute" id="routeTypeBarrierFree" value="1">
+                    Barrier Free Route
+                  </label>
+                </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+                <br>
+            </form>
+
+        </div>
+      </div>
+      <div class="col-md-10">
         <div id="map" class="map"></div>
       </div>
+
     </div>
 
 {% endblock content %}
 
     <script>
+        var url_base = "http://localhost:8000/api/directions/";
+        var start_coord = "1587848.414,5879564.080,2";
+        var end_coord =  "1588005.547,5879736.039,2";
+        var r_type = {{ route_type }};
 
-        var geojs_url = "http://localhost:8000/api/directions/1587848.414,5879564.080,2&1588005.547,5879736.039,2/?format=json";
+        var sel_Val = $( "input:radio[name=typeRoute]:checked" ).val();
+
+        $( ".radio" ).change(function() {
+           map.getLayers().pop();
+           var sel_Val2 = $( "input:radio[name=typeRoute]:checked" ).val();
+           var routeUrl = 'http://localhost:8000/api/directions/1587848.414,5879564.080,2&1588005.547,5879736.039,2&' + sel_Val2  + '/?format=json';
+
+          map.getLayers().push(new ol.layer.Vector({
+                    source: new ol.source.GeoJSON({url: routeUrl}),
+                    style:  new ol.style.Style({
+                        stroke: new ol.style.Stroke({
+                          color: 'blue',
+                          width: 4
+                        })
+                      }),
+                    title: "Route",
+                    name: "Route"
+                }));
+
+
+        });
+        var geojs_url = url_base + start_coord + "&" + end_coord + "&" + sel_Val + "/?format=json";
         var vectorLayer = new ol.layer.Vector({
                         source: new ol.source.GeoJSON({url: geojs_url}),
                         style:  new ol.style.Style({
                             stroke: new ol.style.Stroke({
-                              color: 'green',
+                              color: 'red',
                               width: 4
                             })
                           }),
@@ -44,10 +99,20 @@
             })
           }),
           view: new ol.View({
-            center: [1587927.09817072,5879623.90059265],
+            center: [1587927.09817072,5879650.90059265],
             zoom: 18
           })
         });
+
+
+{#        $(document).on("click", "#routeTypeStandard li" ,function (event) {#}
+{#         var n2 = $(this).text();#}
+{#         addRoute(n2);#}
+{#            });#}
+{##}
+{#        function addRoute(standName) {#}
+
+
 
         </script>
 
