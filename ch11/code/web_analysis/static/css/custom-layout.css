@@ -37,4 +37,24 @@ body, h1, h2, h3, h4, p, li, td, th {
   padding: 5px;
 }
 
+.bs-example{
+	font-family: sans-serif;
+	position: relative;
+	margin: 100px;
+}
+
+.tt-suggestion {
+	font-size: 24px;
+	line-height: 24px;
+	padding: 3px 20px;
+    background-color: #FFFFFF;
+}
+.tt-suggestion.tt-is-under-cursor {
+	background-color: #0097CF;
+	color: #FFFFFF;
+}
+.tt-suggestion p {
+	margin: 0;
+}
+
 
