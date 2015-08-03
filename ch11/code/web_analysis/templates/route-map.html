@@ -2,6 +2,11 @@
 {% load staticfiles %}
 
 {% block title %}Simple route map{% endblock %}
+{% block head %}
+{{ block.super }}
+    <script src="{% static "js/bloodhound.min.js" %}"></script>
+    <script src="{% static "js/typeahead.bundle.min.js" %}"></script>
+{% endblock head %}
 
 {% block body %}
 
@@ -37,7 +42,7 @@
                     Barrier Free Route
                   </label>
                 </div>
-              <button type="submit" class="btn btn-default">Submit</button>
+              <button type="submit" class="btn btn-default">Go !</button>
                 <br>
             </form>
 
