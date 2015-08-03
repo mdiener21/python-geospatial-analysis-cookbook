@@ -226,8 +226,6 @@ def route_room_to_room(request, start_room_num, end_room_num, route_type):
 
     if request.method == 'GET' or request.method == 'POST':
 
-        cur = connection.cursor()
-
         start_room = int(start_room_num)
         end_room = int(end_room_num)
 
