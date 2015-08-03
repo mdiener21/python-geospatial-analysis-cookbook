@@ -1,28 +1,28 @@
         var url_base = "/api/directions/";
         var start_coord = "1587848.414,5879564.080,2";
         var end_coord =  "1588005.547,5879736.039,2";
-        var r_type = {{ route_type }};
-        var geojs_url = url_base + start_coord + "&" + end_coord + "&" + sel_Val + '/?format=json';
         var sel_Val = $( "input:radio[name=typeRoute]:checked" ).val();
+        var geojs_url = url_base + start_coord + "&" + end_coord + "&" + sel_Val + '/?format=json';
 
-        $( ".radio" ).change(function() {
-           map.getLayers().pop();
-           var sel_Val2 = $( "input:radio[name=typeRoute]:checked" ).val();
-           var routeUrl = '/api/directions/1587848.414,5879564.080,2&1588005.547,5879736.039,2&' + sel_Val2  + '/?format=json';
 
-          map.getLayers().push(new ol.layer.Vector({
-                    source: new ol.source.GeoJSON({url: routeUrl, crossDomain: true,}),
-                    style:  new ol.style.Style({
-                        stroke: new ol.style.Stroke({
-                          color: 'blue',
-                          width: 4
-                        })
-                      }),
-                    title: "Route",
-                    name: "Route"
-                }));
-
-        });
+        //$( ".radio" ).change(function() {
+        //   map.getLayers().pop();
+        //   var sel_Val2 = $( "input:radio[name=typeRoute]:checked" ).val();
+        //   var routeUrl = '/api/directions/1587848.414,5879564.080,2&1588005.547,5879736.039,2&' + sel_Val2  + '/?format=json';
+        //
+        //  map.getLayers().push(new ol.layer.Vector({
+        //            source: new ol.source.GeoJSON({url: routeUrl}),
+        //            style:  new ol.style.Style({
+        //                stroke: new ol.style.Stroke({
+        //                  color: 'blue',
+        //                  width: 4
+        //                })
+        //              }),
+        //            title: "Route",
+        //            name: "Route"
+        //        }));
+        //
+        //});
 
         var vectorLayer = new ol.layer.Vector({
                         source: new ol.source.GeoJSON({url: geojs_url}),
@@ -40,7 +40,8 @@
           layers: [
             new ol.layer.Tile({
               source: new ol.source.OSM()
-            }),
+            })
+              ,
             vectorLayer
           ],
           target: 'map',
@@ -54,3 +55,22 @@
             zoom: 18
           })
         });
+
+function addRoute(fromNumber, toNumber, routeType) {
+    map.getLayers().pop();
+    console.log("addRoute big"+ String(fromNumber));
+    var baseUrl = 'http://localhost:8000/api/directions/';
+    var geoJsonUrl = baseUrl + fromNumber + '&' + toNumber + '&' + routeType +'/?format=json';
+    console.log("final url " + geoJsonUrl);
+    map.getLayers().push(new ol.layer.Vector({
+                source: new ol.source.GeoJSON({url: geoJsonUrl}),
+                style:  new ol.style.Style({
+                    stroke: new ol.style.Stroke({
+                      color: 'purple',
+                      width: 4
+                    })
+                  }),
+                title: "Route",
+                name: "Route"
+            }));
+    }
