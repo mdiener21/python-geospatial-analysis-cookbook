@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{% static "css/ol.css" %}" type="text/css">
     <link rel="stylesheet" href="{% static "css/custom-layout.css" %}" type="text/css">
     <script src="{% static "js/ol340.js" %}"></script>
-
+    <script src="{% static "js/bootstrap3-typeahead.min.js" %}"></script>
     {% endblock head %}
 </head>
 <body>
@@ -47,11 +47,6 @@
         </nav>
     {% endblock nav %}
 
-    <div class="container-fluid">
-        {% block content %}
-
-        {% endblock content %}
-    </div>
 
 {% endblock body %}
 </body>
