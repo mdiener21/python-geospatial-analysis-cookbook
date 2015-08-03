@@ -13,15 +13,18 @@
       <div class="col-md-2">
         <div id="directions" class="directions">
             <form>
-              <div class="form-group">
+{#                <div id="prefetch">#}
+{#                  <input class="typeahead" type="text" placeholder="Enter Room Number">#}
+{#                </div>#}
+              <div id="prefetch" class="form-group">
                 <label for="route-to">Route From:</label>
-                <input type="text" class="form-control" id="route-to" placeholder="Enter Room Number">
-{#                  <input type="text" data-provide="typeahead">#}
+                <input type="text" class="typeahead form-control" id="route-to" placeholder="Enter Room Number">
               </div>
-              <div class="form-group">
+              <div id="prefetch2" class="form-group">
                 <label for="route-from">Route To:</label>
-                <input type="text" class="form-control" id="route-from" placeholder="Enter Room Number">
+                <input type="text" class="typeahead form-control" id="route-from" placeholder="Enter Room Number">
               </div>
+
                 <div class="radio">
                   <label>
                     <input type="radio" name="typeRoute" id="routeTypeStandard" value="0" checked>
@@ -49,9 +52,28 @@
 
     <script>  {% include 'routing.js' %} </script>
 
+
+
 <script>
+var countries = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.whitespace,
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  // url points to a json file that contains an array of country names, see
+  // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
+  prefetch: 'http://localhost:8000/api/rooms/?format=json'
+});
 
+// passing in `null` for the `options` arguments will result in the default
+// options being used
+$('#prefetch .typeahead').typeahead(null, {
+  name: 'countries',
+  source: countries
+});
 
+$('#prefetch2 .typeahead').typeahead(null, {
+  name: 'countries',
+  source: countries
+});
 
 </script>
 
