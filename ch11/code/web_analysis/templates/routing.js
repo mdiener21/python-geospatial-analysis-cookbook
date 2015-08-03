@@ -4,7 +4,8 @@
         var sel_Val = $( "input:radio[name=typeRoute]:checked" ).val();
         var geojs_url = url_base + start_coord + "&" + end_coord + "&" + sel_Val + '/?format=json';
 
-
+// uncomment this code if you want to reactivate
+// the quick static demo switcher
         //$( ".radio" ).change(function() {
         //   map.getLayers().pop();
         //   var sel_Val2 = $( "input:radio[name=typeRoute]:checked" ).val();
