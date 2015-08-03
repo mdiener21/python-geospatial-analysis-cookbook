@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block title %}Simple route map{% endblock %}
+
 {% block head %}
 {{ block.super }}
     <script src="{% static "js/bloodhound.min.js" %}"></script>
@@ -17,15 +18,12 @@
     <div class="row">
       <div class="col-md-2">
         <div id="directions" class="directions">
-            <form>
-{#                <div id="prefetch">#}
-{#                  <input class="typeahead" type="text" placeholder="Enter Room Number">#}
-{#                </div>#}
-              <div id="prefetch" class="form-group">
+            <form id="submitForm">
+              <div id="rooms-prefetch" class="form-group">
                 <label for="route-to">Route From:</label>
                 <input type="text" class="typeahead form-control" id="route-to" placeholder="Enter Room Number">
               </div>
-              <div id="prefetch2" class="form-group">
+              <div id="rooms-prefetch" class="form-group">
                 <label for="route-from">Route To:</label>
                 <input type="text" class="typeahead form-control" id="route-from" placeholder="Enter Room Number">
               </div>
@@ -42,7 +40,7 @@
                     Barrier Free Route
                   </label>
                 </div>
-              <button type="submit" class="btn btn-default">Go !</button>
+              <button id="enterRoute" type="submit" class="btn btn-default">Go !</button>
                 <br>
             </form>
 
@@ -55,30 +53,34 @@
     </div>
 </div>
 
-    <script>  {% include 'routing.js' %} </script>
-
+<script>  {% include 'routing.js' %} </script>
 
 
 <script>
-var countries = new Bloodhound({
-  datumTokenizer: Bloodhound.tokenizers.whitespace,
-  queryTokenizer: Bloodhound.tokenizers.whitespace,
-  // url points to a json file that contains an array of country names, see
-  // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
-  prefetch: 'http://localhost:8000/api/rooms/?format=json'
-});
+    var roomNums = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.whitespace,
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      prefetch: 'http://localhost:8000/api/rooms/?format=json'
+    });
 
-// passing in `null` for the `options` arguments will result in the default
-// options being used
-$('#prefetch .typeahead').typeahead(null, {
-  name: 'countries',
-  source: countries
-});
+    // passing in `null` for the `options` arguments will result in the default
+    // options being used
+    $('#rooms-prefetch .typeahead').typeahead(null, {
+      name: 'countries',
+        limit: 100,
+      source: roomNums
+    });
 
-$('#prefetch2 .typeahead').typeahead(null, {
-  name: 'countries',
-  source: countries
-});
+
+    $( "#submitForm" ).submit(function( event ) {
+    {#  alert( "Handler for .submit() called."  );#}
+        var startNum = $('#route-from').val();
+        var endNum = $('#route-to').val();
+        var rType = $( "input:radio[name=typeRoute]:checked" ).val();
+         addRoute(startNum, endNum, rType);
+      event.preventDefault();
+    });
+
 
 </script>
 
