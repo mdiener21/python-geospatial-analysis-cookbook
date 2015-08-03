@@ -138,9 +138,9 @@ def get_room_centroid_node(room_number):
     try:
         return room_node
     except:
-        logger.error("error exporting to json model: " + str(room_node))
+        logger.error("error get room center " + str(room_node))
         logger.error(traceback.format_exc())
-        return {'error': 'either no JSON or no key params in your JSON'}
+        return {'error': 'error get room center'}
 
 
 def run_route(start_node_id, end_node_id, route_type):
