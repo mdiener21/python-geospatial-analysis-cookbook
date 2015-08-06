@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # setup installs
 sudo apt-get install python-setuptools python-pip
 
@@ -15,7 +15,7 @@ sudo apt-get install libgdal-dev  # install is 125MB
 sudo apt-get install python-gdal
 
 #install postgresql postgis
-sudo apt-get install postgresql-9.3 postgresql-9.3-postgis pgadmin3 postgresql-contrib python-psycopg2
+sudo apt-get install postgresql-9.3 postgresql-9.3-postgis-2.1 pgadmin3 postgresql-contrib python-psycopg2
 sudo apt-get install binutils libproj-dev
 
 # virtualenv install
@@ -42,50 +42,5 @@ pip install pysal
 pip install ipython
 pip install django
 pip install owslib
-
-
-
-
-################################################
-#
-#
-# NOT TO INCLUDE ANY OF this stuff in final !!!!
-# BELOW ARE SOME SILLY STUFF not needed
-#
-################################################
-$ sudo apt-add-repository ppa:ubuntugis/ubuntugis-unstable
-$ sudo apt-get update
-$ sudo apt-get install libgdal-dev
-$ virtualenv gdalenv
-$ source gdal/bin/activate
-(gdalenv) $ pip install --no-install GDAL
-(gdalenv) $ cd /path/to/gdalenv/build/GDAL
-(gdalenv) $ python setup.py build_ext include-dirs=/usr/include/gdal/
-(gdalenv) $ pip install --no-download GDAL
-done
-
-cd /.venv/pygeo_analysis_cookbook/build/gdal
-python setup.py build_ext gdal-config=/usr/bin/gdal-config --include-dirs=/usr/include/gdal --library-dirs=/usr/lib
-
-/usr/share/gdal/1.7
-/usr/include/gdal
-/usr/bin/gdal-config
-/usr/local/lib/libgdal.so
-/usr/lib/ogdi/libgdal.so
-/home/mdiener/Downloads/gdal-1.11.0/.libs/libgdal.so
-
-
-export CPLUS_INCLUDE_PATH=/usr/include/gdal
-export C_INCLUDE_PATH=/usr/include/gdal
-pip install GDAL
-
-$ wget http://download.osgeo.org/gdal/1.11.0/gdal-1.11.0.tar.gz
-$ tar xzf gdal-1.11.0.tar.gz
-$ cd gdal-1.11.0
-$ ./configure -with-python
-$ make  #this takes time
-$ sudo make installs
-
-
-
+pip install folium
 
