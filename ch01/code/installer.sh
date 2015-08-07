@@ -23,8 +23,8 @@ export WORKON_HOME=~/venvs
 mkdir $WORKON_HOME
 source /usr/local/bin/virtualenvwrapper.sh
 mkvirtualenv pygeo_analysis_cookbook
-echo export WORKON_HOME=$WORKON_HOME >> ~/.bashrc
-echo source /usr/local/bin/virtualenvwrapper.sh >> ~/.bashrc
+echo "export WORKON_HOME=$WORKON_HOME" >> ~/.bashrc
+echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.bashrc
 source ~/.bashrc
 
 workon pygeoan_cb
