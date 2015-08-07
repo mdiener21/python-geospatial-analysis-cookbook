@@ -27,7 +27,7 @@ echo export WORKON_HOME=$WORKON_HOME >> ~/.bashrc
 echo source /usr/local/bin/virtualenvwrapper.sh >> ~/.bashrc
 source ~/.bashrc
 
-workon pygeo_analysis_cookbook
+workon pygeoan_cb
 
 pip install numpy
 pip install pyproj
@@ -43,4 +43,6 @@ pip install ipython
 pip install django
 pip install owslib
 pip install folium
+toggleglobalsitepackages
+enable global site-packages
 
