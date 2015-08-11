@@ -1,25 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import urllib
-import xml.etree.ElementTree as el_tree
+from owslib.wms import WebMapService
 
-# British Geological Survey WMS  BGS OneGeology Europe geology
-url = "http://ogc.bgs.ac.uk/cgi-bin/BGS_1GE_Geology/wms?service=WMS&version=1.3.0&request=GetCapabilities"
+url = "http://ogc.bgs.ac.uk/cgi-bin/BGS_1GE_Geology/wms"
 
-open_xml_obj = urllib.urlopen(url)
-tree = el_tree.parse(open_xml_obj)
+get_wms_url = WebMapService(url)
 
-root = tree.getroot()
+crs_list = get_wms_url.contents['GBR_Kilmarnock_BGS_50K_CompressibleGround'].crsOptions
 
-namespace_ogis = "{http://www.opengis.net/wms}"
-tag_to_find = "CRS"
-
-wms_crs_tag = namespace_ogis + tag_to_find
-
-capability_element = root[1]
-
-for wms in capability_element:
-    for crs in wms:
-        if crs.tag == wms_crs_tag:
-            print crs.text
+print crs_list
