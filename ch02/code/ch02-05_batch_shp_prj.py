@@ -14,16 +14,17 @@ def create_epsg_wkt_esri(epsg):
     We use the http://spatialreference.org/ref/epsg/4326/esriwkt/
 
     """
-    spatialRef = osr.SpatialReference()
-    spatialRef.ImportFromEPSG(epsg)
-    
+    spatial_ref = osr.SpatialReference()
+    spatial_ref.ImportFromEPSG(epsg)
+
     # transform projection format to ESRI .prj style
-    spatialRef.MorphToESRI()
-    
+    spatial_ref.MorphToESRI()
+
     # export to WKT
-    wkt_epsg = spatialRef.ExportToWkt()
+    wkt_epsg = spatial_ref.ExportToWkt()
 
     return wkt_epsg
+
 
 # Optional method to get EPGS as wkt from a web service
 def get_epsg_code(epsg):
@@ -35,10 +36,10 @@ def get_epsg_code(epsg):
 
     """
     web_url = "http://spatialreference.org/ref/epsg/{0}/esriwkt/".format(epsg)
-    f=urllib.urlopen(web_url)
-    return (f.read())
+    f = urllib.urlopen(web_url)
+    return f.read()
 
-   
+
 # Here we write out a new .prj file with the same name
 # as our Shapefile named "schools" in this example
 def write_prj_file(folder_name, shp_filename, epsg):
@@ -49,7 +50,7 @@ def write_prj_file(folder_name, shp_filename, epsg):
     usage  write_prj_file(<ShapefileName>,<EPSG CODE>)
 
     """
-    
+
     in_shp_name = "/{0}.prj".format(shp_filename)
     full_path_name = folder_name + in_shp_name
 
@@ -59,7 +60,6 @@ def write_prj_file(folder_name, shp_filename, epsg):
         print ("done writing projection definition : " + epsg_code)
 
 
-        
 def run_batch_define_prj(folder_location, epsg):
     """
     input path to the folder location containing
@@ -77,15 +77,16 @@ def run_batch_define_prj(folder_location, epsg):
     # remove the .shp ending so we do not end up with 
     # file names such as .shp.prj
     for shp_file in os.listdir(folder_location):
-      if shp_file.endswith('.shp'):
-        filename_no_ext = os.path.splitext(shp_file)[0]
-        shapefile_list.append(filename_no_ext)
+        if shp_file.endswith('.shp'):
+            filename_no_ext = os.path.splitext(shp_file)[0]
+            shapefile_list.append(filename_no_ext)
 
     # loop through the list of shapefiles and write
     # the new .prj for each shapefile
     for shp in shapefile_list:
         write_prj_file(folder_location, shp, epsg)
-        
+
+
 # Windows users please use the full path
 # Linux users can also use full path        
 run_batch_define_prj("c:/02_DEV/01_projects/04_packt/ch02/geodata/no_prj/", 4326)
