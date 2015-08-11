@@ -24,12 +24,19 @@ in_shp_layer = input_shp.GetLayer()
 
 # create the output layer
 output_shp_file = r'../geodata/UTM_Zone_Boundaries_3857.shp'
+# check if output file exists if yes delete it
 if os.path.exists(output_shp_file):
     shp_driver.DeleteDataSource(output_shp_file)
+
+# create a new Shapefile object
 output_shp_dataset = shp_driver.CreateDataSource(output_shp_file)
+
+# create a new layer in output Shapefile and define its geometry type
 output_shp_layer = output_shp_dataset.CreateLayer("UTM_Zone_Boundaries_3857", geom_type=ogr.wkbMultiPolygon)
 
-# add fields
+# add fields to the new output Shapefile
+# get list of attribute fields
+# create new fields for output
 in_layer_def = in_shp_layer.GetLayerDefn()
 for i in range(0, in_layer_def.GetFieldCount()):
     field_def = in_layer_def.GetFieldDefn(i)
