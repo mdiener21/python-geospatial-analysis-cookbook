@@ -50,10 +50,14 @@ def write_prj_file(folder_name, shp_filename, epsg):
 
     """
     
-    with open(folder_name + "/{0}.prj".format(shp_filename), "w") as prj:
+    in_shp_name = "/{0}.prj".format(shp_filename)
+    full_path_name = folder_name + in_shp_name
+
+    with open(full_path_name, "w") as prj:
         epsg_code = create_epsg_wkt_esri(epsg)
         prj.write(epsg_code)
-        print ("done writing projection definition : ")
+        print ("done writing projection definition : " + epsg_code)
+
 
         
 def run_batch_define_prj(folder_location, epsg):
