@@ -11,7 +11,7 @@ output_format = "PostgreSQL"
 
 # database connection string
 db_connection = """PG:host=localhost port=5432
-	user=pluto dbname=py_test password=stars"""
+	user=pluto dbname=py_geoan_cb password=stars"""
 
 # input shapefile
 input_shp = "../geodata/bikeways.shp"
