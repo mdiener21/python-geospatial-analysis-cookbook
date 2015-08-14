@@ -17,3 +17,4 @@ output_shapefile = shp_driver.CreateDataSource( output_shp + ".shp" )
 new_shapefile = output_shapefile.CreateLayer(output_shp, srs = None )
 
 gdal.Polygonize(input_band, None, new_shapefile, -1, [], callback=None)
+new_shapefile.SyncToDisk()
