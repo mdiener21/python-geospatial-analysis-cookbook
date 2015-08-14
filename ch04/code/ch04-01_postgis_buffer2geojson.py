@@ -8,20 +8,23 @@ from geojson import loads, Feature, FeatureCollection
 
 # Database Connection Info
 db_host = "localhost"
-db_user = "postgres"
-db_passwd = "air"
+db_user = "pluto"
+db_passwd = "stars"
 db_database = "py_geoan_cb"
 db_port = "5432"
 
 # connect to DB
-conn = psycopg2.connect(host=db_host, user=db_user, port=db_port, password=db_passwd, database=db_database)
+conn = psycopg2.connect(host=db_host, user=db_user, 
+	port=db_port, password=db_passwd, database=db_database)
 
 # create a cursor
 cur = conn.cursor()
 
 # the PostGIS buffer query
-buffer_query = """select ST_AsGeoJSON(ST_Transform(ST_Buffer(wkb_geometry, 100,'quad_segs=8'),4326)) as geom, name
-               from geodata.schools"""
+buffer_query = """SELECT ST_AsGeoJSON(ST_Transform(
+			ST_Buffer(wkb_geometry, 100,'quad_segs=8'),4326)) 
+			AS geom, name
+            FROM geodata.schools"""
 
 # execute the query
 cur.execute(buffer_query)
