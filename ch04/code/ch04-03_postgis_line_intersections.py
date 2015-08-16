@@ -8,13 +8,14 @@ from geojson import loads, Feature, FeatureCollection
 
 # Database Connection Info
 db_host = "localhost"
-db_user = "postgres"
-db_passwd = "air"
-db_database = "py_geoan_cb"
+db_user = "pluto"
+db_passwd = "stars"
+db_database = "py_test"
 db_port = "5432"
 
 # connect to DB
-conn = psycopg2.connect(host=db_host, user=db_user, port=db_port, password=db_passwd, database=db_database)
+conn = psycopg2.connect(host=db_host, user=db_user,
+    port=db_port, password=db_passwd, database=db_database)
 
 # create a cursor
 cur = conn.cursor()
@@ -23,13 +24,10 @@ cur = conn.cursor()
 # cur.execute("DROP TABLE IF EXISTS geodata.split_roads;")
 
 # split lines at intesections query
-split_lines_query = """
-                    CREATE TABLE
-                        geodata.split_roads
-                    AS SELECT
-                        (ST_Dump(ST_Node(ST_Collect(wkb_geometry)))).geom AS geom
-                    FROM
-                        geodata.lines;
+split_lines_query = """ CREATE TABLE geodata.split_roads
+    AS SELECT(ST_Dump(ST_Node
+        (ST_Collect(wkb_geometry)))).geom AS geom
+    FROM geodata.lines;
                      """
 cur.execute(split_lines_query)
 conn.commit()

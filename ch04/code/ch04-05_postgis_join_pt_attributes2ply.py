@@ -5,13 +5,14 @@ import psycopg2
 
 # Database Connection Info
 db_host = "localhost"
-db_user = "postgres"
-db_passwd = "air"
+db_user = "pluto"
+db_passwd = "stars"
 db_database = "py_geoan_cb"
 db_port = "5432"
 
 # connect to DB
-conn = psycopg2.connect(host=db_host, user=db_user, port=db_port, password=db_passwd, database=db_database)
+conn = psycopg2.connect(host=db_host, user=db_user,
+    port=db_port, password=db_passwd, database=db_database)
 
 # create a cursor
 cur = conn.cursor()

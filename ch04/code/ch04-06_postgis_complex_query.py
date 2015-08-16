@@ -8,20 +8,24 @@ from geojson import loads, Feature, FeatureCollection
 
 # Database Connection Info
 db_host = "localhost"
-db_user = "postgres"
-db_passwd = "air"
+db_user = "pluto"
+db_passwd = "stars"
 db_database = "py_geoan_cb"
 db_port = "5432"
 
 # connect to DB
-conn = psycopg2.connect(host=db_host, user=db_user, port=db_port, password=db_passwd, database=db_database)
+conn = psycopg2.connect(host=db_host, user=db_user,
+    port=db_port, password=db_passwd, database=db_database)
 
 # create a cursor
 cur = conn.cursor()
 
 complex_query = """
     SELECT
-      ST_AsGeoJSON(st_centroid(g.wkb_geometry)) as geom, c.name AS city, g.name AS golfclub, p.name_en AS park,
+      ST_AsGeoJSON(st_centroid(g.wkb_geometry)) AS geom,
+          c.name AS city,
+          g.name AS golfclub,
+          p.name_en AS park,
 	  ST_Distance(geography(c.wkb_geometry), geography(g.wkb_geometry)) AS distance,
 	  ST_Distance(geography(p.geom), geography(g.wkb_geometry)) AS distance
       FROM 
