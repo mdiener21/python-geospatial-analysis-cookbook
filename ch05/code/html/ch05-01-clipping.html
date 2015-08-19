@@ -4,12 +4,12 @@
 	<title>Clipping Data</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="../leaflet.css" />
+	<link rel="stylesheet" href="leaflet.css" />
 </head>
 <body>
 	<div id="map" style="width: 400px; height: 400px"></div>
 	<script src="../../geodata/ch05-01-geojson.js" type="text/javascript"></script>
-	<script src="../leaflet.js"></script>
+	<script src="leaflet.js"></script>
 
 	<script>
 		var map = L.map('map').setView([50.13466432216696,9.001806640625], 6);
@@ -32,6 +32,12 @@
 			layer.bindPopup(popupContent);
 		}
 
+        var lineStyle = {
+            "color": "#ff7800",
+            "weight": 9,
+            "opacity": 0.65
+        };
+
         L.geoJson(big_linestring, {
             onEachFeature: onEachFeature
 		    }).addTo(map);
@@ -40,8 +46,10 @@
             onEachFeature: onEachFeature
 		    }).addTo(map);
 
-
-
+        L.geoJson(simple_intersect, {
+            style: lineStyle,
+            onEachFeature: onEachFeature
+		    }).addTo(map);
 
 	</script>
 </body>
