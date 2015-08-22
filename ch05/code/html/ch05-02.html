@@ -22,7 +22,7 @@
 		}).addTo(map);
 
 		function onEachFeature(feature, layer) {
-			var popupContent = "<p>" + feature.properties.name + "</p>";
+			var popupContent = "<p> Polygon id: " + feature.properties.id + "</p>";
 
 			if (feature.properties && feature.properties.popupContent) {
 				popupContent += feature.properties.popupContent;
