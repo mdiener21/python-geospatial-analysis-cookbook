@@ -14,7 +14,7 @@ pseudo_mercator = Proj("+init=EPSG:3857")
 
 def transform_point(in_point, in_crs, out_crs):
     """
-    export a Shapely geom to GeoJSON and
+    export a Shapely geom to GeoJSON Feature and
     transform to a new coordinate system with pyproj
     :param in_point: shapely geometry as point
     :param in_crs: pyproj crs definition
