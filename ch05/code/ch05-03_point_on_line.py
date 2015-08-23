@@ -86,8 +86,8 @@ reverse_hello = hello[::-1]
 print reverse_hello
 
 # locating the point on a line based on distance from line start
-# input in meters = to 358.9 Km from line start
-point_on_line = shply_line.interpolate(358900)
+# input in meters = to 360 Km from line start
+point_on_line = shply_line.interpolate(360000)
 
 # transform input linestring and new point
 # to wgs84 for visualization on web map
