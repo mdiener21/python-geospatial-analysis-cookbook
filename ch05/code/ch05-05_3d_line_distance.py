@@ -80,17 +80,20 @@ for f in json_load['features']:
 
         # calculate total elevation gain
         if z1 > z2:
-            elevation_gain = ( (z1 - z2) + elevation_gain )
+            elevation_gain = ((z1 - z2) + elevation_gain )
             z2 = z1
         else:
             elevation_gain = elevation_gain  # no height change
             z2 = z1
 
-print "total elevation gain is: " + str(elevation_gain) \
-      + " meters"
+
+print ("total elevation gain is: {gain} meters".format(gain=str(elevation_gain)))
 
 # print coord_pair
-print "3D line distance is: " + str(length_3d / 1000)
-print "2D line distance is: " + str(length_2d / 1000)
-print "3D-2D length difference: " + str(length_3d - length_2d) \
-      + " meters"
+distance_3d = str(length_3d / 1000)
+distance_2d = str(length_2d / 1000)
+dist_diff = str(length_3d - length_2d)
+
+print ("3D line distance is: {dist3d}".format(dist3d=distance_3d))
+print ("2D line distance is: {dist2d}".format(dist2d=distance_2d))
+print ("3D-2D length difference: {diff} meters".format(diff=dist_diff))
