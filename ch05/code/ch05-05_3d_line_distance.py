@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import math
+import os
 from shapely.geometry import shape, Point
 import json
-
 
 def pairs(lst):
     """
@@ -39,8 +39,8 @@ def readin_json(jsonfile):
         return d
 
 
-geoj_27563_file = "../geodata/velowire_stage_16_27563.geojson"
-
+geoj_27563_file = os.path.realpath("../geodata/velowire_stage_16_27563_utf8.geojson")
+print (geoj_27563_file)
 # create python dict type from geojson file object
 json_load = readin_json(geoj_27563_file)
 
@@ -94,6 +94,6 @@ distance_3d = str(length_3d / 1000)
 distance_2d = str(length_2d / 1000)
 dist_diff = str(length_3d - length_2d)
 
-print ("3D line distance is: {dist3d}".format(dist3d=distance_3d))
-print ("2D line distance is: {dist2d}".format(dist2d=distance_2d))
+print ("3D line distance is: {dist3d} meters".format(dist3d=distance_3d))
+print ("2D line distance is: {dist2d} meters".format(dist2d=distance_2d))
 print ("3D-2D length difference: {diff} meters".format(diff=dist_diff))
