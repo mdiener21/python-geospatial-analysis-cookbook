@@ -2,21 +2,16 @@
 # -*- coding: utf-8 -*-
 
 import json
+from os.path import realpath
 from shapely.geometry import MultiPolygon
 from shapely.geometry import asShape
 from shapely.wkt import dumps
 
-######################
-from matplotlib import pyplot
-from descartes import PolygonPatch
-from utils import SIZE
-from utils import set_plot_bounds
-####################################
 
 # define our files input and output locations
-input_fairways = "../geodata/pebble-beach-fairways-3857.geojson"
-input_greens = "../geodata/pebble-beach-greens-3857.geojson"
-output_wkt_sym_diff = "ol3/data/results_sym_diff.js"
+input_fairways = realpath("../geodata/pebble-beach-fairways-3857.geojson")
+input_greens = realpath("../geodata/pebble-beach-greens-3857.geojson")
+output_wkt_sym_diff = realpath("ol3/data/ch06-01_results_sym_diff.js")
 
 
 # open and load our geojson files as python dictionary
@@ -56,36 +51,3 @@ def write_wkt(filepath, features):
 
 # write to our output js file the new polygon as wkt
 write_wkt(output_wkt_sym_diff, result)
-
-
-#####################################
-#      plot with Matplotlib
-#  display symmetric difference
-# ###################################
-
-# setup matplotlib figure that will display the results
-fig = pyplot.figure(1, figsize=SIZE, dpi=90, facecolor="white")
-
-# add a little more space around subplots
-fig.subplots_adjust(hspace=.5)
-
-ax = fig.add_subplot(111)
-
-# draw each MultiPolygon green
-for poly in result:
-    patch3 = PolygonPatch(poly, fc='green',
-                          alpha=0.5, zorder=2)
-    ax.add_patch(patch3)
-
-ax.set_title('symmetric difference')
-
-# define the area that plot will fit into
-x_range = set_plot_bounds(result, 50)['xrange']
-y_range = set_plot_bounds(result, 50)['yrange']
-
-ax.set_xlim(*x_range)
-ax.set_ylim(*y_range)
-ax.set_aspect(1)
-
-pyplot.show()
-
