@@ -1,18 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import json
+from os.path import realpath
 import shapefile  # pyshp
 from geojson import Feature, FeatureCollection
 from shapely.geometry import asShape, MultiPolygon
 from shapely.ops import polygonize
 from shapely.wkt import dumps
-
-shp1 = "../geodata/temp1-ply.shp"
-shp2 = "../geodata/temp2-ply.shp"
-
-out_geojson_file = "../geodata/res_union.geojson"
-output_union = "../geodata/output_union.geojson"
-out_wkt_js = "ol3/data/results_union.js"
 
 
 def create_shapes(shapefile_path):
@@ -25,7 +19,6 @@ def create_shapes(shapefile_path):
 
     # using pyshp reading geometry
     ply_shp = in_ply.shapes()
-    # ply_shp = in_ply.shapeRecords()
     ply_records = in_ply.records()
     ply_fields = in_ply.fields
     print ply_records
@@ -53,10 +46,6 @@ def create_shapes(shapefile_path):
         out_multi_ply = MultiPolygon(shply_ply)
 
     return out_multi_ply
-
-# create our shapely multipolygons for geoprocessing
-in_ply_1_shape = create_shapes(shp1)
-in_ply_2_shape = create_shapes(shp2)
 
 
 def create_union(in_ply1, in_ply2, result_geojson):
@@ -93,11 +82,7 @@ def create_union(in_ply1, in_ply2, result_geojson):
 
     return out_multi_ply
 
-# run generate union function
-result_union = create_union(in_ply_1_shape, in_ply_2_shape, out_geojson_file)
 
-
-# write the results out to well known text (wkt) with shapely dump
 def write_wkt(filepath, features):
     """
 
@@ -109,9 +94,6 @@ def write_wkt(filepath, features):
         # create a javascript variable called ply_data used in html
         # Shapely dumps geometry out to WKT
         f.write("var ply_data = '" + dumps(features) + "'")
-
-# write to our output js file the new polygon as wkt
-write_wkt(out_wkt_js, result_union)
 
 
 def output_geojson_fc(shply_features, outpath):
@@ -135,4 +117,26 @@ def output_geojson_fc(shply_features, outpath):
         f.write(json.dumps(out_feat_collect))
 
 
-geojson_fc = output_geojson_fc(result_union, output_union)
+if __name__ == "__main__":
+
+    # define our inputs
+    shp1 = realpath("../geodata/temp1-ply.shp")
+    shp2 = realpath("../geodata/temp2-ply.shp")
+
+    # define outputs
+    out_geojson_file = realpath("../geodata/res_union.geojson")
+    output_union = realpath("../geodata/output_union.geojson")
+    out_wkt_js = realpath("ol3/data/results_union.js")
+
+    # create our shapely multipolygons for geoprocessing
+    in_ply_1_shape = create_shapes(shp1)
+    in_ply_2_shape = create_shapes(shp2)
+
+    # run generate union function
+    result_union = create_union(in_ply_1_shape, in_ply_2_shape, out_geojson_file)
+
+    # write to our output js file the new polygon as wkt
+    write_wkt(out_wkt_js, result_union)
+
+    # write the results out to well known text (wkt) with shapely dump
+    geojson_fc = output_geojson_fc(result_union, output_union)
