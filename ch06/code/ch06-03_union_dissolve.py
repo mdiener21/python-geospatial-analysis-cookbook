@@ -2,14 +2,10 @@
 # -*- coding: utf-8 -*-
 from shapely.geometry import MultiPolygon
 from shapely.ops import cascaded_union
+from os.path import realpath
 from utils import create_shapes
 from utils import out_geoj
-
-# input NOAA Shapefile
-shp = "../geodata/temp-all-warn-week.shp"
-
-# output union_dissolve results as GeoJSON
-out_geojson_file = "../geodata/results_union_dissolve.geojson"
+from utils import write_wkt
 
 
 def check_geom(in_geom):
@@ -34,15 +30,27 @@ def check_geom(in_geom):
     out_new_valid_multi = MultiPolygon(plys)
     return out_new_valid_multi
 
-# input Shapefile and convert to Shapely geometries
-shply_geom = create_shapes(shp)
 
-# Check the Shapely geometries if they are valid if not fix them
-new_valid_geom = check_geom(shply_geom)
+if __name__ == "__main__":
 
-# run our union with dissolve
-dissolve_result = cascaded_union(new_valid_geom)
+    # input NOAA Shapefile
+    shp = realpath("../geodata/temp-all-warn-week.shp")
 
-# output the resulting union dissolved polygons to GeoJSON file
-out_geoj(dissolve_result, out_geojson_file)
+    # output union_dissolve results as GeoJSON
+    out_geojson_file = realpath("../geodata/ch06-03_union_dissolve.geojson")
 
+    out_wkt_js = realpath("ol3/data/ch06-03_results_union.js")
+
+    # input Shapefile and convert to Shapely geometries
+    shply_geom = create_shapes(shp)
+
+    # Check the Shapely geometries if they are valid if not fix them
+    new_valid_geom = check_geom(shply_geom)
+
+    # run our union with dissolve
+    dissolve_result = cascaded_union(new_valid_geom)
+
+    # output the resulting union dissolved polygons to GeoJSON file
+    out_geoj(dissolve_result, out_geojson_file)
+
+    write_wkt(out_wkt_js, dissolve_result)
