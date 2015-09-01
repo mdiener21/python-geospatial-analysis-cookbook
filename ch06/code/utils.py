@@ -4,6 +4,8 @@ from math import sqrt
 import shapefile
 from shapely.geometry import asShape, MultiPolygon
 import json
+from shapely.wkt import dumps
+
 # calculate the size of our matplotlib output
 
 GM = (sqrt(5) - 1.0) / 2.0
@@ -89,8 +91,8 @@ def create_shapes(shapefile_path):
     # ply_shp = in_ply.shapeRecords()
     ply_records = in_ply.records()
     ply_fields = in_ply.fields
-    print ply_records
-    print ply_fields
+    # print ply_records
+    # print ply_fields
 
     if len(ply_shp) > 1:
         # using python list comprehension syntax
@@ -174,3 +176,16 @@ def out_geoj(list_geom, out_geoj_file):
 
     # create geojson file on disk
     json.dump(out_geojson, open(out_geoj_file, 'w'))
+
+
+def write_wkt(filepath, shply_geom):
+    """
+
+    :param filepath: output path for new javascript file
+    :param shply_geom: shapely geometry features
+    :return:
+    """
+    with open(filepath, "w") as f:
+        # create a javascript variable called ply_data used in html
+        # Shapely dumps geometry out to WKT
+        f.write("var ply_data = '" + dumps(shply_geom) + "'")
