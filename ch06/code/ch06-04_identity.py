@@ -47,7 +47,8 @@ if __name__ == "__main__":
     output_wkt_identity = realpath("ol3/data/ch06-04_results_identity.js")
 
 
-    # convert our Shapefiles to GeoJSON then to python dictionaries
+    # convert our Shapefiles to GeoJSON
+    # then to python dictionaries
     shp1_data = shp2_geojson_obj(shp1)
     shp2_data = shp2_geojson_obj(shp2)
 
