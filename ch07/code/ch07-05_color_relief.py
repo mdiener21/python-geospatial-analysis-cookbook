@@ -8,7 +8,7 @@ relief = '../geodata/relief.tif'
 final_color_relief = '../geodata/final_color_relief.tif'
 
 create_hillshade = 'gdaldem hillshade -co compress=lzw -compute_edges ' + dem_file +  ' ' + hillshade_relief
-subprocess.call(create_hillshade)
+subprocess.call(create_hillshade, shell=True)
 print create_hillshade
 
 cr = 'gdaldem color-relief -co compress=lzw ' + dem_file + ' ramp.txt ' + relief
