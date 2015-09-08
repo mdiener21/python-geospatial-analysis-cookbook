@@ -6,7 +6,7 @@ from os.path import realpath
 from shapely.geometry import LineString
 
 
-def get_elevation(x_coord, y_coord, raster, bands, gt):
+def get_elevation(x_coord, y_coord, raster, bands, geo_trans):
     """
     get the elevation value of each pixel under
     location x, y
@@ -17,21 +17,21 @@ def get_elevation(x_coord, y_coord, raster, bands, gt):
     :param gt: raster limits
     :return: elevation value of raster at point x,y
     """
-    elevation = []
-    xOrigin = gt[0]
-    yOrigin = gt[3]
-    pixelWidth = gt[1]
-    pixelHeight = gt[5]
-    px = int((x_coord - xOrigin) / pixelWidth)
-    py = int((y_coord - yOrigin) / pixelHeight)
-    for j in range(bands):
-        band = raster.GetRasterBand(j + 1)
-        data = band.ReadAsArray(px, py, 1, 1)
-        elevation.append(data[0][0])
-    return elevation
+    elev_list = []
+    x_origin = geo_trans[0]
+    y_origin = geo_trans[3]
+    pix_width = geo_trans[1]
+    pix_height = geo_trans[5]
+    x_pt = int((x_coord - x_origin) / pix_width)
+    y_pt = int((y_coord - y_origin) / pix_height)
+    for band_num in range(bands):
+        ras_band = raster.GetRasterBand(band_num + 1)
+        ras_data = ras_band.ReadAsArray(x_pt, y_pt, 1, 1)
+        elev_list.append(ras_data[0][0])
+    return elev_list
 
 
-def write_to_csv(csv_out,result_profile_x_z):
+def write_to_csv(csv_out, profil_x_z):
     # check if output file exists on disk if yes delete it
     if os.path.isfile(csv_out):
         os.remove(csv_out)
@@ -41,7 +41,7 @@ def write_to_csv(csv_out,result_profile_x_z):
         # write first row column names into CSV
         outfile.write("distance,elevation" + "\n")
         # loop through each pair and write to CSV
-        for x, z in result_profile_x_z:
+        for x, z in profil_x_z:
             outfile.write(str(round(x, 2)) + ',' + str(round(z, 2)) + '\n')
 
 
@@ -73,15 +73,15 @@ if __name__ == '__main__':
     z = []
     # distance of the topographic profile
     distance = []
-    for currentdistance in range(0, int(length_m), 20):
+    for curent_dist in range(0, int(length_m), 20):
         # creation of the point on the line
-        point = line.interpolate(currentdistance)
+        point = line.interpolate(curent_dist)
         xp, yp = point.x, point.y
         x.append(xp)
         y.append(yp)
         # extraction of the elevation value from the MNT
         z.append(get_elevation(xp, yp, ds, bands, transform)[0])
-        distance.append(currentdistance)
+        distance.append(curent_dist)
 
     print (x)
     print (y)
@@ -89,7 +89,7 @@ if __name__ == '__main__':
     print (distance)
 
     # combine distance and elevation vales as pairs
-    profile_x_z = zip(distance,z)
+    profile_x_z = zip(distance, z)
 
     csv_file = os.path.realpath('../geodata/output_profile.csv')
     # output final csv data
