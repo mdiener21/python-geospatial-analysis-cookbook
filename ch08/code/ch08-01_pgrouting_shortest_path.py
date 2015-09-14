@@ -6,7 +6,7 @@ import json
 from geojson import loads, Feature, FeatureCollection
 
 db_host = "localhost"
-db_user = "postgres"
+db_user = "pluto"
 db_passwd = "secret"
 db_database = "py_geoan_cb"
 db_port = "5432"
@@ -46,7 +46,7 @@ en = int(cur.fetchone()[0])
 
 # pgRouting query to return our list of segments representing
 # our shortest path Dijkstra results as GeoJSON
-# query returns the shortes path between our start and end nodes above
+# query returns the shortest path between our start and end nodes above
 # using the python .format string syntax to insert a variable in the query
 routing_query = '''
     SELECT seq, id1 AS node, id2 AS edge, ST_Length(wkb_geometry) AS cost,
@@ -73,7 +73,6 @@ route_result = []
 # loop over each segment in the result route segments
 # create the list for our new GeoJSON
 for segment in route_segments:
-    print segment
     geojs = segment[4]
     geojs_geom = loads(geojs)
     geojs_feat = Feature(geometry=geojs_geom, properties={'nice': 'route'})
