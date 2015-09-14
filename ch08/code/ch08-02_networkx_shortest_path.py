@@ -36,7 +36,7 @@ def get_full_path(path):
 
 def write_geojson(outfilename, indata):
     """
-    create GeoGJSOn file
+    create GeoJSON file
     :param outfilename: name of output file
     :param indata:
     :return: a new GeoJSON file
