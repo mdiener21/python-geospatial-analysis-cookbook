@@ -41,13 +41,15 @@ def valid_point_in_poly(polys, points):
 
         for pt in points:
             if poly.touches(pt):
-                pts_touch_this_ply.append({'multipoint_errors_touches': pt.__geo_interface__, 'poly_id': i, 'point_coord': pt.__geo_interface__})
+                pts_touch_this_ply.append(
+                    {'multipoint_errors_touches': pt.__geo_interface__, 'poly_id': i,
+                     'point_coord': pt.__geo_interface__})
 
             if poly.contains(pt):
                 pts_in_this_ply.append({'multipoint_contains': pt.__geo_interface__})
 
-        pts_in_polys.append(len(pts_in_this_ply)) #  print count of point errors
-        pts_touch_plys.append(len(pts_touch_this_ply)) # print count of point errors
+        pts_in_polys.append(len(pts_in_this_ply))
+        pts_touch_plys.append(len(pts_touch_this_ply))
 
         # create list of point geometry errors
         pts_plys_geom.append(pts_in_this_ply)
@@ -93,7 +95,7 @@ def valid_point_in_poly(polys, points):
                     fgeom['geom'] = hui
             bad_list.append(fgeom)
         return bad_list
-        #return no_good,pts_in_polys2 # [4,0,1]
+        # return no_good,pts_in_polys2 # [4,0,1]
 
 
 valid_res = valid_point_in_poly(shply_polys, shply_points)
@@ -104,7 +106,5 @@ for res in valid_res:
         geom = res['geom']
         final_list.append(geom)
 
-final_gj = {"type": "GeometryCollection","geometries":final_list}
+final_gj = {"type": "GeometryCollection", "geometries": final_list}
 print json.dumps(final_gj)
-
-
