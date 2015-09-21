@@ -6,7 +6,7 @@ import json
 from geojson import loads, Feature, FeatureCollection
 
 db_host = "localhost"
-db_user = "postgres"
+db_user = "pluto"
 db_passwd = "secret"
 db_database = "py_geoan_cb"
 db_port = "5432"
@@ -86,7 +86,6 @@ route_result = []
 # loop over each segment in the result route segments
 # create the list of our new GeoJSON
 for segment in route_segments:
-    print segment
     seg_cost = segment[3]     # cost value
     layer_level = segment[4]  # floor number
     seg_type = segment[5]
