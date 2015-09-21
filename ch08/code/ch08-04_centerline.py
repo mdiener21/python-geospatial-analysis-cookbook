@@ -5,8 +5,6 @@ import shapefile
 from shapely.geometry import asShape, mapping
 from centerline import Centerline
 
-input_hallways = "../geodata/shp/e01_hallways_small_3857.shp"
-
 
 def write_geojson(outfilename, indata):
     with open(outfilename, "w") as file_out:
@@ -21,16 +19,12 @@ def create_shapes(shapefile_path):
     '''
     in_ply = shapefile.Reader(shapefile_path)
     ply_shp = in_ply.shapes()
-    print type(ply_shp)
 
     out_multi_ply = [asShape(feature) for feature in ply_shp]
 
     print "converting to MultiPolygon: "
 
     return out_multi_ply
-
-# run our function to create Shapely geometries
-shply_ply_halls = create_shapes(input_hallways)
 
 
 def generate_centerlines(polygon_shps):
@@ -40,8 +34,6 @@ def generate_centerlines(polygon_shps):
     :return: dictionary of linestrings
     '''
     dct_centerlines = {}
-    print polygon_shps
-    print "i see"
 
     for i, geom in enumerate(polygon_shps):
         print " now running Centerline creation"
@@ -50,8 +42,6 @@ def generate_centerlines(polygon_shps):
         dct_centerlines[i] = center_line_shply_line
 
     return dct_centerlines
-
-res_centerlines = generate_centerlines(shply_ply_halls)
 
 
 def export_center(geojs_file, centerlines):
@@ -68,11 +58,19 @@ def export_center(geojs_file, centerlines):
 
             out.write(json.dumps(newline))
 
-print "now creating centerlines geojson"
 
-outgeojs_file = '../geodata/04_centerline_results_final.geojson'
+if __name__ == '__main__':
 
-# write the output GeoJSON file to disk
-export_center(outgeojs_file, res_centerlines)
+    input_hallways = "../geodata/shp/e01_hallways_small_3857.shp"
+    # run our function to create Shapely geometries
+    shply_ply_halls = create_shapes(input_hallways)
 
-print "FINISHED !  Finally"
+    # create our centerlines
+    res_centerlines = generate_centerlines(shply_ply_halls)
+    print "now creating centerlines geojson"
+
+    # define output file name and location
+    outgeojs_file = '../geodata/04_centerline_results_final.geojson'
+
+    # write the output GeoJSON file to disk
+    export_center(outgeojs_file, res_centerlines)
