@@ -10,8 +10,8 @@ from shapely.geometry import asShape
 
 # database connection
 db_host = "localhost"
-db_user = "postgres"
-db_passwd = "air"
+db_user = "pluto"
+db_passwd = "secret"
 db_database = "py_geoan_cb"
 db_port = "5432"
 
