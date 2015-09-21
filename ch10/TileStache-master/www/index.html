@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TileStache</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+<body>
+
+<div id="content">
+    <p>
+        <strong><i>TileStache</i> is a Python-based server application that can
+        serve up map tiles based on rendered geographic data.</strong>
+    </p>
+
+    <p>
+        You might be familiar with <a
+        href="http://tilecache.org">TileCache</a>, the venerable open source
+        WMS server from MetaCarta. TileStache is similar, but we hope simpler
+        and better-suited to the needs of designers and cartographers.
+    </p>
+    
+    <p>
+        <b>Read more</b> about the motivations behind TileStache in an
+        <a href="http://mike.teczno.com/notes/tilestache.html">introductory blog post</a>.
+    </p>
+    
+    <p>
+        <b>Get TileStache:</b> <a href="http://github.com/migurski/TileStache">on GitHub</a>,
+        <a href="http://pypi.python.org/pypi/TileStache">from PyPI via <tt>easy_install</tt></a>,
+        and as a <a href="download/?C=M;O=D">direct download here</a>. Modest Maps
+        (<a href="http://github.com/migurski/modestmaps-py">Github</a>,
+        <a href="http://pypi.python.org/pypi/ModestMaps">PyPI</a>,
+        <a href="http://modestmaps.com/">download</a>) is required to use TileStache.
+    </p>
+
+    <p>
+        See also <a href="doc/">documentation</a>, and ask for help in
+        <a href="http://groups.google.com/group/tilestache">the Tilestache group</a>.
+    </p>
+
+    <h1>
+        <img src="mustaches.jpg" alt="TileStache" width="500" height="321">
+    </h1>
+
+    <p style="color: #666;">
+        <small>Mustaches:
+        <a href="http://www.flickr.com/photos/locaburg/4416312808/in/faves-mmigurski/">IMG_7531</a>
+        by <a href="http://www.flickr.com/photos/locaburg/">locaburg</a>, on Flickr.</small>
+    </p>
+    
+    <h2>Features</h2>
+    
+    <p>
+        Things TileStache does now:
+    </p>
+    
+    <ul>
+        <li>Renders <a href="http://mapnik.org/">Mapnik</a> maps.</li>
+        <li>Serves pre-rendered tiles out of <a href="http://mbtiles.org">MBTiles</a> tilesets.</li>
+        <li>Generates vector tiles from <a href="http://www.osgeo.org/gdal_ogr">OGR</a> datasources in <a href="http://geojson.org/">GeoJSON</a> usable in <a href="http://polymaps.org/">Polymaps</a>.</li>
+        <li>Caches to disk, <a href="http://memcached.org/">Memcache</a>, <a href="http://aws.amazon.com/s3/">Amazon S3</a>, <a href="http://mbtiles.org">MBTiles</a>, and elsewhere.</li>
+        <li>Serves tiles in Google-style spherical mercator projection and WGS84 lat/lon projection.</li>
+        <li>Runs from CGI, mod_python, or <a href="http://github.com/benoitc/gunicorn">Gunicorn</a> WSGI.</li>
+        <li>Uses metatiles.</li>
+    </ul>
+
+    <p>
+        Things TileStache might do in the near future:
+    </p>
+    
+    <ul>
+        <li>Render <a href="http://www.gdal.org/">GDAL</a> datasources</li>
+    </ul>
+
+    <h2>Design</h2>
+    
+    <p>
+        The design of TileStache focuses on approachability at the expense of
+        cleverness or completeness. Our hope is to make it easy for anyone to
+        design a new map of their city, publish a fresh view of their world, or
+        even build the next <a href="http://8bitnyc.com">8-Bit NYC</a>.
+    </p>
+
+    <h3>Small</h3>
+
+    <p>
+        The core of TileStache is intended to have a small code footprint. It
+        should be quick and easy to to understand what the library is doing and
+        why, based on common entry points like included CGI scripts. Where
+        possible, dynamic programming “magic” is to be avoided, in favor of
+        basic, procedural and copiously-documented Python.
+    </p>
+
+    <h3>Pluggable</h3>
+
+    <p>
+        We want to accept plug-ins and extensions from outside TileStache, and
+        offer TileStache itself as an extension for other systems. It must be
+        possible to write and use additional caches or renderers without having
+        to modify the core package itself, extend classes from inside the
+        package, or navigate chains of class dependencies. Duck typing and
+        stable interfaces win.
+    </p>
+
+    <h3>Sensible Defaults</h3>
+
+    <p>
+        The default action of a configured TileStache instance should permit
+        the most common form of interaction: a worldwide, spherical-mercator
+        upper-left oriented tile layout compatible with those used by
+        OpenStreetMap, Google, Bing Maps, Yahoo! and others. It should be
+        possible to make TileStache do whatever is necessary to support any
+        external system, but we eschew complex, impenetrable standards in favor
+        of pragmatic, fast utility with basic web clients.
+    </p>
+
+    <h2>Who</h2>
+
+    <p>
+        TileStache is a product of <a class="credit" href="http://mike.teczno.com">Michal Migurski</a>
+        with input from
+        <a class="credit" href="http://www.aaronland.info/">Aaron Cope</a>,
+        <a class="credit" href="http://inzain.net">Zain Memon</a>,
+        <a class="credit" href="http://dbsgeo.com/">Dane Springmeyer</a>,
+        Ian Dees,
+        <a class="credit" href="http://www.urbanresearch.org/about/people/david-burgoon">David Burgoon</a>,
+        <a class="credit" href="http://billmill.org">Bill Mill</a>,
+        <a class="credit" href="http://blog.kartena.se">Per Liedman</a>,
+        <a class="credit" href="https://github.com/shawnbot">Shawn Allen</a>,
+        <a class="credit" href="http://www.itopen.it/chi-siamo/">Alessandro Pasotti</a>,
+        <a class="credit" href="http://rassie.org/">Nikolai Prokoschenko</a>,
+        <a class="credit" href="http://perrygeo.net/">Matthew Perry</a>,
+        <a class="credit" href="http://www.pauladamsmith.com/">Paul Smith</a>,
+        <a class="credit" href="https://github.com/sk1p/">Alexander Clausen</a>,
+        <a class="credit" href="https://github.com/danzel/">Dave Leaver</a>,
+        <a class="credit" href="https://github.com/thegreat/">Tom Nightingale</a>,
+        <a class="credit" href="https://github.com/semprebon/">Andrew Semprebon</a>,
+        <a class="credit" href="https://github.com/ryanbreen">Ryan Breen</a>,
+        <a class="credit" href="https://github.com/alno">Alexey Noskov</a>,
+        <a class="credit" href="https://github.com/RBURHUM">Ragi Burhum</a>,
+        <a class="credit" href="https://github.com/mojodna">Seth Fitzsimmons</a>,
+        <a class="credit" href="https://github.com/fabianbuechler">Fabian Büchler</a>,
+        and <a class="credit" href="http://photos.bigwebguy.net/">Lee Shepherd</a>.
+    </p>
+</div>
+
+</body>
+</html>
