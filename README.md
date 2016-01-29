@@ -1,6 +1,8 @@
 python-geospatial-analysis-cookbook
 ==================================
 
+Complimentary project indrz for indoor routing at [indrz](http://www.indrz.com)
+
 Code for the book [*Python Geospatial Analysis Cookbook*](https://github.com/mdiener21/python-geospatial-analysis-cookbook/archive/master.zip).
 
 
