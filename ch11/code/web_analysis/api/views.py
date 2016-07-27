@@ -165,9 +165,13 @@ def run_route(start_node_id, end_node_id, route_type):
         barrierfree_q = "WHERE type_id not in (3,4)"
 
     routing_query = '''
-        SELECT seq, id1 AS node, id2 AS edge,
-          ST_Length(wkb_geometry) AS cost, layer,
-          type_id, ST_AsGeoJSON(wkb_geometry) AS geoj
+        SELECT seq,
+        id1 AS node,
+        id2 AS edge,
+          ST_Length(wkb_geometry) AS cost,
+          layer,
+          type_id,
+          ST_AsGeoJSON(wkb_geometry) AS geoj
           FROM pgr_dijkstra('
             {normal} {type}', %s, %s, FALSE, FALSE
           ) AS dij_route
