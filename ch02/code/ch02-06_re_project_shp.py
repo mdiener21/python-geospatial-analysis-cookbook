@@ -1,9 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import ogr
-import osr
 import os
+
+try:
+    import ogr
+    import osr
+
+except ImportError:
+    from osgeo import ogr, osr
+
 
 shp_driver = ogr.GetDriverByName('ESRI Shapefile')
 
