@@ -6,12 +6,14 @@
 
 ## Directory-based project format:
 .idea/
+
 # if you remove the above rule, at least ignore the following:
 
 # User-specific stuff:
-# .idea/workspace.xml
-# .idea/tasks.xml
-# .idea/dictionaries
+ .idea/workspace.xml
+ .idea/tasks.xml
+ .idea/dictionaries
+ .idea/inspectionProfiles
 
 # Sensitive or high-churn files:
 # .idea/dataSources.ids
@@ -46,5 +48,8 @@ atlassian-ide-plugin.xml
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
+
+ch11/code/web_analysis/logs/debug.log
+ch11/code/web_analysis/logs/verbose.log
 
 
