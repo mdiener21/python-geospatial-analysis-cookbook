@@ -40,7 +40,7 @@ pip install pandas
 pip install scipy
 pip install pysal
 pip install ipython
-pip install django
+pip install django==1.8.3
 pip install owslib
 pip install folium
 toggleglobalsitepackages
