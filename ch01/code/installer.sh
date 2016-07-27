@@ -29,20 +29,30 @@ source ~/.bashrc
 
 workon pygeoan_cb
 
+# use the requirements.txt file for quick install found in the root project directory
+# pip install -r ../../requirements.txt
+
 pip install numpy
 pip install pyproj
-pip install shapely
+pip install shapely==1.5.2
 pip install matplotlib
 pip install descartes
 pip install pyshp
-pip install geojson
-pip install pandas
+pip install geojson==1.3.1
+pip install pandas==0.16.12
 pip install scipy
 pip install pysal
 pip install ipython
 pip install django==1.8.3
-pip install owslib
-pip install folium
+pip install jinja2==2.7.3
+pip install owslib==0.9.0
+pip install tilestache==1.50.1
+pip install folium==0.1.4
+pip install gdal==1.11.0
+pip install ipython==2.3.0
+pip install kartograph.py==0.6.8
+pip install networkx==1.9.1
+
 toggleglobalsitepackages
 enable global site-packages
 
