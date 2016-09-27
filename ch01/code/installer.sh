@@ -22,7 +22,7 @@ sudo apt-get install binutils libproj-dev
 export WORKON_HOME=~/venvs
 mkdir $WORKON_HOME
 source /usr/local/bin/virtualenvwrapper.sh
-mkvirtualenv pygeo_analysis_cookbook
+mkvirtualenv pygeoan_cb
 echo "export WORKON_HOME=$WORKON_HOME" >> ~/.bashrc
 echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.bashrc
 source ~/.bashrc
