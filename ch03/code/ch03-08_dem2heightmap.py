@@ -17,7 +17,7 @@ command_gdaldem = "c:/OSGeo4w/bin/gdaldem.exe"
 # command_gdalinfo = "gdalinfo"
 # command_gdaldem = "gdaldem"
 
-orig_dem_asc = path_base + "ALS_DGM_10m.asc"
+
 orig_dem_asc = path_base + "dem-5000.asc"
 # input arcascii format DEM data
 input_dem = path_base + "small_elev.asc"
