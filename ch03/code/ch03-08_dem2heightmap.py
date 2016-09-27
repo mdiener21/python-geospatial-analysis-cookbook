@@ -4,8 +4,7 @@ import subprocess
 from osgeo import gdal
 import math
 
-# path_base = "../geodata/"
-path_base = "c:/00_GOMOGI/geodata/"
+path_base = "../geodata/"
 
 # for windows users
 command_gdal_translate = "c:/OSGeo4W/bin/gdal_translate.exe"
