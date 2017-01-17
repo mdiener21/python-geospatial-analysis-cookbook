@@ -1,7 +1,7 @@
 python-geospatial-analysis-cookbook
 ==================================
 
-Complimentary project indrz for indoor routing at [indrz](http://www.indrz.com)
+Welecom to the code repository for "Python Geospatial Analysis Cookbook" over 60 python recipes to perform spatial operations and of course build an indoor routing Django web application.   If you are interested in more about indoor routing see Chapter 10 and 11.  Also please visit the Github repo INDRZ https://www.github.com/indrz  to see the official indoor routing and mapping code.  The project homepage is [indrz](http://www.indrz.com)
 
 Code for the book [*Python Geospatial Analysis Cookbook*](https://github.com/mdiener21/python-geospatial-analysis-cookbook/archive/master.zip).
 
