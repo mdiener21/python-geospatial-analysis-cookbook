@@ -11,7 +11,7 @@ A book for developoers, gis programmers, analysts, researchers, gis geeks, IT ad
 The reciepes are short and long, full of descriptions and code comments.  The book takes you on a journey from installation of spatial libraries to executing fun analyis in a cookbook like tutorial.
 
 Technologies
-pyshp, gdal, ogr, proj4, django, jinja2, Shapely, folium, matplotlib, networkx, numpy, pandas, psycopg2, pyproj, bootstrap, jquery, typeahead.js, bloodhound.js
+pyshp, gdal, ogr, proj4, django, jinja2, Shapely, folium, matplotlib, networkx, numpy, pandas, psycopg2, pyproj, bootstrap, jquery, typeahead.js, bloodhound.js, openlayers, leaflet
 
 
 With pip you can install:
