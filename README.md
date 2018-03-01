@@ -31,3 +31,17 @@ Or directly from GitHub like this:
 ```bash
 pip install https://github.com/mdiener21/python-geospatial-analysis-cookbook/archive/master.zip
 ```
+
+
+# Updates
+
+Page number: 46 
+Currently step 7 includes
+
+```bash
+sudo su createdb –O pluto –U postgres py_geoan_cb
+```
+Correction is:
+```bash
+sudo -u postgres createdb -U postgrs -P pluto py_geoan_cb"
+```
