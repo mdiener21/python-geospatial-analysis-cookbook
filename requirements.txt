@@ -10,7 +10,7 @@ scipy
 pysal
 ipython
 django==1.11.23
-jinja2==2.7.3
+jinja2==2.10.1
 owslib==0.9.0
 tilestache==1.50.1
 folium==0.1.4
