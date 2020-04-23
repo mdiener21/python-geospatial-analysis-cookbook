@@ -5,7 +5,7 @@ Welcome to the code repository for "Python Geospatial Analysis Cookbook" over 60
 
 **Please post any comments and questions directly as an issue/ticket here in the GitHub** Repo.
 
-If you are interested in more about indoor routing see Chapter 10 and 11.  Also please visit the Github repo INDRZ https://www.github.com/indrz  to see the official indoor routing and mapping code.  The project homepage is [indrz](http://www.indrz.com)
+If you are interested in more about indoor routing see [Chapter 10](./ch10) and [Chapter 11](./ch11).  Also please visit the Github repo INDRZ https://www.github.com/indrz  to see the official indoor routing and mapping code.  The project homepage is [indrz](http://www.indrz.com)
 
 Code for the book [*Python Geospatial Analysis Cookbook*](https://github.com/mdiener21/python-geospatial-analysis-cookbook/archive/master.zip).
 
