@@ -1,4 +1,6 @@
-# Appendix A Other Geospatial Python Libraries not covered by this book
+# Appendix A 
+
+## Other Geospatial Python Libraries not covered by this book
 
 | Library Name | Description | Website |
 | ------ | ------ | ------ |
