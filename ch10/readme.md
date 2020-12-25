@@ -1,5 +1,6 @@
-# Chapter 10
+# Chapter 10 Visualizing Your Analysis
 
-- [Folium](./code/ch10-01_folium_leaflet.py)
-- drape orthophoto
-- dem2threejs
+1. Generating a leaflet web map with Folium
+1. Setting up TileStache to serve tiles
+1. Visualizting DEM data with Three.js
+1. Draping an orthophoto over a DEM
