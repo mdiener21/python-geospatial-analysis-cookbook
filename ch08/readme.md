@@ -1,16 +1,9 @@
 # Chapter 8 Network Routing
+This chapter is all about indoor routing and finding the shortest path inside a building.
 
-Chapter 8 is all about indoor routing and finding the shortest path inside a building.
-
-### Finding the Dijkstra shortest path with pgRouting
-Simple quick shortest path example with Dijkstra
-### Finding the Dijkstra shortest path with NetworkX in pure python
-No database needed shortest path route on vector data
-### Generating evacuation polygons based on indoor shortest path
-Creating polygons based on travel time inside a building
-### Creating centerlines from polygons
-Generating centerlines from building data
-### Indoor routing through a building in 3D
-Calculating a indoor route through different floors in 3D.
-### Calculating indoor route walk times
-Display the walk time in a user friendly format
+  1. Finding the Dijkstra shortest path with pgRouting
+  2. Finding the Dijkstra shortest path with NetworkX in pure python
+  3. Generating evacuation polygons based on indoor shortest path
+  4. Creating centerlines from polygons
+  5. Building and indoor routing system in 3D
+  6. Calculating indoor route walk times
