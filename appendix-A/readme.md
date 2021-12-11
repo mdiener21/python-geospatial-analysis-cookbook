@@ -21,7 +21,7 @@
 | Scipy  |  collection of python libraries for scientific data analysis bundled or available as individual installations. | http://www.scipy.org |
 | Geoalchemy  |  spatial extension to sqlalchemy for working with spatial database PostGIS. | http://geoalchemy.org |
 | pyspatialite  |  helps you work with spatialite database of geospatial data. | https://pypi.python.org/pypi/pyspatialite |
-| gpxpy  |  working with GPS data in the standard GPX format in a python friendly format. | http://www.trackprofiler.com/gpxpy/index.html |
+| gpxpy  |  working with GPS data in the standard GPX format in a python friendly format. | https://github.com/tkrajina/gpxpy |
 | shapy  |  pure python version of shapely with no dependencies | https://github.com/karimbahgat/Shapy |
 | pyshp  |  Reads and writes Shapefiles in pure Python | https://github.com/GeospatialPython/pyshp |
 | tilecache | An implemetation of a WMS-C (catalogue)  TMS (Tile Mapping Server) server | http://tilecache.org |
