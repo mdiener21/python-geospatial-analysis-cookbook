@@ -9,7 +9,7 @@ pandas==0.16.12
 scipy
 pysal
 ipython
-django==2.2.25
+django==2.2.27
 jinja2==2.11.3
 owslib==0.9.0
 tilestache==1.50.1
