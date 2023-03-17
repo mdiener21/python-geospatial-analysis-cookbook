@@ -15,7 +15,7 @@ owslib==0.28.1
 tilestache==1.50.1
 folium==0.1.4
 gdal==1.11.0
-ipython==7.16.3
+ipython==8.10.0
 kartograph.py==0.6.8
 networkx==1.9.1
 
